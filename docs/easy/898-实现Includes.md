@@ -41,6 +41,47 @@ type Case1 = Includes<[{}], { a: 1 }>
 
 所以这道题的核心，就变成了如何精准的判断两个类型是否相等，关于这一点，单独查看 [此文章: todo](todo)。
 
-了解了如何判断
+了解了如何严格判断两个类型是否严格相等，下一步就是一步一步遍历这个元组，每一次比较当前类型和目标类型是否相等，有一次相等，就返回 true，否则递归继续比较剩余的元素。
+
+但是由于之前的解法，严格比较是发生在 ts 内部的，所以并不能利用上述解法，故只能自行实现元组的遍历。
+
+元组的遍历，除了通过 索引签名 `T[number]` 的方式，还可以通过对象遍历的方式(有点反直觉，但是在 ts 中，元组属于对象， 即 `[] extends {} ? true : false;` 返回 true)，以及 匹配推断的方式。
+
+这里对象遍历的方式先不做过多讲解，此处仅说明匹配推断的方式，范式如下：
+
+```ts
+type Traverse<T extends any[]> = T extends [infer F, ...infer R] ? [F, ...Traverse<R>] : [];
+
+// Case1 = [1, 2, 3];
+type Case1 = Traverse<[1, 2, 3]>;
+```
+
+本质是利用 `T extends [infer F, ...infer R]`，推断出第一个元素的类型，对该元素执行相应操作后(此处没有，仅仅是又组合成了新元组)，继续 `Traverse<R>` 处理剩余元组，如果元组数量为 0，那么此时走 false 的逻辑，此处返回空元组。
+
+## 题解
+
+了解了元组的遍历后，结合 `Equal` 函数，本题的题解基本清晰，通过遍历每一个元组是否和目标类型相等，如不相等，继续判断剩余元素，相等，则返回 true。
+
+```ts
+// 标准 Equal 判断逻辑，具体原因看 Equal判断 章节
+type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+
+type Includes<T extends readonly any[], U> =
+  T extends [infer F, ...infer R]
+  ? MyEqual<F, U> extends true
+    ? true
+    // 递归判断剩余元素
+    : Includes<R, U>
+  : false;
+```
+
+## 知识点
+
+1. 元组遍历的第二种方式：`T extends [infer F, ...infer R]`
+2. 元组遍历的第一种方式：`T[number]`
+3. 递归处理剩余元素
+4. Equal 的判断
+
+ps: 这道题的难度应该放到 medium 中，毕竟涉及到了递归、`A extends infer F` 的写法。
 
 

@@ -29,6 +29,6 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U];
 
 只需要借助 扩展操作符即可实现。
 
-知识点：
+## 知识点
 1. 扩展操作符
 

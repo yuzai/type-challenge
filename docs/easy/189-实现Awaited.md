@@ -7,7 +7,7 @@ lang: zh-CN
 
 ## 题目描述
 
-假如我们有一个 Promise 对象，这个 Promise 对象会返回一个类型。在 TS 中，我们用 Promise<T> 中的 T 来描述这个 Promise 返回的类型。请你实现一个类型，可以获取这个类型。
+假如我们有一个 Promise 对象，这个 Promise 对象会返回一个类型。在 TS 中，我们用 `Promise<T>` 中的 T 来描述这个 Promise 返回的类型。请你实现一个类型，可以获取这个类型。
 
 例如：`Promise<ExampleType>`，请你返回 ExampleType 类型。
 
@@ -21,7 +21,7 @@ type Result = MyAwaited<ExampleType> // string
 
 ## 分析
 
-这个题目同 [第一个元素](/docs/easy/14-%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0.md) 一样，都需要用到 `A extends infer xxx` 的特性，只不过原本的 `infer` 是匹配数组，而这里的 `infer`，是去匹配 `Promise` 的返回值。
+这个题目同 [第一个元素](/easy/14-%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0.md) 一样，都需要用到 `A extends infer xxx` 的特性，只不过原本的 `infer` 是匹配数组，而这里的 `infer`，是去匹配 `Promise` 的返回值。
 
 了解这一点后，可以非常快速的写出如下代码：
 
@@ -72,7 +72,7 @@ type MyAwaited<T> = T extends Promise<infer R> | { then: (onfullfilled: (arg: in
 
 这里还有一点值得一提的是，当联合类型位于 `extends` 右侧时，并没有分发特性，虽然内部判断会做多次，但是其多次判断的结果会以或的方式合并后交由 `extends` 的逻辑处理，比如，`'a' extends 'a' | 'b' ? 1 : 2`，此时，内部会进行 `'a' extends 'a'` 以及 `'a' extends 'b'`两次判断，两者有一处为 true 即返回 1，否则返回 2。但是并不会返回 `1 | 2`。
 
-知识点：
+## 知识点
 
 1. `A extends Promise<infer R>`，匹配推断类型
 2. 递归解决嵌套问题

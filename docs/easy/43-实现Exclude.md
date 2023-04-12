@@ -64,6 +64,6 @@ type MyExclude<T, U> = T extends U ? never : T;
 type Case = MyExclude<'a' | 'b' | 'c', 'a'>
 ```
 
-知识点：
+## 知识点
 1. 泛型下联合的分发特性
 2. 任意类型 | never = 任意类型

@@ -68,9 +68,9 @@ type MyPick<T, K extends keyof T> = {
 type Case2 = MyPick<{a: string, b: string, c: string}, 'a' | 'b'>
 ```
 
-注意：上述需要对 `K` 进行约束，也就是 `K extends keyof T`，因为 K 如果不是类型的键值的话，需要进行类型约束，否则 T[P] 将会因为访问不到类型而报错。
+注意：上述需要对 `K` 进行约束，也就是 `K extends keyof T`，因为 K 如果不是类型的键值的话，需要进行类型约束，否则 `T[P]` 将会因为访问不到类型而报错。
 
-知识点在于：
+## 知识点
 
 1. `[P in keyof T]: T[P]` 遍历 对象类型/数组类型
 2. `[P in K]: T[P]` ，根据传入的 K 进行遍历，此时 K 需要满足 `K extends keyof T`
