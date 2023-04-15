@@ -25,7 +25,7 @@ type trimed = TrimLeft<'  Hello World  '> // 应推导出 'Hello World  '
 type TraverseTuple<T extends any[]> = T extends [infer F, ...infer R] ? [F, ...TraverseTuple<R>] : [];
 ```
 
-类似的，字符也可以(关于这个操作，没有在官网上找到类似的，如果有找到的，可以微信联系我哈)：
+类似的，字符也可以(关于这个操作，没有在官网上找到类似的，就不贴官网地址了哈)：
 
 ```ts
 type TraverseString<T extends string> = T extends `${infer F}${infer R}` ? `${F}${TraverseString<R>}` : '';
@@ -49,4 +49,4 @@ type TrimLeft<S extends string> = S extends `${' ' | '\n' | '\t'}${infer R}` ? T
 
 ## 知识点
 
-1. 字符遍历：``` T` extends `${F}${R}` ```
+1. 字符遍历：``` T extends `${F}${R}` ```
