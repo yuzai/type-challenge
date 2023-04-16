@@ -47,7 +47,7 @@ type FlattenDepth<T extends any[], D extends number = 1, Arr extends any[] = []>
     : [];
 ```
 
-这里值得注意的是 `...FlattenDepth<R, D, Arr>` 中的 Arr，这里 Arr 记录了当前递归的深度，这样，对于嵌套的元组，就能够正确计算出还需要递归几次。（本人也是费了不少劲才整出来的）。
+这里值得注意的是 `...FlattenDepth<R, D, Arr>` 中的 Arr，这里 Arr 记录了当前递归的深度，这样，对于嵌套的元组，就能够正确计算出还需要递归几次。（笔者也是费了不少劲才整出来的）。
 
 另一种思路，相对好理解一点，先实现一个 FlattenOnce，对整个元组解一层，用 Arr 控制长度，直到解了 Depth 层为止。
 

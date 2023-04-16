@@ -7,7 +7,7 @@ lang: zh-CN
 
 ## 题目描述
 
-实现类型版本的 Lodash.uniq 方法, Unique<T> 接收数组类型 T, 返回去重后的数组类型.
+实现类型版本的 `Lodash.uniq` 方法, `Unique<T>` 接收数组类型 T, 返回去重后的数组类型.
 
 ```ts
 type Res = Unique<[1, 1, 2, 2, 3, 3]>; // expected to be [1, 2, 3]
