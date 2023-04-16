@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'TS类型体操',
+    title: 'TS类型体操全题解',
     description: '刷题吧少年',
     base: '',
     configureWebpack: {
@@ -113,6 +113,21 @@ module.exports = {
               '/medium/8987-Subsequence',
               '/medium/9142-CheckRepeatedChars',
               '/medium/9896-获取数组的中间元素',
+              '/medium/10969-整数',
+              '/medium/16259-转换为基本类型',
+              '/medium/17973-DeepMutatable',
+              '/medium/18142-all',
+              '/medium/18220-filter',
+              '/medium/中等难度题目刷完总结',
+            ],
+            // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
+          },
+          {
+            title: '困难',   // 必要的
+            // path: '/hard/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/hard/README'
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
