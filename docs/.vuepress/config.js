@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'TS类型体操全题解',
+    title: 'TS 类型挑战解题手册',
     description: '刷题吧少年',
     base: '',
     configureWebpack: {
