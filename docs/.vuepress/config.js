@@ -131,6 +131,15 @@ module.exports = {
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
+          {
+            title: '通用知识总结',   // 必要的
+            // path: '/hard/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/summary/判断两个类型相等',
+            ],
+            // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
+          },
         ],
         lastUpdated: 'Last Updated', // string | boolean
     }

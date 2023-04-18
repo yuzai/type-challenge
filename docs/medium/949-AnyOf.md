@@ -28,7 +28,7 @@ type Sample2 = AnyOf<[0, '', false, [], {}]> // expected to be false.
 
 但是这里面有个特殊类型 `{}`，在前面提到过，函数，元组，对象，`extends {}` 都是 true。
 
-那么就需要单独使用 `Equal` TODO: 进行判断即可。
+那么就需要单独使用 [Equal](/summary/%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9B%B8%E7%AD%89.md) 进行判断即可。
 
 ## 题解
 

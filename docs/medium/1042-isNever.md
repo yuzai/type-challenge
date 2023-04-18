@@ -22,7 +22,7 @@ type E = IsNever<number> // expected to be false
 
 ## 分析
 
-可以通过 Equal TODO: 来进行判断。
+可以通过 [Equal](/summary/%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9B%B8%E7%AD%89.md) 来进行判断。
 
 那如果不借助 Equal 呢？
 
