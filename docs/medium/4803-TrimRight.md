@@ -17,7 +17,7 @@ type Trimed = TrimRight<'  Hello World  '> // 应推导出 '  Hello World'
 
 ## 分析
 
-做了前面那些题，这题可以说是非常简单了。可以参考 [106-TrimLeft](/docs/medium/106-%E5%AE%9E%E7%8E%B0TrimLeft.md)、[108-实现 Trim](/docs/medium/108-%E5%AE%9E%E7%8E%B0Trim.md)，不赘述。
+做了前面那些题，这题可以说是非常简单了。可以参考 [106-TrimLeft](/medium/106-%E5%AE%9E%E7%8E%B0TrimLeft.md)、[108-实现 Trim](/medium/108-%E5%AE%9E%E7%8E%B0Trim.md)，不赘述。
 
 ## 题解
 

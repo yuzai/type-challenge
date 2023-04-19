@@ -22,7 +22,7 @@ type case3 = IsTuple<number[]> // false
 判断是否是元组，其实 `T extends []` 即可，但是实际总是存在一些意外的情况：
 
 1. readonly 修饰符，`readonly [] extends [] ? true : false` 是 false
-2. never，可以参考 [isNever](/docs/medium/1042-isNever.md)。
+2. never，可以参考 [isNever](/medium/1042-isNever.md)。
 3. number[]，表示数组，而非元组
 
 对于1，可以看看例子：

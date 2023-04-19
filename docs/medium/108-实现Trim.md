@@ -44,4 +44,4 @@ type Trim<S extends string> =
 
 ## 知识点
 
-1. 同 [TirmLeft](/docs/medium/108-Trim.md)。
+1. 同 [TirmLeft](/medium/108-Trim.md)。

@@ -18,7 +18,7 @@ type Result = AppendToObject<Test, 'value', 4> // expected to be { id: '1', valu
 
 ## 分析
 
-这题操作的类型时对象，在对象上新增属性，相比较之前的 [实现 Omit](/docs/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)、[Readonly 2](/docs/medium/8-Readonly2.md) 都简单很多。只需要根据传入的参数生成新的类型，同当前类型交叉即可得到结果。
+这题操作的类型时对象，在对象上新增属性，相比较之前的 [实现 Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)、[Readonly 2](/medium/8-Readonly2.md) 都简单很多。只需要根据传入的参数生成新的类型，同当前类型交叉即可得到结果。
 
 ## 题解
 

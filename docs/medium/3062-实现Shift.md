@@ -17,7 +17,7 @@ type Result = Shift<[3, 2, 1]> // [2, 1]
 
 ## 分析
 
-其实和 [实现Pop](/docs/medium/16-%E5%AE%9E%E7%8E%B0Pop.md) 一样，只需要推断匹配出剩余元素并返回即可
+其实和 [实现Pop](/medium/16-%E5%AE%9E%E7%8E%B0Pop.md) 一样，只需要推断匹配出剩余元素并返回即可
 
 ## 题解
 
@@ -29,5 +29,5 @@ type Shift<T extends any[]> = T extends [infer F, ...infer R] ? R : [];
 
 ## 知识点
 
-1. 同 [实现Pop](/docs/medium/16-%E5%AE%9E%E7%8E%B0Pop.md)
+1. 同 [实现Pop](/medium/16-%E5%AE%9E%E7%8E%B0Pop.md)
 

@@ -1,7 +1,7 @@
 module.exports = {
     title: 'TS 类型挑战解题手册',
     description: '刷题吧少年',
-    base: '',
+    base: '/type-challenge/dist/',
     configureWebpack: {
         resolve: {
           alias: {

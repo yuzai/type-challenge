@@ -39,7 +39,7 @@ type Merge<T, S> = {
 } & S
 ```
 
-这是一种思路，不借助 Exclude 本身也能实现，就是借助 [实现Omit](/docs/medium/3-%E5%AE%9E%E7%8E%B0Omit.md) 来完成，代码如下：
+这是一种思路，不借助 Exclude 本身也能实现，就是借助 [实现Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md) 来完成，代码如下：
 
 ```ts
 type Merge<T, S> = {
@@ -70,5 +70,5 @@ type Merge<F, S> = {
 
 ## 知识点
 
-1. 同 [实现Omit](/docs/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)。
+1. 同 [实现Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)。
 

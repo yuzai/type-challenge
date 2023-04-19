@@ -22,7 +22,7 @@ type OmitBoolean = OmitByType<{
 
 ## 分析
 
-这题和 [2595-实现PickByType](/docs/medium/2595-%E5%AE%9E%E7%8E%B0PickByType.md) 一样，只不过是去除属性，了解该题目的同学，只需要把条件判断改一下位置即可。
+这题和 [2595-实现PickByType](/medium/2595-%E5%AE%9E%E7%8E%B0PickByType.md) 一样，只不过是去除属性，了解该题目的同学，只需要把条件判断改一下位置即可。
 
 ## 题解
 
@@ -40,6 +40,6 @@ type OmitByType<T, U> = {
 
 ## 知识点
 
-1. 同 [实现 Omit](/docs/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)
+1. 同 [实现 Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)
 
 
