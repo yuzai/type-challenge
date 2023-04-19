@@ -14,7 +14,8 @@ lang: zh-CN
 ```ts
 const foo = (arg1: string, arg2: number): void => {}
 
-type FunctionParamsType = MyParameters<typeof foo> // [arg1: string, arg2: number]
+// [arg1: string, arg2: number]
+type FunctionParamsType = MyParameters<typeof foo>
 ```
 
 ## 分析
@@ -22,7 +23,8 @@ type FunctionParamsType = MyParameters<typeof foo> // [arg1: string, arg2: numbe
 这一题乍一看没思路，但是其实也是常规套路：`A extends infer B` 这样的匹配推断，不过这里推断的是函数的参数。可以先从一个参数推断开始：
 
 ```ts
-// infer 处于第一个参数的位置，故可以得到第一个参数，如果函数没有第一个参数，则会推断出来 unknown，并不会走 false 逻辑
+// infer 处于第一个参数的位置，故可以得到第一个参数
+// 如果函数没有第一个参数，则会推断出来 unknown，并不会走 false 逻辑
 type MyFirstParameter<T> = T extends (arg: infer F) => any ? F : never; 
 
 // Case1 = number;
@@ -41,8 +43,11 @@ type Case2 = MyFirstParameter<() => {}>
 ## 题解
 
 ```ts
-// 扩展操作符，推断出 P
-type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) => any ? P : never;
+type Parameters<T extends (...args: any) => any> =
+    // 扩展操作符，推断出 P
+    T extends (...args: infer P) => any
+    ? P
+    : never;
 ```
 
 ## 知识点
