@@ -48,7 +48,7 @@ type Case2 = ('1' | 1) extends string ? 1 : 2;
 type Case3 = Example<'1' | 1>;
 ```
 
-了解了分发特性后，这题的结果就呼之欲出了，但是在此之前，还有一个特性需要了解，那就是 任意类型 | never = 任意类型。
+了解了分发特性后，这题的结果就呼之欲出了，但是在此之前，还有一个特性需要了解，那就是 **任意类型 | never = 任意类型**。
 
 ## 题解
 
@@ -59,11 +59,11 @@ type MyExclude<T, U> = T extends U ? never : T;
 
 // 触发分发特性
 // 'a' extends 'a' ? never : 'a' | 'b' extends 'a' ? never : 'b' | 'c' extends 'a' ? never : 'c'
-// 'a' | never | never
-// Case = 'a';
+// never | 'b' | 'c'
+// Case = 'b' | 'c';
 type Case = MyExclude<'a' | 'b' | 'c', 'a'>
 ```
 
 ## 知识点
 1. 泛型下联合的分发特性
-2. 任意类型 | never = 任意类型
+2. `任意类型 | never = 任意类型`

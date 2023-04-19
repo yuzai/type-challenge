@@ -12,7 +12,9 @@ lang: zh-CN
 例如：
 
 ```ts
-type isPillarMen = Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'> // expected to be `false`
+type isPillarMen = Includes<
+  ['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'
+> // expected to be `false`
 ```
 
 ## 分析
@@ -39,7 +41,7 @@ type Case1 = Includes<[{}], { a: 1 }>
 
 由于 `{ a: 1 } extends {}` 为 true，所以导致判定失效。
 
-所以这道题的核心，就变成了如何精准的判断两个类型是否相等，关于这一点，单独查看 [此文章: todo](todo)。
+所以这道题的核心，就变成了如何精准的判断两个类型是否相等，关于这一点，单独查看 [通用技巧总结: 判断两个类型是否相等](/summary/判断两个类型相等.md)。
 
 了解了如何严格判断两个类型是否严格相等，下一步就是一步一步遍历这个元组，每一次比较当前类型和目标类型是否相等，有一次相等，就返回 true，否则递归继续比较剩余的元素。
 
@@ -50,7 +52,10 @@ type Case1 = Includes<[{}], { a: 1 }>
 这里对象遍历的方式先不做过多讲解，此处仅说明匹配推断的方式，范式如下：
 
 ```ts
-type Traverse<T extends any[]> = T extends [infer F, ...infer R] ? [F, ...Traverse<R>] : [];
+type Traverse<T extends any[]> =
+  T extends [infer F, ...infer R]
+  ? [F, ...Traverse<R>]
+  : [];
 
 // Case1 = [1, 2, 3];
 type Case1 = Traverse<[1, 2, 3]>;
@@ -64,7 +69,9 @@ type Case1 = Traverse<[1, 2, 3]>;
 
 ```ts
 // 标准 Equal 判断逻辑，具体原因看 Equal判断 章节
-type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+type MyEqual<A, B> =
+  (<T>() => T extends A ? 1 : 2) extends
+  (<T>() => T extends B ? 1 : 2) ? true : false;
 
 type Includes<T extends readonly any[], U> =
   T extends [infer F, ...infer R]

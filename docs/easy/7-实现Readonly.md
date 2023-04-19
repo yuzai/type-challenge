@@ -9,7 +9,7 @@ lang: zh-CN
 
 不要使用内置的 `Readonly<T>`，自己实现一个。
 
-该 `Readonly` 会接收一个 _泛型参数_，并返回一个完全一样的类型，只是所有属性都会被  `readonly` 所修饰。
+该 `Readonly` 会接收一个 泛型参数，并返回一个完全一样的类型，只是所有属性都会被  `readonly` 所修饰。
 
 也就是不可以再对该对象的属性赋值。
 
@@ -32,7 +32,7 @@ todo.description = "barFoo" // Error: cannot reassign a readonly property
 
 ## 分析
 
-这一题，本质也是对对象类型进行遍历，然后为每一个属性增加 `readonly` 的修饰符即可，遍历非常简单，而要添加修饰符在 js 中是没有的，可以查看官网的说明[Mapping Modifiers
+这一题，本质也是对对象类型进行遍历，然后为每一个属性增加 `readonly` 的修饰符即可，遍历非常简单，而要添加修饰符在 js 中是没有的，可以查看官网的说明 [Mapping Modifiers
 ](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers)。
 
 只需要在遍历的时候为每一个属性增加只读修饰符即可，按照官网的文档操作即可

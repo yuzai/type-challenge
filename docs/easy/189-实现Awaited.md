@@ -65,12 +65,16 @@ type T = { then: (onfulfilled: (arg: number) => any) => any }
 也就是还需要处理 类似 promise 的场景，根据题目 case，可以写出如下代码：
 
 ```ts
-type MyAwaited<T> = T extends Promise<infer R> | { then: (onfullfilled: (arg: infer R) => any) => any } ? MyAwaited<R> : T;
+type MyAwaited<T> =
+    T extends Promise<infer R>
+        | { then: (onfullfilled: (arg: infer R) => any) => any }
+    ? MyAwaited<R>
+    : T;
 ```
 
 利用 `|` 覆盖 普通的 `Promise` 和 `then` 两种场景。
 
-这里还有一点值得一提的是，当联合类型位于 `extends` 右侧时，并没有分发特性，虽然内部判断会做多次，但是其多次判断的结果会以或的方式合并后交由 `extends` 的逻辑处理，比如，`'a' extends 'a' | 'b' ? 1 : 2`，此时，内部会进行 `'a' extends 'a'` 以及 `'a' extends 'b'`两次判断，两者有一处为 true 即返回 1，否则返回 2。但是并不会返回 `1 | 2`。
+这里还有一点值得一提的是，当联合类型位于 `extends` 右侧时，并没有分发特性，虽然判断会做多次，但是其多次判断的结果会以或的方式合并后交由 `extends` 的逻辑处理，比如，`'a' extends 'a' | 'b' ? 1 : 2`，此时，可以理解为会进行 `'a' extends 'a'` 以及 `'a' extends 'b'`两次判断，两者有一处为 true 即返回 1，否则返回 2。但是并不会返回 `1 | 2`。
 
 ## 知识点
 
