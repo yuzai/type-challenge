@@ -1,6 +1,5 @@
-
 ---
-title: 270-get
+title: 300-stringToNumber
 lang: zh-CN
 ---
 
