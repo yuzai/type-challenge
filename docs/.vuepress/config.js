@@ -127,6 +127,7 @@ module.exports = {
             // path: '/hard/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
             sidebarDepth: 1,    // 可选的, 默认值是 1
             children: [
+              'hard/写在hard开始前',
               '/hard/6-SimpleVue',
               '/hard/17-柯里化1',
               'hard/55-UnionToIntersection',
@@ -135,7 +136,7 @@ module.exports = {
               'hard/89-获取必填属性键值',
               'hard/90-获取可选属性键值',
               'hard/112-大写首字母',
-              'hard/114-大写首字母',
+              'hard/114-CamelCase',
               'hard/147-cPrintfParser',
               'hard/223-isAny',
               'hard/270-get',
@@ -149,6 +150,7 @@ module.exports = {
               'hard/847-StringJoin',
               'hard/1290-pinia',
               'hard/1383-Camelize',
+              'hard/2070-DropString',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
