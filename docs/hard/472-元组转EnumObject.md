@@ -91,7 +91,7 @@ type Enum<T extends readonly string[], N extends boolean = false> =
   : Merge<TupleToObjectWithIndex<T>>;
 ```
 
-为什么需要 merge 可以查看 [Equals](/summary/判断两个类型相等.md) 中终极版的讨论。
+为什么需要 merge 可以查看 [Equals](/summary/基操-判断两个类型相等.md) 中终极版的讨论。
 
 ## 知识点
 

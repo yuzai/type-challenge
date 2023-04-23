@@ -151,6 +151,17 @@ module.exports = {
               'hard/1290-pinia',
               'hard/1383-Camelize',
               'hard/2070-DropString',
+              'hard/2822-split',
+              'hard/2828-ClassPublicKeys',
+              'hard/2857-IsRequiredKey',
+              'hard/2949-ObjectFromEntries',
+              'hard/4037-判断波兰数',
+              'hard/5181-mutablekeys',
+              'hard/6141-二进制转十进制',
+              'hard/8804-两数之和',
+              'hard/9155-判断日期有效性',
+              'hard/9160-Assign',
+              'hard/9384-Maximum',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
@@ -168,8 +179,18 @@ module.exports = {
             // path: '/hard/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
             sidebarDepth: 1,    // 可选的, 默认值是 1
             children: [
-              '/summary/判断两个类型相等',
-              '/summary/todo',
+              '/summary/基操-判断两个类型相等',
+              '/summary/冷门-递归深度',
+              '/summary/基操-箭头函数重载',
+              '/summary/基操-对象遍历的as和索引访问',
+              '/summary/基操-类型推断的边界条件',
+              '/summary/基操-类型转换大集合',
+              '/summary/基操-元组遍历的黑科技',
+              '/summary/进阶-计数-加减乘除',
+              '/summary/进阶-逆变顺变协变',
+              '/summary/冷门-字面量类型和基础类型',
+              '/summary/算法-排列组合大乱炖',
+              '/summary/战斗基-联合类型的分发特性',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
