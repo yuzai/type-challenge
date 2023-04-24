@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'TS 类型挑战解题手册',
+    title: 'TS 类型挑战通关手册',
     description: '刷题吧少年',
     base: '/type-challenge/dist/',
     configureWebpack: {
