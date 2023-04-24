@@ -138,6 +138,7 @@ module.exports = {
               'hard/112-大写首字母',
               'hard/114-CamelCase',
               'hard/147-cPrintfParser',
+              'hard/213-VueBasicProps',
               'hard/223-isAny',
               'hard/270-get',
               'hard/300-stringToNumber',
@@ -160,6 +161,7 @@ module.exports = {
               'hard/4037-判断波兰数',
               'hard/5181-mutablekeys',
               'hard/6141-二进制转十进制',
+              'hard/7258-ObjectKeyPaths',
               'hard/8804-两数之和',
               'hard/9155-判断日期有效性',
               'hard/9160-Assign',
@@ -168,6 +170,7 @@ module.exports = {
               'hard/13580-Replaceunions',
               'hard/14080-FizzBuzz',
               'hard/14188-Run-lengthEncoding',
+              'hard/15260-TreePathArray',
               'hard/19458-Snakecase',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
