@@ -1,6 +1,6 @@
 # 关于本文档
 
-欢迎来到《TS 类型挑战解题手册》！这是一份对 [type-challenges](https://github.com/type-challenges/type-challenges) 题目的详细解答，旨在帮助你深入理解 TypeScript 类型系统，提高你的 TypeScript 编程能力。
+欢迎来到《TS 类型挑战通关手册》！这是一份对 [type-challenges](https://github.com/type-challenges/type-challenges) 题目的详细解答，旨在帮助你深入理解 TypeScript 类型系统，提高你的 TypeScript 编程能力。
 
 ## 为什么要做 ts 体操
 
