@@ -68,11 +68,11 @@ props: {
 
 等等，为什么是 `BooleanConstructor` 而不是 boolean 或者 Boolean？
 
-这里就涉及到函数中的隐式类型推断了，TODO:隐式类型推断。
+这里就涉及到函数中的隐式类型推断了。
 
-由于题目中，props的类型是根据入参隐式推断出来的。js 中的 String，会被推断为 StringConstructor，这一点，好好理解下 js 中的 String 中的功能相比不难理解。
+由于题目中，props的类型是根据入参隐式推断出来的。js 中的 String，会被推断为 StringConstructor，这一点，好好理解下 js 中的 String 中的功能想必不难理解。
 
-那么如果从 StringConstructor 得到 string？
+那么如何从 StringConstructor 得到 string？
 
 ```ts
 type Cons<T> = T extends () => infer R ? R : never;
@@ -92,7 +92,7 @@ interface StringConstructor {
 }
 ```
 
-借助第二个特性，就可以匹配出来。
+借助第二个特性 `(value?: any): string`，就可以匹配出来。
 
 掌握了这一点，这一题就不在话下了，可以先实现一个转换 props 的类型：
 
@@ -105,7 +105,7 @@ type ClassToType<C> =
       // 元组，递归每一个元素
       // 此处借助了 C[number] 利用联合类型的分发特性遍历每一个元素 
       ? ClassToType<C[number]>
-      // 匹配用户自己定义的     propD: { type: ClassA }，这样的要求
+      // 匹配用户自己定义的 ClassA 这样的要求
       : C extends new (...args: any) => any // user defined constructors 
         ? InstanceType<C>
         // 不应该出现其他情况

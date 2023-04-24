@@ -57,7 +57,7 @@ const instance = SimpleVue({
 
 相关的文档在官网有：[函数中的 this](https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function), [ThisType辅助工具](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype)。
 
-主要就是在函数中注入 this，和给现有函数注入 this，使用示例如下：
+主要就是在函数中注入 this，和给现有对象注入 this，使用示例如下：
 
 ```ts
 // 注入 this 示例

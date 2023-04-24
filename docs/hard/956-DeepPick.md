@@ -13,8 +13,7 @@ A type takes two arguments.
 
 For example:
 
-```
-
+```ts
 type obj = {
   name: 'hoge', 
   age: 20,
@@ -42,6 +41,7 @@ type T3 = DeepPick<obj, 'name' | 'friend.name' |  'friend.family.name'>  // { na
 ## 题解
 
 ```ts
+// [联合转交叉](/hard/55-UnionToIntersection.md)
 type UnionToIntersection<U> =
   (
     // 利用分发特性生成 (arg: a) => any | (arg: b) => any
@@ -53,6 +53,7 @@ type UnionToIntersection<U> =
   ? P
   : never;
 
+// [270-get](/hard/270-get.md)
 type Get<T, K> =
   // 是属性
   K extends keyof T
@@ -72,11 +73,14 @@ type Get<T, K> =
     : never
 
 type DeepPick<T, K> = UnionToIntersection<
+  // 分发特性
   K extends any
   ? Get<T, K>
   : never
 >
 ```
+
+这里，由于 `Get<T, K>` 中其实已经进行过一次分发了，`K extends keyof T`，所以外层也可以不用再 `K extends any` 触发分发。
 
 ## 知识点
 

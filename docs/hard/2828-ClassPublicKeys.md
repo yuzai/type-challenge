@@ -30,8 +30,6 @@ type publicKyes = ClassPublicKeys<A> // 'str' | 'getNum'
 
 这里还是可以看看 class 和 typeof class 的区别：
 
-In typescript, when you wrote a class A, you defined two types in its type system:
-
 在 ts 里面，当你写了一个 classA，就定义了两种类型：
 
 1. A 就表示 class A 的一个实例的类型

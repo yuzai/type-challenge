@@ -66,11 +66,17 @@ type ObjectFromKeys<T extends string> = {
     [P in T]: P
 }
 
+// { a: 'a', b: 'b', c: 'c' }
+type Case1 = ObjectFromKeys<Keys>;
+
 type KeyValues = ['a', string] | ['b', string] | ['c', number];
 
 type ObjectFromKeyValues<T extends [string, any]> = {
   [P in T as P[0]]: P[1]
 }
+
+// { a: string, b: string, c: string }
+type Case2 = ObjectFromKeyValues<KeyValues>;
 ```
 
 ## 题解
@@ -81,7 +87,7 @@ type ObjectFromEntries<T extends [string, any]> = {
 }
 ```
 
-这个方法巧妙的结合了联合类型以及对象遍历时的黑科技，有点分发的意思，注意 P 和 T 的位置即可。
+这个方法巧妙的结合了联合类型以及对象遍历时的黑科技 as，有点分发的意思，注意 P 和 T 的位置即可。
 
 ## 知识点
 

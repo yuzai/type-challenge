@@ -157,9 +157,9 @@ module.exports = {
               'hard/2828-ClassPublicKeys',
               'hard/2857-IsRequiredKey',
               'hard/2949-ObjectFromEntries',
-              'hard/5423-intersection',
               'hard/4037-判断波兰数',
               'hard/5181-mutablekeys',
+              'hard/5423-intersection',
               'hard/6141-二进制转十进制',
               'hard/7258-ObjectKeyPaths',
               'hard/8804-两数之和',
@@ -172,6 +172,7 @@ module.exports = {
               'hard/14188-Run-lengthEncoding',
               'hard/15260-TreePathArray',
               'hard/19458-Snakecase',
+              'hard/写在hard结束后',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },

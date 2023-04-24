@@ -43,10 +43,11 @@ type Split<S extends string, SEP extends string> =
   : S extends `${infer F}${SEP}${infer R}`
     // 能够匹配，判断剩余字符 R 是否为空，为空，则结束，否则，递归处理剩余字符
     ? [F, ...(R extends '' ? [] : Split<R, SEP>)]
-    // 没有匹配上，存在一些特殊情况 Equal<Split<'', ''>, []>，那么此时 返回空元组
+    // 由于上述已经处理了命中后，空字符的情况，所以如果还是走到这个逻辑，那么只有两种情况
+    // 1. Split<'', ''>, 此时，返回空元组
     : SEP extends ''
       ? []
-      // 否则，需要把剩余字符作为一个元素返回，用于拼接最后剩余的字符
+      // 2. Split<'xxxx', 'not x' 且不为 ''>，此时需要把字符本身返回
       : [S]
 ```
 

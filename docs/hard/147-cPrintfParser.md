@@ -52,7 +52,7 @@ type cases = [
 
 可以通过匹配 `${infer F}%${infer X}${infer R}` 来进行处理。也可以遍历处理。
 
-这里仅讲解匹配处理即可。
+这里仅讲解匹配处理。
 
 ## 题解
 
@@ -64,7 +64,7 @@ type ParsePrintFormat<
   T extends `${infer F}%${infer X}${infer R}`
   // X 合法
   ? X extends keyof ControlsMap
-    // 像结果中增加 X，并递归剩余字符
+    // 向结果中增加 X 对应的类型，并递归剩余字符
     ? [ControlsMap[X], ...ParsePrintFormat<R>]
     // 不合法，直接递归剩余字符
     : ParsePrintFormat<R>

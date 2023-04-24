@@ -42,7 +42,7 @@ type cases = [
 
 思路三：
 
-字符匹配即可。
+字符匹配：
 
 ```ts
 type ToNumber<S extends string> =
