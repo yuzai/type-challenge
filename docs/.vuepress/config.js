@@ -13,6 +13,10 @@ module.exports = {
         lineNumbers: false
     },
     themeConfig: {
+        nav: [
+          { text: '关于本文档', link: '/' },
+          { text: 'Github', link: 'https://github.com/yuzai/type-challenge' },
+        ],
         sidebar: [
           '/',
           {
@@ -205,6 +209,7 @@ module.exports = {
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
+          '/Contactme.md',
         ],
         lastUpdated: 'Last Updated', // string | boolean
     }
