@@ -185,6 +185,8 @@ module.exports = {
             // path: '/hard/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
             sidebarDepth: 1,    // 可选的, 默认值是 1
             children: [
+              '/extreme/5-GetReadOnlyKeys',
+              '/extreme/151-QueryStringParser',
               '/extreme/todo',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
