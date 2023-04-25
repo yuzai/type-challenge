@@ -19,4 +19,4 @@ lang: zh-CN
 
 当然，由于 [type-challenge](https://github.com/type-challenges/type-challenges/) 题目一直在更新，不过大体思路都差不太多，本题解会在空闲时间进行追加新增的题目，敬请关注.👀
 
-同时本手册的思路也取决于我的理解，有错误 or 不清楚的地方，可以随时找我(vx: mxb151)联系交流.🤝
+同时本手册的思路也取决于我的理解，有错误 or 不清楚的地方，可以随时 [联系我](/Contactme.md) 交流.🤝

@@ -32,10 +32,10 @@ type-challenges 是一个非常好的学习工具，它提供了一系列的 Typ
 
 建议通过 vscode 插件 [Type Challenges](https://marketplace.visualstudio.com/items?itemName=YRM.type-challenges) 进行解答。同时查阅 [TypeScript 官方文档](https://www.typescriptlang.org/)，提高自己的 TypeScript 技能。
 
-最终再翻看或者在没有思路的时候翻看本文档整理的题解，看看思路上有无出入，当然，思路往往不止一种，本文档也仅仅只代表我的理解，不一定最优，有更好的想法，或者文中有说的不对的地方，可以随时联系我，(vx: mxb151)。
+最终再翻看或者在没有思路的时候翻看本文档整理的题解，看看思路上有无出入，当然，思路往往不止一种，本文档也仅仅只代表我的理解，不一定最优，有更好的想法，或者文中有说的不对的地方，可以随时[联系我](/Contactme.md)，(vx: mxb151)。
 
 ## 最后
 
 希望这份《TypeScript 类型挑战题解》能对你学习 TypeScript 类型系统和解答 type-challenges 题目有所帮助。
 
-如果有任何问题或建议，请随时联系我(vx: mxb151)，我将非常乐意与你交流和学习。
+如果有任何问题或建议，请随时 [联系我](/Contactme.md) (vx: mxb151)，我将非常乐意与你交流和学习。
