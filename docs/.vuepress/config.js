@@ -188,6 +188,7 @@ module.exports = {
               '/extreme/5-GetReadOnlyKeys',
               '/extreme/151-QueryStringParser',
               '/extreme/216-实现slice',
+              '/extreme/274-整数比较器',
               '/extreme/todo',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
@@ -213,6 +214,7 @@ module.exports = {
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
           },
           '/Contactme.md',
+          '/Contributors.md'
         ],
         lastUpdated: 'Last Updated', // string | boolean
     }
