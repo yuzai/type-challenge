@@ -187,6 +187,7 @@ module.exports = {
             children: [
               '/extreme/5-GetReadOnlyKeys',
               '/extreme/151-QueryStringParser',
+              '/extreme/216-实现slice',
               '/extreme/todo',
             ],
             // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
