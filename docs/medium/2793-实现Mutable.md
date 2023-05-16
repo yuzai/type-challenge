@@ -7,19 +7,18 @@ lang: zh-CN
 
 ## 题目描述
 
-实现一个通用的类型 ```Mutable<T>```，使类型 `T` 的全部属性可变（非只读）。
+实现一个通用的类型 `Mutable<T>`，使类型 `T` 的全部属性可变（非只读）。
 
 例如：
 
 ```typescript
 interface Todo {
-  readonly title: string
-  readonly description: string
-  readonly completed: boolean
+  readonly title: string;
+  readonly description: string;
+  readonly completed: boolean;
 }
 
-type MutableTodo = Mutable<Todo> // { title: string; description: string; completed: boolean; }
-
+type MutableTodo = Mutable<Todo>; // { title: string; description: string; completed: boolean; }
 ```
 
 ## 分析
@@ -30,11 +29,11 @@ type MutableTodo = Mutable<Todo> // { title: string; description: string; comple
 
 ```ts
 type Mutable<T extends Record<string, any>> = {
-  -readonly [P in keyof T]: T[P]
-}
+  -readonly [P in keyof T]: T[P];
+};
 ```
 
 ## 知识点
 
 1. 修饰符操作。
-2. 同 [实现Readonly](/easy/7-实现Readonly.md)
+2. 同 [实现 Readonly](/easy/7-实现Readonly.md)

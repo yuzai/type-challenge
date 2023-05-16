@@ -20,7 +20,7 @@ type cases = [
   Expect<Equal<ToNumber<'12'>, 12>>,
   Expect<Equal<ToNumber<'27'>, 27>>,
   Expect<Equal<ToNumber<'18@7_$%'>, never>>,
-]
+];
 ```
 
 也就是对于合法的数字，返回数字，不合法的返回 never。
@@ -45,8 +45,7 @@ type cases = [
 字符匹配：
 
 ```ts
-type ToNumber<S extends string> =
-  S extends `${infer F extends number}`
+type ToNumber<S extends string> = S extends `${infer F extends number}`
   ? F
   : never;
 ```
@@ -54,8 +53,7 @@ type ToNumber<S extends string> =
 ## 题解
 
 ```ts
-type ToNumber<S extends string> =
-  S extends `${infer F extends number}`
+type ToNumber<S extends string> = S extends `${infer F extends number}`
   ? F
   : never;
 ```

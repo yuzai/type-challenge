@@ -7,15 +7,15 @@ lang: zh-CN
 
 ## 题目描述
 
-实现内置的 `Parameters<T>` 类型，而不是直接使用它，可参考[TypeScript官方文档](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype)。
+实现内置的 `Parameters<T>` 类型，而不是直接使用它，可参考[TypeScript 官方文档](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype)。
 
 例如：
 
 ```ts
-const foo = (arg1: string, arg2: number): void => {}
+const foo = (arg1: string, arg2: number): void => {};
 
 // [arg1: string, arg2: number]
-type FunctionParamsType = MyParameters<typeof foo>
+type FunctionParamsType = MyParameters<typeof foo>;
 ```
 
 ## 分析
@@ -25,13 +25,13 @@ type FunctionParamsType = MyParameters<typeof foo>
 ```ts
 // infer 处于第一个参数的位置，故可以得到第一个参数
 // 如果函数没有第一个参数，则会推断出来 unknown，并不会走 false 逻辑
-type MyFirstParameter<T> = T extends (arg: infer F) => any ? F : never; 
+type MyFirstParameter<T> = T extends (arg: infer F) => any ? F : never;
 
 // Case1 = number;
-type Case1 = MyFirstParameter<(a: number) => {}>
+type Case1 = MyFirstParameter<(a: number) => {}>;
 
 // Case2 = unknown，特殊情况，没有参数
-type Case2 = MyFirstParameter<() => {}>
+type Case2 = MyFirstParameter<() => {}>;
 ```
 
 同样的套路，推断第二个参数 or 第三个参数也可以很快写出来。
@@ -44,10 +44,8 @@ type Case2 = MyFirstParameter<() => {}>
 
 ```ts
 type Parameters<T extends (...args: any) => any> =
-    // 扩展操作符，推断出 P
-    T extends (...args: infer P) => any
-    ? P
-    : never;
+  // 扩展操作符，推断出 P
+  T extends (...args: infer P) => any ? P : never;
 ```
 
 ## 知识点

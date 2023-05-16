@@ -10,11 +10,11 @@ lang: zh-CN
 实现一个类型，把驼峰命名转换为短斜杠命名，示例如下：
 
 ```ts
-type FooBarBaz = KebabCase<"FooBarBaz">;
-const foobarbaz: FooBarBaz = "foo-bar-baz";
+type FooBarBaz = KebabCase<'FooBarBaz'>;
+const foobarbaz: FooBarBaz = 'foo-bar-baz';
 
-type DoNothing = KebabCase<"do-nothing">;
-const doNothing: DoNothing = "do-nothing";
+type DoNothing = KebabCase<'do-nothing'>;
+const doNothing: DoNothing = 'do-nothing';
 ```
 
 ## 分析
@@ -28,17 +28,17 @@ const doNothing: DoNothing = "do-nothing";
 type KebabCase<S extends string, isFirst extends boolean = true> =
   // 匹配推断提取第一个字符 F 和剩余字符 R
   S extends `${infer F}${infer R}`
-  // 如果是第一个字符
-  ? isFirst extends true
-    // 那么直接转为小写，递归处理剩余字符
-    ? `${Lowercase<F>}${KebabCase<R, false>}`
-    // 不是第一个字符，判断是不是小写
-    : F extends Lowercase<F>
-      // 如果是小写，那么不做处理，递归拼接剩余字符
-      ? `${F}${KebabCase<R, false>}`
-      // 如果是大写，转换为小写并拼接 -，递归拼接剩余字符
-      : `-${Lowercase<F>}${KebabCase<R, false>}`
-  : ''
+    ? // 如果是第一个字符
+      isFirst extends true
+      ? // 那么直接转为小写，递归处理剩余字符
+        `${Lowercase<F>}${KebabCase<R, false>}`
+      : // 不是第一个字符，判断是不是小写
+      F extends Lowercase<F>
+      ? // 如果是小写，那么不做处理，递归拼接剩余字符
+        `${F}${KebabCase<R, false>}`
+      : // 如果是大写，转换为小写并拼接 -，递归拼接剩余字符
+        `-${Lowercase<F>}${KebabCase<R, false>}`
+    : '';
 ```
 
 可以看出，上述解法相对麻烦一点，此时可以换一种思路，始终让第一个字符小写，判断后续的字符是否是大写字母开头的，如果是，那么就增加一个短斜杠连接。直接看题解：
@@ -46,14 +46,13 @@ type KebabCase<S extends string, isFirst extends boolean = true> =
 ## 题解
 
 ```ts
-type KebabCase<S extends string> =
-  S extends `${infer F}${infer R}`
-  // 判断剩余字符的首字母是否大写
-  ? R extends Uncapitalize<R>
-    // 如果是小写，那么直接拼接递归处理后的剩余字符
-    ? `${Lowercase<F>}${KebabCase<R>}`
-    // 如果是大写，那么增加 - 拼接
-    : `${Lowercase<F>}-${KebabCase<R>}`
+type KebabCase<S extends string> = S extends `${infer F}${infer R}`
+  ? // 判断剩余字符的首字母是否大写
+    R extends Uncapitalize<R>
+    ? // 如果是小写，那么直接拼接递归处理后的剩余字符
+      `${Lowercase<F>}${KebabCase<R>}`
+    : // 如果是大写，那么增加 - 拼接
+      `${Lowercase<F>}-${KebabCase<R>}`
   : '';
 ```
 

@@ -12,7 +12,7 @@ lang: zh-CN
 例如
 
 ```ts
-type replaced = Replace<'types are fun!', 'fun', 'awesome'> // 期望是 'types are awesome!'
+type replaced = Replace<'types are fun!', 'fun', 'awesome'>; // 期望是 'types are awesome!'
 ```
 
 ## 分析
@@ -26,17 +26,17 @@ type replaced = Replace<'types are fun!', 'fun', 'awesome'> // 期望是 'types 
 ## 题解
 
 ```ts
-type Replace<S extends string, From extends string, To extends string> = 
+type Replace<S extends string, From extends string, To extends string> =
   // 如果 from 是 ''，那么直接返回原字符
-  From extends '' ? S :
-  S extends `${infer F}${From}${infer R}`
-  ? `${F}${To}${R}`
-  : S
+  From extends ''
+    ? S
+    : S extends `${infer F}${From}${infer R}`
+    ? `${F}${To}${R}`
+    : S;
 ```
 
 只需要注意边界即可。
 
 ## 知识点
 
-1. 字符匹配推断：```A extends `${infer F}${From}${infer R}` ```
-
+1. 字符匹配推断：`` A extends `${infer F}${From}${infer R}`  ``

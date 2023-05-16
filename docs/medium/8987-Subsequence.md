@@ -11,10 +11,10 @@ Given an array of unique elements, return all possible subsequences.
 
 A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements.
 
-For example: 
+For example:
 
 ```typescript
-type A = Subsequence<[1, 2]> // [] | [1] | [2] | [1, 2]
+type A = Subsequence<[1, 2]>; // [] | [1] | [2] | [1, 2]
 ```
 
 ## 分析
@@ -52,11 +52,10 @@ type A = Subsequence<[1, 2]> // [] | [1] | [2] | [1, 2]
 有了思路，题解就非常简单了
 
 ```ts
-type Subsequence<T extends any[]> =
-  T extends [infer F, ...infer R]
-  // 选当前元素并递归 | 不选当前元素并递归
-  ? [F, ...Subsequence<R>] | Subsequence<R>
-  : []
+type Subsequence<T extends any[]> = T extends [infer F, ...infer R]
+  ? // 选当前元素并递归 | 不选当前元素并递归
+    [F, ...Subsequence<R>] | Subsequence<R>
+  : [];
 ```
 
 ## 知识点
@@ -64,7 +63,7 @@ type Subsequence<T extends any[]> =
 1. 元组遍历套路
 2. 编程思路
 
-建议 4道题目放一起看看：
+建议 4 道题目放一起看看：
 
 [全排列](/medium/296-实现全排列.md)
 
@@ -75,5 +74,3 @@ type Subsequence<T extends any[]> =
 [不考虑顺序的组合](/medium/8987-Subsequence.md)
 
 数学术语可能不太严谨，大家明白意思即可
-
-

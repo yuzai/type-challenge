@@ -14,33 +14,33 @@ lang: zh-CN
 例如
 
 ```ts
-type X = { 
-  x: { 
-    a: 1
-    b: 'hi'
-  }
-  y: 'hey'
-}
+type X = {
+  x: {
+    a: 1;
+    b: 'hi';
+  };
+  y: 'hey';
+};
 
-type Expected = { 
-  readonly x: { 
-    readonly a: 1
-    readonly b: 'hi'
-  }
-  readonly y: 'hey' 
-}
+type Expected = {
+  readonly x: {
+    readonly a: 1;
+    readonly b: 'hi';
+  };
+  readonly y: 'hey';
+};
 
-type Todo = DeepReadonly<X> // should be same as `Expected`
+type Todo = DeepReadonly<X>; // should be same as `Expected`
 ```
 
 ## 分析
 
-这题是 [实现readonly](/easy/7-实现Readonly.md) 的深度遍历版，理论上只需要在原来的基础上增加递归处理嵌套即可。
+这题是 [实现 readonly](/easy/7-实现Readonly.md) 的深度遍历版，理论上只需要在原来的基础上增加递归处理嵌套即可。
 
 ```ts
 type DeepReadonly<T> = {
-    readonly [P in keyof T]: T[P] extends {} ? DeepReadonly<T[P]> : T[P];
-}
+  readonly [P in keyof T]: T[P] extends {} ? DeepReadonly<T[P]> : T[P];
+};
 ```
 
 通过 `T[P] extends {} ? DeepReadonly<T[P]> : T[P]` 对属性值进行二次判断，如果是继承自 对象，那么就递归处理，否则返回原始属性值。
@@ -56,10 +56,10 @@ type Case2 = (() => {}) extends {} ? true : false; // true
 
 ```ts
 type Traverse<T> = {
-    [P in keyof T]: T[P]
-}
+  [P in keyof T]: T[P];
+};
 
-type Case3 = Traverse<[1, 2, 3]> // [1, 2, 3]
+type Case3 = Traverse<[1, 2, 3]>; // [1, 2, 3]
 ```
 
 元组的遍历就是这样，同对象一样，也可以增加 `readonly` 等修饰符。故这一场景可以忽略。
@@ -68,14 +68,14 @@ type Case3 = Traverse<[1, 2, 3]> // [1, 2, 3]
 
 ```ts
 type DeepReadonly<T> = {
-    readonly [P in keyof T]: T[P] extends {} ? DeepReadonly<T[P]> : T[P];
-}
+  readonly [P in keyof T]: T[P] extends {} ? DeepReadonly<T[P]> : T[P];
+};
 
 // Case4 = {}
-type Case4 = DeepReadonly<() => {}>
+type Case4 = DeepReadonly<() => {}>;
 
 // Case5 = never
-type Case5 = keyof (() => {})
+type Case5 = keyof (() => {});
 ```
 
 对于函数执行遍历，那么由于 `keyof (() => {})` 是 `never`，新的类型的属性就为空，从而返回 `{}`。
@@ -86,8 +86,12 @@ type Case5 = keyof (() => {})
 
 ```ts
 type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends Function ? T[P] : T[P] extends {} ?  DeepReadonly<T[P]> : T[P]
-}
+  readonly [P in keyof T]: T[P] extends Function
+    ? T[P]
+    : T[P] extends {}
+    ? DeepReadonly<T[P]>
+    : T[P];
+};
 ```
 
 增加函数的场景判断即可。

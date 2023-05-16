@@ -7,7 +7,7 @@ lang: zh-CN
 
 ## 题目描述
 
-实现一个接收string,number或bigInt类型参数的`Absolute`类型,返回一个正数字符串。
+实现一个接收 string,number 或 bigInt 类型参数的`Absolute`类型,返回一个正数字符串。
 
 例如
 
@@ -32,16 +32,14 @@ type Case1 = NumberToString<100>;
 ## 题解
 
 ```ts
-type Absolute<T extends number | string | bigint> =
-    `${T}` extends `-${infer S}`
-    // 有 - 号，保留剩余的字符
-    ? `${S}`
-    // 否则保留原字符即可
-    : `${T}`;
+type Absolute<T extends number | string | bigint> = `${T}` extends `-${infer S}`
+  ? // 有 - 号，保留剩余的字符
+    `${S}`
+  : // 否则保留原字符即可
+    `${T}`;
 ```
 
 ## 知识点
 
 1. number 转 string
-2. 字符推断匹配套路： ```A extends `-${infer R}` ```
-
+2. 字符推断匹配套路： `` A extends `-${infer R}`  ``

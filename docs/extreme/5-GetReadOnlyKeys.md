@@ -13,12 +13,12 @@ lang: zh-CN
 
 ```ts
 interface Todo {
-  readonly title: string
-  readonly description: string
-  completed: boolean
+  readonly title: string;
+  readonly description: string;
+  completed: boolean;
 }
 
-type Keys = GetReadonlyKeys<Todo> // expected to be "title" | "description"
+type Keys = GetReadonlyKeys<Todo>; // expected to be "title" | "description"
 ```
 
 ## 分析
@@ -29,15 +29,13 @@ type Keys = GetReadonlyKeys<Todo> // expected to be "title" | "description"
 
 ```ts
 type GetReadonlyKeys<T> = keyof {
-  [P in keyof T as
-      Equal<
-        { [K in P]: T[P] },
-        {-readonly [K in P]: T[P]}
-      > extends true
-      ? never
-      : P
-  ]: T[P]
-}
+  [P in keyof T as Equal<
+    { [K in P]: T[P] },
+    { -readonly [K in P]: T[P] }
+  > extends true
+    ? never
+    : P]: T[P];
+};
 ```
 
 ## 知识点

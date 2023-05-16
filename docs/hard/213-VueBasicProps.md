@@ -19,11 +19,13 @@ For example
 
 ```js
 props: {
-  foo: Boolean
+  foo: Boolean;
 }
 // or
 props: {
-  foo: { type: Boolean }
+  foo: {
+    type: Boolean;
+  }
 }
 ```
 
@@ -33,10 +35,12 @@ When passing multiple constructors, the type should be inferred to a union.
 
 ```ts
 props: {
-  foo: { type: [Boolean, Number, String] }
+  foo: {
+    type: [Boolean, Number, String];
+  }
 }
 // -->
-type Props = { foo: boolean | number | string }
+type Props = { foo: boolean | number | string };
 ```
 
 When an empty object is passed, the key should be inferred to `any`.
@@ -44,7 +48,6 @@ When an empty object is passed, the key should be inferred to `any`.
 For more specified cases, check out the Test Cases section.
 
 > `required`, `default`, and array props in Vue are not considered in this challenge.
-
 
 ## 分析
 
@@ -70,7 +73,7 @@ props: {
 
 这里就涉及到函数中的隐式类型推断了。
 
-由于题目中，props的类型是根据入参隐式推断出来的。js 中的 String，会被推断为 StringConstructor，这一点，好好理解下 js 中的 String 中的功能想必不难理解。
+由于题目中，props 的类型是根据入参隐式推断出来的。js 中的 String，会被推断为 StringConstructor，这一点，好好理解下 js 中的 String 中的功能想必不难理解。
 
 那么如何从 StringConstructor 得到 string？
 
@@ -85,10 +88,10 @@ type Case1 = Cons<StringConstructor>;
 
 ```ts
 interface StringConstructor {
-    new(value?: any): String;
-    (value?: any): string;
-    readonly prototype: String;
-    fromCharCode(...codes: number[]): string;
+  new (value?: any): String;
+  (value?: any): string;
+  readonly prototype: String;
+  fromCharCode(...codes: number[]): string;
 }
 ```
 
@@ -97,41 +100,39 @@ interface StringConstructor {
 掌握了这一点，这一题就不在话下了，可以先实现一个转换 props 的类型：
 
 ```ts
-type ClassToType<C> = 
+type ClassToType<C> =
   // 匹配 StringConstructor, NumberConstructor, BooleanConstructor etc.
   C extends () => infer T
     ? T
     : C extends unknown[]
-      // 元组，递归每一个元素
-      // 此处借助了 C[number] 利用联合类型的分发特性遍历每一个元素 
-      ? ClassToType<C[number]>
-      // 匹配用户自己定义的 ClassA 这样的要求
-      : C extends new (...args: any) => any // user defined constructors 
-        ? InstanceType<C>
-        // 不应该出现其他情况
-        : never
+    ? // 元组，递归每一个元素
+      // 此处借助了 C[number] 利用联合类型的分发特性遍历每一个元素
+      ClassToType<C[number]>
+    : // 匹配用户自己定义的 ClassA 这样的要求
+    C extends new (...args: any) => any // user defined constructors
+    ? InstanceType<C>
+    : // 不应该出现其他情况
+      never;
 
 type ComputedProps<P> = {
   // 遍历 props 的属性
-  [key in keyof P]:
-    // 匹配 type: xxx 的情况
-    P[key] extends { type: infer T }
+  [key in keyof P]: P[key] extends { type: infer T } // 匹配 type: xxx 的情况
     ? ClassToType<T>
     : {} extends P[key]
-      // 如果是 {}，对应 propA 的情况
-      ? any
-      // 处理 propF: RegExp 的情况
-      : ClassToType<P[key]>
-}
+    ? // 如果是 {}，对应 propA 的情况
+      any
+    : // 处理 propF: RegExp 的情况
+      ClassToType<P[key]>;
+};
 
 type d = ComputedProps<{
-  propA: {},
-  propB: { type: String },
-  propC: { type: Boolean },
-  propD: { type: ClassA },
-  propE: { type: [String, Number] },
-  propF: RegExp,
-}>
+  propA: {};
+  propB: { type: String };
+  propC: { type: Boolean };
+  propD: { type: ClassA };
+  propE: { type: [String, Number] };
+  propF: RegExp;
+}>;
 ```
 
 ## 题解
@@ -140,33 +141,32 @@ type d = ComputedProps<{
 
 ```ts
 type ComputedValues<C> = {
-  [key in keyof C]: C[key] extends (...args: unknown[]) => infer R ? R : never
-}
+  [key in keyof C]: C[key] extends (...args: unknown[]) => infer R ? R : never;
+};
 
-type ClassToType<C> = 
-  C extends () => infer T // String/Number/Boolean
-    ? T
-    : C extends unknown[] 
-      ? ClassToType<C[number]>
-      : C extends new (...args: any) => any // user defined constructors 
-        ? InstanceType<C>
-        : never
+type ClassToType<C> = C extends () => infer T // String/Number/Boolean
+  ? T
+  : C extends unknown[]
+  ? ClassToType<C[number]>
+  : C extends new (...args: any) => any // user defined constructors
+  ? InstanceType<C>
+  : never;
 
 type ComputedProps<P> = {
   [key in keyof P]: P[key] extends { type: infer T }
     ? ClassToType<T>
     : {} extends P[key]
-      ? any
-      : ClassToType<P[key]>
-}
+    ? any
+    : ClassToType<P[key]>;
+};
 
 declare function VueBasicProps<P, D, C, M>(options: {
-  props: P,
+  props: P;
   // 注入 props 的声明
-  data: (this: ComputedProps<P>) => D,
-  computed: C & ThisType<D & ComputedProps<P>>,
-  methods: M & ThisType<D & M & ComputedValues<C> & ComputedProps<P>>
-}): any
+  data: (this: ComputedProps<P>) => D;
+  computed: C & ThisType<D & ComputedProps<P>>;
+  methods: M & ThisType<D & M & ComputedValues<C> & ComputedProps<P>>;
+}): any;
 ```
 
 ## 知识点

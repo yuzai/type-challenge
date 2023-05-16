@@ -7,13 +7,13 @@ lang: zh-CN
 
 ## 题目描述
 
-实现类型版本的数组反转 ```Array.reverse```
+实现类型版本的数组反转 `Array.reverse`
 
 例如：
 
 ```typescript
-type a = Reverse<['a', 'b']> // ['b', 'a']
-type b = Reverse<['a', 'b', 'c']> // ['c', 'b', 'a']
+type a = Reverse<['a', 'b']>; // ['b', 'a']
+type b = Reverse<['a', 'b', 'c']>; // ['c', 'b', 'a']
 ```
 
 ## 分析
@@ -23,10 +23,9 @@ type b = Reverse<['a', 'b', 'c']> // ['c', 'b', 'a']
 ## 题解
 
 ```ts
-type Reverse<T extends any[]> =
-    T extends [...infer F, infer R]
-    ? [R, ...Reverse<F>]
-    : [];
+type Reverse<T extends any[]> = T extends [...infer F, infer R]
+  ? [R, ...Reverse<F>]
+  : [];
 ```
 
 ## 知识点

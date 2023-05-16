@@ -12,9 +12,7 @@ lang: zh-CN
 例如：
 
 ```ts
-type isPillarMen = Includes<
-  ['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'
-> // expected to be `false`
+type isPillarMen = Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'>; // expected to be `false`
 ```
 
 ## 分析
@@ -30,13 +28,13 @@ type isPillarMen = Includes<
 基于此，可以非常简单的写下如下解法：
 
 ```ts
-type Includes<T extends any[], U> = U extends T[number] ? true: false;
+type Includes<T extends any[], U> = U extends T[number] ? true : false;
 ```
 
 也能顺利通过部分题目的一部分 Case，但是对于一些 Case，表示无能无力。
 
 ```ts
-type Case1 = Includes<[{}], { a: 1 }>
+type Case1 = Includes<[{}], { a: 1 }>;
 ```
 
 由于 `{ a: 1 } extends {}` 为 true，所以导致判定失效。
@@ -52,8 +50,7 @@ type Case1 = Includes<[{}], { a: 1 }>
 这里对象遍历的方式先不做过多讲解，此处仅说明匹配推断的方式，范式如下：
 
 ```ts
-type Traverse<T extends any[]> =
-  T extends [infer F, ...infer R]
+type Traverse<T extends any[]> = T extends [infer F, ...infer R]
   ? [F, ...Traverse<R>]
   : [];
 
@@ -69,16 +66,17 @@ type Case1 = Traverse<[1, 2, 3]>;
 
 ```ts
 // 标准 Equal 判断逻辑，具体原因看 Equal判断 章节
-type MyEqual<A, B> =
-  (<T>() => T extends A ? 1 : 2) extends
-  (<T>() => T extends B ? 1 : 2) ? true : false;
+type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B
+  ? 1
+  : 2
+  ? true
+  : false;
 
-type Includes<T extends readonly any[], U> =
-  T extends [infer F, ...infer R]
+type Includes<T extends readonly any[], U> = T extends [infer F, ...infer R]
   ? MyEqual<F, U> extends true
     ? true
-    // 递归判断剩余元素
-    : Includes<R, U>
+    : // 递归判断剩余元素
+      Includes<R, U>
   : false;
 ```
 
@@ -90,5 +88,3 @@ type Includes<T extends readonly any[], U> =
 4. Equal 的判断
 
 ps: 这道题的难度应该放到 medium 中，毕竟涉及到了递归、`A extends infer F` 的写法。
-
-

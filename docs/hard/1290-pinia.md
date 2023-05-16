@@ -27,22 +27,22 @@ const store = defineStore({
   // ...other required fields
   getters: {
     getSomething() {
-      return 'xxx'
-    }
-  }
-})
+      return 'xxx';
+    },
+  },
+});
 ```
 
 And you should use it like this:
 
 ```typescript
-store.getSomething
+store.getSomething;
 ```
 
 instead of:
 
 ```typescript
-store.getSomething()  // error
+store.getSomething(); // error
 ```
 
 Additionally, getters can access state and/or other getters via `this`, but state is read-only.
@@ -56,21 +56,20 @@ const store = defineStore({
   // ...other required fields
   actions: {
     doSideEffect() {
-      this.xxx = 'xxx'
-      return 'ok'
-    }
-  }
-})
+      this.xxx = 'xxx';
+      return 'ok';
+    },
+  },
+});
 ```
 
 Using it is just to call it:
 
 ```typescript
-const returnValue = store.doSideEffect()
+const returnValue = store.doSideEffect();
 ```
 
-Actions can return any value or return nothing, and it can receive any number of parameters with different types.
-Parameters types and return type can't be lost, which means type-checking must be available at call side.
+Actions can return any value or return nothing, and it can receive any number of parameters with different types. Parameters types and return type can't be lost, which means type-checking must be available at call side.
 
 State can be accessed and mutated via `this`. Getters can be accessed via `this` but they're read-only.
 
@@ -87,24 +86,22 @@ State can be accessed and mutated via `this`. Getters can be accessed via `this`
 ```ts
 // 转换 getters，取出返回值，并增加 readonly 标签
 type TransGetters<T> = {
-  readonly [P in keyof T]:
-    T[P] extends (...args: any[]) => infer R
-    ? R
-    : never;
-}
+  readonly [P in keyof T]: T[P] extends (...args: any[]) => infer R ? R : never;
+};
 
 type Options<D, G, A> = {
-  id: string,
-  state: (this: null) => D,
+  id: string;
+  state: (this: null) => D;
   // getters 中的 this 可以访问 只读的state 和自身的返回值类型
   getters: G & ThisType<Readonly<D> & TransGetters<G>>;
   // actions 中的 this 可以访问 state，自身，和 getter 的返回值类型
-  actions: A & ThisType<D & A & TransGetters<G>>,
-}
+  actions: A & ThisType<D & A & TransGetters<G>>;
+};
 
-declare function defineStore<D, G, A>(store: Options<D, G, A>):
-  // 返回值可以直接访问 state ，和 getter 的返回值类型 以及 action 和 init 方法
-  D & TransGetters<G> & A & {init: () => void}
+declare function defineStore<D, G, A>(
+  store: Options<D, G, A>,
+): // 返回值可以直接访问 state ，和 getter 的返回值类型 以及 action 和 init 方法
+D & TransGetters<G> & A & { init: () => void };
 ```
 
 ## 知识点

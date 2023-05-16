@@ -12,8 +12,8 @@ lang: zh-CN
 ```ts
 type Res = Unique<[1, 1, 2, 2, 3, 3]>; // expected to be [1, 2, 3]
 type Res1 = Unique<[1, 2, 3, 4, 4, 5, 6, 7]>; // expected to be [1, 2, 3, 4, 5, 6, 7]
-type Res2 = Unique<[1, "a", 2, "b", 2, "a"]>; // expected to be [1, "a", 2, "b"]
-type Res3 = Unique<[string, number, 1, "a", 1, string, 2, "b", 2, number]>; // expected to be [string, number, 1, "a", 2, "b"]
+type Res2 = Unique<[1, 'a', 2, 'b', 2, 'a']>; // expected to be [1, "a", 2, "b"]
+type Res3 = Unique<[string, number, 1, 'a', 1, string, 2, 'b', 2, number]>; // expected to be [string, number, 1, "a", 2, "b"]
 type Res4 = Unique<[unknown, unknown, any, any, never, never]>; // expected to be [unknown, any, never]
 ```
 
@@ -26,10 +26,13 @@ type Res4 = Unique<[unknown, unknown, any, any, never, never]>; // expected to b
 ## 题解
 
 ```ts
-type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B
+  ? 1
+  : 2
+  ? true
+  : false;
 
-type Includes<T extends readonly any[], U> =
-  T extends [infer F, ...infer R]
+type Includes<T extends readonly any[], U> = T extends [infer F, ...infer R]
   ? MyEqual<F, U> extends true
     ? true
     : Includes<R, U>
@@ -38,13 +41,13 @@ type Includes<T extends readonly any[], U> =
 type Unique<T extends any[], Res extends any[] = []> =
   // 遍历元组
   T extends [infer F, ...infer R]
-  // 判断辅助元组中是否包含 F
-  ? Includes<Res, F> extends true
-    // 如果包含，直接遍历剩余元素
-    ? Unique<R, Res>
-    // 不包含，则将当前元素放入结果，并在辅助元组中放入 F，然后递归剩余元素
-    : [F, ...Unique<R, [...Res, F]>]
-  : [];
+    ? // 判断辅助元组中是否包含 F
+      Includes<Res, F> extends true
+      ? // 如果包含，直接遍历剩余元素
+        Unique<R, Res>
+      : // 不包含，则将当前元素放入结果，并在辅助元组中放入 F，然后递归剩余元素
+        [F, ...Unique<R, [...Res, F]>]
+    : [];
 ```
 
 ## 知识点

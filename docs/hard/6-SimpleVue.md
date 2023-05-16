@@ -7,11 +7,11 @@ lang: zh-CN
 
 ## 题目描述
 
-实现类似Vue的类型支持的简化版本。
+实现类似 Vue 的类型支持的简化版本。
 
 通过提供一个函数`SimpleVue`（类似于`Vue.extend`或`defineComponent`），它应该正确地推断出 computed 和 methods 内部的`this`类型。
 
-在此挑战中，我们假设`SimpleVue`接受只带有`data`，`computed`和`methods`字段的Object作为其唯一的参数，
+在此挑战中，我们假设`SimpleVue`接受只带有`data`，`computed`和`methods`字段的 Object 作为其唯一的参数，
 
 - `data`是一个简单的函数，它返回一个提供上下文`this`的对象，但是你无法在`data`中获取其他的计算属性或方法。
 
@@ -28,24 +28,24 @@ const instance = SimpleVue({
       firstname: 'Type',
       lastname: 'Challenges',
       amount: 10,
-    }
+    };
   },
   computed: {
     fullname() {
-      return this.firstname + ' ' + this.lastname
-    }
+      return this.firstname + ' ' + this.lastname;
+    },
   },
   methods: {
     hi() {
-      alert(this.fullname.toLowerCase())
-    }
-  }
-})
+      alert(this.fullname.toLowerCase());
+    },
+  },
+});
 ```
 
 ## 分析
 
-不知道有没有小伙伴觉得看到这道题时的内心os: 没想到之前做的那么多题目，都是虚的，这题好像没思路啊。
+不知道有没有小伙伴觉得看到这道题时的内心 os: 没想到之前做的那么多题目，都是虚的，这题好像没思路啊。
 
 其实也仅仅是这道题目啦。后续的 hard 题，很不幸，也有很多之前没有接触过的知识点。
 
@@ -55,7 +55,7 @@ const instance = SimpleVue({
 
 不过，现代 react 开发的普通业务开发中，用到 this 的地方可以说是少之又少。
 
-相关的文档在官网有：[函数中的 this](https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function), [ThisType辅助工具](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype)。
+相关的文档在官网有：[函数中的 this](https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function), [ThisType 辅助工具](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype)。
 
 主要就是在函数中注入 this，和给现有对象注入 this，使用示例如下：
 
@@ -63,8 +63,8 @@ const instance = SimpleVue({
 // 注入 this 示例
 // 如果不注入 this，this.a, this.b 就会报错
 // 因为 window 上面并不存在
-function F(this: {a: string, b: string}) {
-    return this.a + this.b
+function F(this: { a: string; b: string }) {
+  return this.a + this.b;
 }
 ```
 
@@ -72,19 +72,19 @@ function F(this: {a: string, b: string}) {
 
 ```ts
 // 定义一个对象
-type Test = ({
-        f1():string;
-    }) & ThisType<{
-        a: string,
-        b: string,
-    }>;
+type Test = {
+  f1(): string;
+} & ThisType<{
+  a: string;
+  b: string;
+}>;
 
 const Case1: Test = {
-    f1() {
-        // 在这个对象中的函数可以使用 this
-        return this.a + this.b
-    }
-}
+  f1() {
+    // 在这个对象中的函数可以使用 this
+    return this.a + this.b;
+  },
+};
 ```
 
 具体到实际中的场景(其实不太多了，用 this 的地方都不多其实)，就是题目中的场景。
@@ -94,21 +94,21 @@ const Case1: Test = {
 ## 题解
 
 ```ts
-declare function SimpleVue<
-  D,
-  C,
-  M
->(options: {
+declare function SimpleVue<D, C, M>(options: {
   // 在这个函数中，this 为 空，返回值为泛型 D
-  data: (this: void) => D,
+  data: (this: void) => D;
   // 返回值依赖泛型 C，并在 C 中，可以在 this 中使用 D
-  computed: C & ThisType<D>
-// 返回值依赖泛型 M，并在 M 中，可以在 this 中使用 D 和自身以及 computed 中函数的返回值类型
-  methods: M & ThisType<D & M & {
-    // 提取 计算属性的返回值类型
-    [P in keyof C]: C[P] extends (...args: any[]) => infer R ? R : never;
-  }>
-}): any
+  computed: C & ThisType<D>;
+  // 返回值依赖泛型 M，并在 M 中，可以在 this 中使用 D 和自身以及 computed 中函数的返回值类型
+  methods: M &
+    ThisType<
+      D &
+        M & {
+          // 提取 计算属性的返回值类型
+          [P in keyof C]: C[P] extends (...args: any[]) => infer R ? R : never;
+        }
+    >;
+}): any;
 ```
 
 这一题还是涉及到了不少函数相关的泛型，在这种情况下，遇到返回值不确定，但是其他地方又需要用到的地方，就可以考虑定义泛型。
@@ -123,7 +123,7 @@ declare function SimpleVue<
 
 ## 知识点
 
-1. [ThisType辅助工具](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype)
+1. [ThisType 辅助工具](https://www.typescriptlang.org/docs/handbook/utility-types.html#thistypetype)
 2. [函数中的 this](https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function)
 
 觉得困难的话，可以再看看官方的[关于函数的章节](https://www.typescriptlang.org/docs/handbook/2/functions.html#handbook-content)。

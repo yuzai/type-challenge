@@ -7,14 +7,14 @@ lang: zh-CN
 
 ## 题目描述
 
-Implement a type ```IsTuple```, which takes an input type ```T``` and returns whether ```T``` is tuple type.
+Implement a type `IsTuple`, which takes an input type `T` and returns whether `T` is tuple type.
 
 For example:
 
 ```typescript
-type case1 = IsTuple<[number]> // true
-type case2 = IsTuple<readonly [number]> // true
-type case3 = IsTuple<number[]> // false
+type case1 = IsTuple<[number]>; // true
+type case2 = IsTuple<readonly [number]>; // true
+type case3 = IsTuple<number[]>; // false
 ```
 
 ## 分析
@@ -25,11 +25,11 @@ type case3 = IsTuple<number[]> // false
 2. never，可以参考 [isNever](/medium/1042-isNever.md)。
 3. number[]，表示数组，而非元组
 
-对于1，可以看看例子：
+对于 1，可以看看例子：
 
 ```ts
 // false
-type Case1 = readonly [] extends [] ? true : false
+type Case1 = readonly [] extends [] ? true : false;
 
 // true
 type Case2 = readonly [] extends readonly any[] ? true : false;
@@ -58,11 +58,11 @@ type Case2 = number extends [1, 2, 3]['length'] ? true : false;
 type IsUnion<T> =
   // 排除 never
   [T] extends [never]
-  ? false
-  // 判断是否是元组
-  : T extends readonly any[]
-    // 排除数组的影响
-    ? number extends T['length']
+    ? false
+    : // 判断是否是元组
+    T extends readonly any[]
+    ? // 排除数组的影响
+      number extends T['length']
       ? false
       : true
     : false;
@@ -72,4 +72,3 @@ type IsUnion<T> =
 
 1. readonly 修饰符对元组的影响
 2. 元组的长度是固定的，而数组的长度是 number，故可以通过 `T['length']` 是否是 number 加以区分
-

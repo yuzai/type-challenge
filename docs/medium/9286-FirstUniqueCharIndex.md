@@ -25,30 +25,29 @@ Given a string s, find the first non-repeating character in it and return its in
 
 ```ts
 // 这个 has 可以参考 easy 级别中的 Includes，这里因为是字符，简化了 equal 的逻辑
-type Has<T extends string, U> =
-  T extends `${infer F}${infer R}`
+type Has<T extends string, U> = T extends `${infer F}${infer R}`
   ? F extends U
     ? true
     : Has<R, U>
   : false;
 
 type FirstUniqueCharIndex<
-    T extends string,
-    // 辅助元组记录索引
-    Arr extends any[] = [],
-    // 辅助字符记录在当前字符前的其他字符
-    U extends string = ''
+  T extends string,
+  // 辅助元组记录索引
+  Arr extends any[] = [],
+  // 辅助字符记录在当前字符前的其他字符
+  U extends string = '',
 > =
-    // 遍历得到第一个字符和剩余字符
-    T extends `${infer F}${infer R}`
-    // 如果其他字符：剩余字符 + 在其之前的字符 中包含了 F
-    ? Has<`${R}${U}`, F> extends true
-        // 继续遍历，增加索引，并在之前的字符中加入 F
-        ? FirstUniqueCharIndex<`${R}`, [...Arr, 1], `${U}${F}`>
-        // 返回索引
-        : Arr['length']
-    // 没有
-    : -1
+  // 遍历得到第一个字符和剩余字符
+  T extends `${infer F}${infer R}`
+    ? // 如果其他字符：剩余字符 + 在其之前的字符 中包含了 F
+      Has<`${R}${U}`, F> extends true
+      ? // 继续遍历，增加索引，并在之前的字符中加入 F
+        FirstUniqueCharIndex<`${R}`, [...Arr, 1], `${U}${F}`>
+      : // 返回索引
+        Arr['length']
+    : // 没有
+      -1;
 ```
 
 ## 知识点

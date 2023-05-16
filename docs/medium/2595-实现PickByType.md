@@ -12,12 +12,15 @@ From `T`, pick a set of properties whose type are assignable to `U`.
 For Example
 
 ```typescript
-type OnlyBoolean = PickByType<{
-  name: string
-  count: number
-  isReadonly: boolean
-  isEnable: boolean
-}, boolean> // { isReadonly: boolean; isEnable: boolean; }
+type OnlyBoolean = PickByType<
+  {
+    name: string;
+    count: number;
+    isReadonly: boolean;
+    isEnable: boolean;
+  },
+  boolean
+>; // { isReadonly: boolean; isEnable: boolean; }
 ```
 
 ## 分析
@@ -28,8 +31,8 @@ type OnlyBoolean = PickByType<{
 
 ```ts
 type PickByType<T, U> = {
-  [P in keyof T as T[P] extends U ? P : never]: T[P] 
-}
+  [P in keyof T as T[P] extends U ? P : never]: T[P];
+};
 ```
 
 as 过滤属性即可
@@ -37,4 +40,3 @@ as 过滤属性即可
 ## 知识点
 
 1. 同 [实现 Omit](/medium/3-实现Omit.md)
-

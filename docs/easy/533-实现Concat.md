@@ -12,7 +12,7 @@ lang: zh-CN
 例如：
 
 ```ts
-type Result = Concat<[1], [2]> // expected to be [1, 2]
+type Result = Concat<[1], [2]>; // expected to be [1, 2]
 ```
 
 ## 分析
@@ -30,5 +30,5 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U];
 只需要借助 扩展操作符即可实现。
 
 ## 知识点
-1. 扩展操作符
 
+1. 扩展操作符

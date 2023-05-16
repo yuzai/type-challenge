@@ -7,7 +7,7 @@ lang: zh-CN
 
 ## 题目描述
 
-Implement the type version of ```Object.fromEntries```
+Implement the type version of `Object.fromEntries`
 
 For example:
 
@@ -18,14 +18,17 @@ interface Model {
   locations: string[] | null;
 }
 
-type ModelEntries = ['name', string] | ['age', number] | ['locations', string[] | null];
+type ModelEntries =
+  | ['name', string]
+  | ['age', number]
+  | ['locations', string[] | null];
 
-type result = ObjectFromEntries<ModelEntries> // expected to be Model
+type result = ObjectFromEntries<ModelEntries>; // expected to be Model
 ```
 
 ## 分析
 
-这个题目其实做过类似的：[2946-实现ObjectEntries](/medium/2946-实现ObjectEntries.md)，只不过是反过来的。
+这个题目其实做过类似的：[2946-实现 ObjectEntries](/medium/2946-实现ObjectEntries.md)，只不过是反过来的。
 
 也就是需要实现一个类型，接收一个元素为两个元组的联合类型，把每个联合类型元素的第一个元素作为属性，第二个元素作为类型生成一个对象。
 
@@ -33,28 +36,27 @@ type result = ObjectFromEntries<ModelEntries> // expected to be Model
 
 ```ts
 // 55-UnionToIntersection
-type UnionToIntersection<U> =
-  (
-    U extends any
-    ? (arg: U) => any
-    : never
-  ) extends (arg: infer P) => any
+type UnionToIntersection<U> = (
+  U extends any ? (arg: U) => any : never
+) extends (arg: infer P) => any
   ? P
   : never;
 
 // 可以参考 相等的判断中最终版的说明
 type Merge<T> = {
-  [P in keyof T]: T[P]
-}
+  [P in keyof T]: T[P];
+};
 
-type ObjectFromEntries<T extends [string, any]> = Merge<UnionToIntersection<
-  // 触发分发特性
-  T extends any
-  ? {
-    [P in T[0]]: T[1]
-  }
-  : never
->>
+type ObjectFromEntries<T extends [string, any]> = Merge<
+  UnionToIntersection<
+    // 触发分发特性
+    T extends any
+      ? {
+          [P in T[0]]: T[1];
+        }
+      : never
+  >
+>;
 ```
 
 但是，话又说回来了，有没有更简单的方法呢？
@@ -63,8 +65,8 @@ type ObjectFromEntries<T extends [string, any]> = Merge<UnionToIntersection<
 type Keys = 'a' | 'b' | 'c';
 
 type ObjectFromKeys<T extends string> = {
-    [P in T]: P
-}
+  [P in T]: P;
+};
 
 // { a: 'a', b: 'b', c: 'c' }
 type Case1 = ObjectFromKeys<Keys>;
@@ -72,8 +74,8 @@ type Case1 = ObjectFromKeys<Keys>;
 type KeyValues = ['a', string] | ['b', string] | ['c', number];
 
 type ObjectFromKeyValues<T extends [string, any]> = {
-  [P in T as P[0]]: P[1]
-}
+  [P in T as P[0]]: P[1];
+};
 
 // { a: string, b: string, c: string }
 type Case2 = ObjectFromKeyValues<KeyValues>;
@@ -83,8 +85,8 @@ type Case2 = ObjectFromKeyValues<KeyValues>;
 
 ```ts
 type ObjectFromEntries<T extends [string, any]> = {
-  [P in T as P[0]]: P[1]
-}
+  [P in T as P[0]]: P[1];
+};
 ```
 
 这个方法巧妙的结合了联合类型以及对象遍历时的黑科技 as，有点分发的意思，注意 P 和 T 的位置即可。

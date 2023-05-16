@@ -7,14 +7,14 @@ lang: zh-CN
 
 ## 题目描述
 
-Implement a generic ```IsRequiredKey<T, K>```  that return whether ```K``` are required keys of ```T``` .
+Implement a generic `IsRequiredKey<T, K>` that return whether `K` are required keys of `T` .
 
 For example
 
 ```typescript
-type A = IsRequiredKey<{ a: number, b?: string },'a'> // true
-type B = IsRequiredKey<{ a: number, b?: string },'b'> // false
-type C = IsRequiredKey<{ a: number, b?: string },'b' | 'a'> // false
+type A = IsRequiredKey<{ a: number; b?: string }, 'a'>; // true
+type B = IsRequiredKey<{ a: number; b?: string }, 'b'>; // false
+type C = IsRequiredKey<{ a: number; b?: string }, 'b' | 'a'>; // false
 ```
 
 ## 分析
@@ -24,14 +24,14 @@ type C = IsRequiredKey<{ a: number, b?: string },'b' | 'a'> // false
 ## 题解
 
 ```ts
-// [57-获取必填属性](/hard/57-获取必填属性.md) 
+// [57-获取必填属性](/hard/57-获取必填属性.md)
 type GetRequired<T> = {
-  [P in keyof T as T[P] extends Required<T>[P] ? P : never]: T[P]
-}
+  [P in keyof T as T[P] extends Required<T>[P] ? P : never]: T[P];
+};
 
 type IsRequiredKey<T, K extends keyof T> =
-    // [] 去除分发特性
-    [K] extends [keyof GetRequired<T>] ? true : false;
+  // [] 去除分发特性
+  [K] extends [keyof GetRequired<T>] ? true : false;
 ```
 
 ## 知识点

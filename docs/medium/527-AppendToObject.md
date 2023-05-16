@@ -12,8 +12,8 @@ lang: zh-CN
 例如:
 
 ```ts
-type Test = { id: '1' }
-type Result = AppendToObject<Test, 'value', 4> // expected to be { id: '1', value: 4 }
+type Test = { id: '1' };
+type Result = AppendToObject<Test, 'value', 4>; // expected to be { id: '1', value: 4 }
 ```
 
 ## 分析
@@ -25,11 +25,13 @@ type Result = AppendToObject<Test, 'value', 4> // expected to be { id: '1', valu
 ```ts
 type Merge<T> = {
   [P in keyof T]: T[P];
-}
+};
 
-type AppendToObject<T, U extends string, V> = Merge<T & {
-  [K in U]: V
-}>;
+type AppendToObject<T, U extends string, V> = Merge<
+  T & {
+    [K in U]: V;
+  }
+>;
 ```
 
 核心在于 `T & { [L in U]: V }`，其实到这里应该有同学提出疑惑了，为什么需要 `Merge` 包裹一层？
@@ -37,24 +39,26 @@ type AppendToObject<T, U extends string, V> = Merge<T & {
 原因具体不清楚，但是可以直接从表现上来看：
 
 ```ts
-export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
+export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
   ? true
-  : false
+  : false;
 
 type A = {
-    a: number,
-    b: number,
-}
+  a: number;
+  b: number;
+};
 
 type B = {
-    a: number
+  a: number;
 } & {
-    b: number
-}
+  b: number;
+};
 
 type Merge<T> = {
   [P in keyof T]: T[P];
-}
+};
 
 // false
 type Case1 = Equal<A, B> extends true ? true : false;

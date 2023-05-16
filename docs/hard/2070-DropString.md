@@ -12,7 +12,7 @@ Drop the specified chars from a string.
 For example:
 
 ```ts
-type Butterfly = DropString<'foobar!', 'fb'> // 'ooar!'
+type Butterfly = DropString<'foobar!', 'fb'>; // 'ooar!'
 ```
 
 ## 分析
@@ -26,15 +26,13 @@ type Butterfly = DropString<'foobar!', 'fb'> // 'ooar!'
 ## 题解
 
 ```ts
-type InCludes<S, Q> =
-  S extends `${infer F}${infer R}`
+type InCludes<S, Q> = S extends `${infer F}${infer R}`
   ? F extends Q
     ? true
     : InCludes<R, Q>
   : false;
 
-type DropString<S, C> =
-  S extends `${infer F}${infer R}`
+type DropString<S, C> = S extends `${infer F}${infer R}`
   ? InCludes<C, F> extends true
     ? DropString<R, C>
     : `${F}${DropString<R, C>}`

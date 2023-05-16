@@ -15,13 +15,12 @@ lang: zh-CN
 
 ```ts
 interface User {
-  name?: string
-  age?: number
-  address?: string
+  name?: string;
+  age?: number;
+  address?: string;
 }
 
-type UserRequiredName = RequiredByKeys<User, 'name'> // { name: string; age?: number; address?: string }
-
+type UserRequiredName = RequiredByKeys<User, 'name'>; // { name: string; age?: number; address?: string }
 ```
 
 ## 分析
@@ -33,16 +32,18 @@ type UserRequiredName = RequiredByKeys<User, 'name'> // { name: string; age?: nu
 ```ts
 type Merge<T> = {
   [P in keyof T]: T[P];
-}
-type RequiredByKeys<T, K extends keyof T = keyof T> = Merge<{
-  [P in K]-?: T[P]
-} & {
-  [P in keyof T as P extends K ? never : P]: T[P]
-}>
+};
+type RequiredByKeys<T, K extends keyof T = keyof T> = Merge<
+  {
+    [P in K]-?: T[P];
+  } & {
+    [P in keyof T as P extends K ? never : P]: T[P];
+  }
+>;
 ```
 
 这里，省略部分属性，也可以通过 `Pick<T, Exclude<T, K>>` 实现，反正就一行代码，自己实现来的又快又简单就没必要使用库工具了。
 
 ## 知识点
 
-1. 同 [实现PartialByKeys](/medium/2757-实现PartialByKeys.md)
+1. 同 [实现 PartialByKeys](/medium/2757-实现PartialByKeys.md)
