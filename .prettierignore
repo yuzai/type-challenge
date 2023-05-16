@@ -1,0 +1,28 @@
+# misc
+.DS_Store
+.eslintcache
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+node_modules
+.husky
+
+# ignored suffix
+*.log
+*.ico
+*.svg
+*.png
+*ignore
+.editorconfig
+
+# ignore artifacts
+CHANGELOG.md
+build
+coverage
+dist
+.next
+.umi
+.umi-test
+.umi-production
+
+# project
