@@ -34,25 +34,25 @@ Some detailed requirements:
 type DealSingle<T extends string> =
   // 匹配 = 号
   T extends `${infer F}=${infer R}`
-  ? {
-    // 生成 { F: R } 的对象
-    [P in F]: R
-  } : {
-    // 没有等号，此时可能对应 K1 或者 空字符的情况
-    // 通过 as never 排除 空字符的情况
-    [P in T as P extends '' ? never : P]: true
-  };
+    ? {
+        // 生成 { F: R } 的对象
+        [P in F]: R;
+      }
+    : {
+        // 没有等号，此时可能对应 K1 或者 空字符的情况
+        // 通过 as never 排除 空字符的情况
+        [P in T as P extends '' ? never : P]: true;
+      };
 
 // Case1 = { K1: 2 }
-type Case1 = DealSingle<'K1=2'>
+type Case1 = DealSingle<'K1=2'>;
 ```
 
 接下来还需要将属性进行合并，这其中，对于同时存在的属性，就需要根据值进行合并。这一步单独拆开：
 
 ```ts
 // 判断 T 中是否包含 U
-type Includes<T, U> =
-  T extends [infer F, ...infer R]
+type Includes<T, U> = T extends [infer F, ...infer R]
   ? F extends U
     ? true
     : Includes<R, U>
@@ -62,21 +62,21 @@ type Includes<T, U> =
 type MergeSingle<U1, U2> =
   // 如果 是元组
   U1 extends any[]
-  // 判断是否包含 U2
-  ? Includes<U1, U2> extends true
-    // 包含，则不纳入
-    ? U1
-    // 否则，纳入
-    : [...U1, U2]
-  // 不是元组，判断当前值是否相同
-  : U1 extends U2
-    // 相同，则不组成元组，直接返回 U1
-    ? U1
-    // 否则，组成元组
-    : [U1, U2]
+    ? // 判断是否包含 U2
+      Includes<U1, U2> extends true
+      ? // 包含，则不纳入
+        U1
+      : // 否则，纳入
+        [...U1, U2]
+    : // 不是元组，判断当前值是否相同
+    U1 extends U2
+    ? // 相同，则不组成元组，直接返回 U1
+      U1
+    : // 否则，组成元组
+      [U1, U2];
 
 // Case2 = [1, 2, 3]
-type Case2 = MergeSingle<[1, 2], 3>
+type Case2 = MergeSingle<[1, 2], 3>;
 ```
 
 有了这个操作后，就可以实现完整的合并操作:
@@ -85,17 +85,16 @@ type Case2 = MergeSingle<[1, 2], 3>
 // 完整的合并操作
 type Merge<T1, T2> = {
   // 遍历所有属性
-  [P in keyof T1 | keyof T2]:
-    P extends keyof T1
-      ? P extends keyof T2
-        // 如果是两者都有的属性，调用上述的 MergeSingle
-        ? MergeSingle<T1[P], T2[P]>
-        // 否则返回前者
-        : T1[P]
-      : P extends keyof T2
-        // 否则返回后者
-        ? T2[P]
-        : never
+  [P in keyof T1 | keyof T2]: P extends keyof T1
+    ? P extends keyof T2
+      ? // 如果是两者都有的属性，调用上述的 MergeSingle
+        MergeSingle<T1[P], T2[P]>
+      : // 否则返回前者
+        T1[P]
+    : P extends keyof T2
+    ? // 否则返回后者
+      T2[P]
+    : never;
 };
 ```
 
@@ -109,13 +108,13 @@ type Merge<T1, T2> = {
 type ParseQueryString<T extends string, Res = {}> =
   // 根据 & 匹配前后字符
   T extends `${infer F}&${infer R}`
-  ? ParseQueryString<
-      R,
-      // 把 F 解析后的结果合并到 Res 中
-      Merge<Res, DealSingle<F>>
-    >
-  // 匹配结束，处理 T 之后合并到 Res 中并返回便是答案
-  : Merge<Res, DealSingle<T>>;
+    ? ParseQueryString<
+        R,
+        // 把 F 解析后的结果合并到 Res 中
+        Merge<Res, DealSingle<F>>
+      >
+    : // 匹配结束，处理 T 之后合并到 Res 中并返回便是答案
+      Merge<Res, DealSingle<T>>;
 ```
 
 ## 知识点
@@ -123,4 +122,3 @@ type ParseQueryString<T extends string, Res = {}> =
 1. 字符匹配套路
 
 其实就是旧有知识的整合啦，麻烦是真麻烦，但是并不困难。
-

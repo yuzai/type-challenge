@@ -9,26 +9,26 @@ lang: zh-CN
 
 实现一个通用`MyReadonly2<T, K>`，它带有两种类型的参数`T`和`K`。
 
-`K`指定应设置为Readonly的`T`的属性集。如果未提供`K`，则应使所有属性都变为只读，就像普通的`Readonly<T>`一样。
+`K`指定应设置为 Readonly 的`T`的属性集。如果未提供`K`，则应使所有属性都变为只读，就像普通的`Readonly<T>`一样。
 
 例如
 
 ```ts
 interface Todo {
-  title: string
-  description: string
-  completed: boolean
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
 const todo: MyReadonly2<Todo, 'title' | 'description'> = {
-  title: "Hey",
-  description: "foobar",
+  title: 'Hey',
+  description: 'foobar',
   completed: false,
-}
+};
 
-todo.title = "Hello" // Error: cannot reassign a readonly property
-todo.description = "barFoo" // Error: cannot reassign a readonly property
-todo.completed = true // OK
+todo.title = 'Hello'; // Error: cannot reassign a readonly property
+todo.description = 'barFoo'; // Error: cannot reassign a readonly property
+todo.completed = true; // OK
 ```
 
 ## 分析
@@ -39,25 +39,24 @@ todo.completed = true // OK
 
 ```ts
 type MyReadonly<T> = {
-    readonly [P in keyof T]: T[P]
-}
+  readonly [P in keyof T]: T[P];
+};
 ```
 
 但是这个修饰符不能直接指定某些属性增加，某些属性不增加，就导致本题通过一次遍历做出。
 
 只能做到：对于需要增加的属性，遍历一次，增加 `readonly` 修饰符，对于不需要增加的属性，遍历一次，然后将两次遍历生成的类型进行交叉即可生成目标类型。
 
-关于交叉，可以看官方的文档：[Intersection Types
-](https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types)
+关于交叉，可以看官方的文档：[Intersection Types ](https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types)
 
 ## 题解
 
 ```ts
 type MyReadonly2<T, K extends keyof T = keyof T> = {
-    readonly [P in K]: T[P]
+  readonly [P in K]: T[P];
 } & {
-    [P in keyof T as P extends K ? never : P] : T[P];
-}
+  [P in keyof T as P extends K ? never : P]: T[P];
+};
 ```
 
 这个题解可以分成两部分看，第一部分是对指定的类型增加 `readonly` 修饰符，第二部分是从 `T` 的属性中排除存在于 `K` 中的属性后组成的类型，两者交叉，就是本题的结果。

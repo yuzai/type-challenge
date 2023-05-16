@@ -12,10 +12,10 @@ Implement `Format<T extends string>` generic.
 For example,
 
 ```ts
-type FormatCase1 = Format<"%sabc"> // FormatCase1 : string => string
-type FormatCase2 = Format<"%s%dabc"> // FormatCase2 : string => number => string
-type FormatCase3 = Format<"sdabc"> // FormatCase3 :  string
-type FormatCase4 = Format<"sd%abc"> // FormatCase4 :  string
+type FormatCase1 = Format<'%sabc'>; // FormatCase1 : string => string
+type FormatCase2 = Format<'%s%dabc'>; // FormatCase2 : string => number => string
+type FormatCase3 = Format<'sdabc'>; // FormatCase3 :  string
+type FormatCase4 = Format<'sd%abc'>; // FormatCase4 :  string
 ```
 
 ## 分析
@@ -30,7 +30,7 @@ type cases = [
   Expect<Equal<Format<'a%%dbc'>, string>>,
   Expect<Equal<Format<'a%%%dbc'>, (d1: number) => string>>,
   Expect<Equal<Format<'a%dbc%s'>, (d1: number) => (s1: string) => string>>,
-]
+];
 ```
 
 可以看出来，本质是去匹配字符中 %d, %s 出现的地方，根据顺序依次作为函数入参，每次取一个(有点柯里化的意思)，返回值始终是 string。
@@ -47,24 +47,22 @@ type cases = [
 type FormatParams<T extends string> =
   // 匹配 %
   T extends `${any}%${infer M}${infer R}`
-  ? M extends 'd'
-    ? [number, ...FormatParams<R>]
-    : M extends 's'
+    ? M extends 'd'
+      ? [number, ...FormatParams<R>]
+      : M extends 's'
       ? [string, ...FormatParams<R>]
       : FormatParams<R>
-  : [];
+    : [];
 
 // 转换元组为柯里化后的函数
 // [string, number] -> (string) => (number) => string;
-type FormatFn<T extends any[]> =
-  T extends [infer F, ...infer R]
+type FormatFn<T extends any[]> = T extends [infer F, ...infer R]
   ? (p: F) => FormatFn<R>
-  // 没有元素直接返回 string
-  : string;
+  : // 没有元素直接返回 string
+    string;
 
 type Format<T extends string> = FormatFn<FormatParams<T>>;
 ```
-
 
 ## 知识点
 

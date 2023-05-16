@@ -10,22 +10,23 @@ lang: zh-CN
 Create a type `Path` that represents validates a possible path of a tree under the form of an array.
 
 Related challenges:
+
 - [7258-ObjectKeyPaths](/hard/7258-ObjectKeyPaths.md)
 
 ```ts
 declare const example: {
-    foo: {
-        bar: {
-            a: string;
-        };
-        baz: {
-            b: number
-            c: number
-        }
+  foo: {
+    bar: {
+      a: string;
     };
-}
+    baz: {
+      b: number;
+      c: number;
+    };
+  };
+};
 
-// Possible solutions: 
+// Possible solutions:
 // []
 // ['foo']
 // ['foo', 'bar']
@@ -43,21 +44,28 @@ declare const example: {
 declare const example: {
   foo: {
     bar: {
-      a: string
-    }
+      a: string;
+    };
     baz: {
-      b: number
-      c: number
-    }
-  }
-}
+      b: number;
+      c: number;
+    };
+  };
+};
 
 type cases = [
-  ExpectTrue<ExpectExtends<Path<typeof example['foo']['bar']>, ['a']>>,
-  ExpectTrue<ExpectExtends<Path<typeof example['foo']['baz']>, ['b'] | ['c'] >>,
-  ExpectTrue<ExpectExtends<Path<typeof example['foo']>, ['bar'] | ['baz'] | ['bar', 'a'] | ['baz', 'b'] | ['baz', 'c']>>,
-  ExpectFalse<ExpectExtends<Path<typeof example['foo']['bar']>, ['z']>>,
-]
+  ExpectTrue<ExpectExtends<Path<(typeof example)['foo']['bar']>, ['a']>>,
+  ExpectTrue<
+    ExpectExtends<Path<(typeof example)['foo']['baz']>, ['b'] | ['c']>
+  >,
+  ExpectTrue<
+    ExpectExtends<
+      Path<(typeof example)['foo']>,
+      ['bar'] | ['baz'] | ['bar', 'a'] | ['baz', 'b'] | ['baz', 'c']
+    >
+  >,
+  ExpectFalse<ExpectExtends<Path<(typeof example)['foo']['bar']>, ['z']>>,
+];
 ```
 
 和 [7258-ObjectKeyPaths](/hard/7258-ObjectKeyPaths.md) 类似，但是结果不同，上一题是 a.b 这样的组成的联合类型，而本题是 `[a, b]` 这样组合成的联合类型。同时这个题目不需要处理元组属性，更为简单一点。
@@ -81,13 +89,11 @@ type a = [2, ...(['a'] | ['b'])];
 type Path<T, K = keyof T> =
   // 遍历属性
   K extends keyof T
-  // 生成 [K]
-  // 如果 T[K] 是对象，那么需要再生成 
-  // [K, ...(递归T[K]的结果)]
-  ? [K] | (T[K] extends Record<string, any>
-      ? [K, ...Path<T[K]>]
-      : never)
-  : never
+    ? // 生成 [K]
+      // 如果 T[K] 是对象，那么需要再生成
+      // [K, ...(递归T[K]的结果)]
+      [K] | (T[K] extends Record<string, any> ? [K, ...Path<T[K]>] : never)
+    : never;
 ```
 
 借助联合类型在元组中的类似分发的特性，就可以实现题目要求的结果组合了。

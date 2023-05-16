@@ -7,23 +7,23 @@ lang: zh-CN
 
 ## 题目描述
 
-实现一个通用`Pop<T>`，它接受一个数组`T`，并返回一个由数组`T`的前length-1项以相同的顺序组成的数组。
+实现一个通用`Pop<T>`，它接受一个数组`T`，并返回一个由数组`T`的前 length-1 项以相同的顺序组成的数组。
 
 例如
 
 ```ts
-type arr1 = ['a', 'b', 'c', 'd']
-type arr2 = [3, 2, 1]
+type arr1 = ['a', 'b', 'c', 'd'];
+type arr2 = [3, 2, 1];
 
-type re1 = Pop<arr1> // expected to be ['a', 'b', 'c']
-type re2 = Pop<arr2> // expected to be [3, 2]
+type re1 = Pop<arr1>; // expected to be ['a', 'b', 'c']
+type re2 = Pop<arr2>; // expected to be [3, 2]
 ```
 
 **额外**：同样，您也可以实现`Shift`，`Push`和`Unshift`吗？
 
 ## 分析
 
-这一题乍一看和 [实现push](/easy/3057-实现Push.md)、[实现Unshift](/easy/3060-实现Unshift.md) 一样，都是对元组元素进行增删。
+这一题乍一看和 [实现 push](/easy/3057-实现Push.md)、[实现 Unshift](/easy/3060-实现Unshift.md) 一样，都是对元组元素进行增删。
 
 只不过这一题是要删除，相比之下，增加更为容易。
 

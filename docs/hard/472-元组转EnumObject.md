@@ -10,25 +10,25 @@ lang: zh-CN
 枚举是 TypeScript 的一种原生语法（在 JavaScript 中不存在）。因此在 JavaScript 中枚举会被转成如下形式的代码：
 
 ```js
-let OperatingSystem
-;(function (OperatingSystem) {
-  OperatingSystem[(OperatingSystem['MacOS'] = 0)] = 'MacOS'
-  OperatingSystem[(OperatingSystem['Windows'] = 1)] = 'Windows'
-  OperatingSystem[(OperatingSystem['Linux'] = 2)] = 'Linux'
-})(OperatingSystem || (OperatingSystem = {}))
+let OperatingSystem;
+(function (OperatingSystem) {
+  OperatingSystem[(OperatingSystem['MacOS'] = 0)] = 'MacOS';
+  OperatingSystem[(OperatingSystem['Windows'] = 1)] = 'Windows';
+  OperatingSystem[(OperatingSystem['Linux'] = 2)] = 'Linux';
+})(OperatingSystem || (OperatingSystem = {}));
 ```
 
 在这个问题中，你实现的类型应当将给定的字符串元组转成一个行为类似枚举的对象。此外，枚举的属性一般是 `pascal-case` 的。
 
 ```ts
-Enum<['macOS', 'Windows', 'Linux']>
+Enum<['macOS', 'Windows', 'Linux']>;
 // -> { readonly MacOS: "macOS", readonly Windows: "Windows", readonly Linux: "Linux" }
 ```
 
 如果传递了第二个泛型参数，且值为 `true`，那么返回值应当是一个 `number` 字面量。
 
 ```ts
-Enum<['macOS', 'Windows', 'Linux'], true>
+Enum<['macOS', 'Windows', 'Linux'], true>;
 // -> { readonly MacOS: 0, readonly Windows: 1, readonly Linux: 2 }
 ```
 
@@ -44,8 +44,8 @@ Enum<['macOS', 'Windows', 'Linux'], true>
 
 ```ts
 type TupleToReadonlyObject<T extends readonly string[]> = {
-  readonly [P in T[number] as Capitalize<P>]: P  
-}
+  readonly [P in T[number] as Capitalize<P>]: P;
+};
 ```
 
 为 true 时，相对麻烦一点，因为需要保留属性原本在元组中的位置，想要保留位置，思路有不少种，可以先取出来元素，再查找在元组中的位置，这种方法虽然耗性能(查找元素在元组中的位置需要递归)，但是好处是可以直接借助 `T[number]` 遍历元组。
@@ -59,10 +59,10 @@ type TupleToObjectWithIndex<T extends readonly string[]> =
   // 遍历元组
   T extends readonly [...infer F extends string[], infer R extends string]
     ? {
-      // 大写首字母，F['length'] 就是目标索引值
-      readonly [P in R as Capitalize<P>]: F['length']
-    } & TupleToObjectWithIndex<F>
-    : {}
+        // 大写首字母，F['length'] 就是目标索引值
+        readonly [P in R as Capitalize<P>]: F['length'];
+      } & TupleToObjectWithIndex<F>
+    : {};
 ```
 
 将二者合并，就是最终的结果了。
@@ -71,22 +71,26 @@ type TupleToObjectWithIndex<T extends readonly string[]> =
 
 ```ts
 type TupleToReadonlyObject<T extends readonly string[]> = {
-  readonly [P in T[number] as Capitalize<P>]: P  
-}
-
-type TupleToObjectWithIndex<T extends readonly string[]> =
-  T extends readonly [...infer F extends string[], infer R extends string]
-    ? {
-      readonly [P in R as Capitalize<P>]: F['length']
-    } & TupleToObjectWithIndex<F>
-    : {}
-
-type Merge<T> = {
-  [P in keyof T]: T[P]
+  readonly [P in T[number] as Capitalize<P>]: P;
 };
 
-type Enum<T extends readonly string[], N extends boolean = false> =
-  N extends false
+type TupleToObjectWithIndex<T extends readonly string[]> = T extends readonly [
+  ...infer F extends string[],
+  infer R extends string,
+]
+  ? {
+      readonly [P in R as Capitalize<P>]: F['length'];
+    } & TupleToObjectWithIndex<F>
+  : {};
+
+type Merge<T> = {
+  [P in keyof T]: T[P];
+};
+
+type Enum<
+  T extends readonly string[],
+  N extends boolean = false,
+> = N extends false
   ? TupleToReadonlyObject<T>
   : Merge<TupleToObjectWithIndex<T>>;
 ```

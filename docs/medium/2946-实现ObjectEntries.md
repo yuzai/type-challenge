@@ -7,9 +7,9 @@ lang: zh-CN
 
 ## 题目描述
 
-Implement the type version of ```Object.entries```
+Implement the type version of `Object.entries`
 
-For example 
+For example
 
 ```typescript
 interface Model {
@@ -17,17 +17,17 @@ interface Model {
   age: number;
   locations: string[] | null;
 }
-type modelEntries = ObjectEntries<Model> // ['name', string] | ['age', number] | ['locations', string[] | null];
+type modelEntries = ObjectEntries<Model>; // ['name', string] | ['age', number] | ['locations', string[] | null];
 ```
 
 ## 分析
 
-这一题也是对对象的操作，不过输出的是联合类型，每一个元素都是一个长度为2的元组，元素为对象的属性名和属性值。
+这一题也是对对象的操作，不过输出的是联合类型，每一个元素都是一个长度为 2 的元组，元素为对象的属性名和属性值。
 
 这里涉及到的知识点就是 [索引访问](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html)，举个例子：
 
 ```ts
-type Test = { a: number, b: string }
+type Test = { a: number; b: string };
 
 // Case1 = number
 type Case1 = Test['a'];
@@ -41,21 +41,24 @@ type Case2 = Test[keyof Test];
 ```ts
 type ObjectEntries<T> = {
   // 遍历修改属性值
-  [K in keyof T]:[K, T[K]]
-// 索引签名得到结果
-}[keyof T]
+  [K in keyof T]: [K, T[K]];
+  // 索引签名得到结果
+}[keyof T];
 ```
 
 讲道理到这一步其实已经结束了，但是偏偏这个题的用例比较特殊：
 
 ```ts
 interface Model {
-  name: string
-  age: number
-  locations: string[] | null
+  name: string;
+  age: number;
+  locations: string[] | null;
 }
 
-type ModelEntries = ['name', string] | ['age', number] | ['locations', string[] | null]
+type ModelEntries =
+  | ['name', string]
+  | ['age', number]
+  | ['locations', string[] | null];
 
 type cases = [
   Expect<Equal<ObjectEntries<Model>, ModelEntries>>,
@@ -64,14 +67,14 @@ type cases = [
   // 引入了可选属性，但是结果中显示为 never
   Expect<Equal<ObjectEntries<{ key?: undefined }>, ['key', undefined]>>,
   Expect<Equal<ObjectEntries<{ key: undefined }>, ['key', undefined]>>,
-]
+];
 ```
 
 这里可以做几个例子来看看可选属性对属性值的影响：
 
 ```ts
 type Copy<T> = {
-  [P in keyof T]: [P, T[P]]
+  [P in keyof T]: [P, T[P]];
 };
 
 /*
@@ -82,13 +85,13 @@ type Copy<T> = {
     }
 */
 type Case1 = Copy<{
-  a?: number,
-  b: number,
-  c?: undefined,
-}>
+  a?: number;
+  b: number;
+  c?: undefined;
+}>;
 
 type CopyWithoutOption<T> = {
-  [P in keyof T]-?: [P, T[P]]
+  [P in keyof T]-?: [P, T[P]];
 };
 
 /*
@@ -99,10 +102,10 @@ type CopyWithoutOption<T> = {
     }
 */
 type Case2 = CopyWithoutOption<{
-  a?: number,
-  b: number,
-  c?: undefined,
-}>
+  a?: number;
+  b: number;
+  c?: undefined;
+}>;
 ```
 
 从上面结果来看，为了应对可选属性，需要在遍历的时候移除可选修饰符，才能清除拷贝后的 `['key', type] | undefined` 的影响。
@@ -113,17 +116,16 @@ type Case2 = CopyWithoutOption<{
 
 ```ts
 type ObjectEntries<T> = {
-    // step1，移除修饰符中的 可选修饰符
-    [P in keyof T]-?:
-        [   
-            P,
-            // 如果 T[P] 只有一个 undefined
-            [T[P]] extends [undefined]
-            // 返回 T[P] 也就是 undefined
-            ? T[P]
-            // 否则，从属性中移除 undefined 以满足用例的要求
-            : Exclude<T[P],undefined>
-        ];
+  // step1，移除修饰符中的 可选修饰符
+  [P in keyof T]-?: [
+    P,
+    // 如果 T[P] 只有一个 undefined
+    [T[P]] extends [undefined]
+      ? // 返回 T[P] 也就是 undefined
+        T[P]
+      : // 否则，从属性中移除 undefined 以满足用例的要求
+        Exclude<T[P], undefined>,
+  ];
 }[keyof T];
 ```
 
@@ -131,4 +133,3 @@ type ObjectEntries<T> = {
 
 1. 索引访问，`[keyof T]`。
 2. 修饰符对对象遍历的影响：属性值中会多出一个 undefined。
-

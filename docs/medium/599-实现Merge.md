@@ -15,14 +15,14 @@ lang: zh-CN
 type foo = {
   name: string;
   age: string;
-}
+};
 
 type coo = {
   age: number;
-  sex: string
-}
+  sex: string;
+};
 
-type Result = Merge<foo,coo>; // expected to be {name: string, age: number, sex: string}
+type Result = Merge<foo, coo>; // expected to be {name: string, age: number, sex: string}
 ```
 
 ## 分析
@@ -35,16 +35,16 @@ type Result = Merge<foo,coo>; // expected to be {name: string, age: number, sex:
 
 ```ts
 type Merge<T, S> = {
-    [P in Exclude<keyof T, keyof S>]: T[P]
-} & S
+  [P in Exclude<keyof T, keyof S>]: T[P];
+} & S;
 ```
 
-这是一种思路，不借助 Exclude 本身也能实现，就是借助 [实现Omit](/medium/3-实现Omit.md) 来完成，代码如下：
+这是一种思路，不借助 Exclude 本身也能实现，就是借助 [实现 Omit](/medium/3-实现Omit.md) 来完成，代码如下：
 
 ```ts
 type Merge<T, S> = {
-    [P in keyof T as P extends keyof S ? never : P]: T[P]
-} & S
+  [P in keyof T as P extends keyof S ? never : P]: T[P];
+} & S;
 ```
 
 还有没有其他思路？其实也有，就是不借助交叉，直接遍历 `keyof T | keyof S`，然后在取值的时候先取后者的类型即可。可以直接看题解。
@@ -54,21 +54,18 @@ type Merge<T, S> = {
 ```ts
 type Merge<F, S> = {
   // step1: 遍历所有的 key
-  [P in keyof F | keyof S]:
-    // 如果是后者的键值
-    P extends keyof S
-    // 取后者的类型，这里保证了后者覆盖前者
-    ? S[P]
-    // 如果是前者的属性
-    : P extends keyof F
-        // 返回前者的类型
-        ? F[P]
-        // 不会走到这一流程
-        : never;
-}
+  [P in keyof F | keyof S]: P extends keyof S // 如果是后者的键值
+    ? // 取后者的类型，这里保证了后者覆盖前者
+      S[P]
+    : // 如果是前者的属性
+    P extends keyof F
+    ? // 返回前者的类型
+      F[P]
+    : // 不会走到这一流程
+      never;
+};
 ```
 
 ## 知识点
 
-1. 同 [实现Omit](/medium/3-实现Omit.md)。
-
+1. 同 [实现 Omit](/medium/3-实现Omit.md)。

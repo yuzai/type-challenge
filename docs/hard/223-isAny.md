@@ -25,22 +25,18 @@ type isAny<T> = Equals<any, T>;
 
 ```ts
 type IsAny<T> =
-    // 核心在于 T & 1，如果 T 是 1，那么 T & 1 = 1
-    // 0 extends 1 -> false
-    // 如果 T 不是 1 和 any，那么 T & 1 之后，只会 = 1 或者 never
-    // 0 extends 1 | never -> false
-    // 只有 any 满足条件
-    0 extends T & 1
-    ? true : false
+  // 核心在于 T & 1，如果 T 是 1，那么 T & 1 = 1
+  // 0 extends 1 -> false
+  // 如果 T 不是 1 和 any，那么 T & 1 之后，只会 = 1 或者 never
+  // 0 extends 1 | never -> false
+  // 只有 any 满足条件
+  0 extends T & 1 ? true : false;
 ```
 
-当然，上述判断中的 0， 1可以改成其他任意字面量类型。
+当然，上述判断中的 0， 1 可以改成其他任意字面量类型。
 
 ## 知识点
 
 1. `any & 任意类型 = any`
 
 感觉实际中没什么用，也可以通过 Equal 实现即可。
-
-
-

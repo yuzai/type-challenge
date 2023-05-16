@@ -12,8 +12,8 @@ lang: zh-CN
 例如：
 
 ```ts
-type Sample1 = AnyOf<[1, '', false, [], {}]> // expected to be true.
-type Sample2 = AnyOf<[0, '', false, [], {}]> // expected to be false.
+type Sample1 = AnyOf<[1, '', false, [], {}]>; // expected to be true.
+type Sample2 = AnyOf<[0, '', false, [], {}]>; // expected to be false.
 ```
 
 ## 分析
@@ -33,18 +33,21 @@ type Sample2 = AnyOf<[0, '', false, [], {}]> // expected to be false.
 ## 题解
 
 ```ts
-export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
+export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
   ? true
-  : false
+  : false;
 
 type Zerolist = 0 | false | '' | [] | undefined | null;
 
-type AnyOf<T extends readonly any[]> =
-  T extends [infer F, ...infer R]
+type AnyOf<T extends readonly any[]> = T extends [infer F, ...infer R]
   ? F extends Zerolist
     ? AnyOf<R>
-    // 单独处理 {} 的判定
-    : Equal<F, {}> extends true ? AnyOf<R> : true
+    : // 单独处理 {} 的判定
+    Equal<F, {}> extends true
+    ? AnyOf<R>
+    : true
   : false;
 ```
 
@@ -52,4 +55,3 @@ type AnyOf<T extends readonly any[]> =
 
 1. Equal
 2. `[] ｜ Function | { a: any } extends {}` 为 true
-

@@ -7,14 +7,14 @@ lang: zh-CN
 
 ## 题目描述
 
-实现内置的Exclude <T, U>类型，但不能直接使用它本身。
+实现内置的 Exclude <T, U>类型，但不能直接使用它本身。
 
-> 从联合类型T中排除U的类型成员，来构造一个新的类型。
+> 从联合类型 T 中排除 U 的类型成员，来构造一个新的类型。
 
 例如：
 
 ```ts
-type Result = MyExclude<'a' | 'b' | 'c', 'a'> // 'b' | 'c'
+type Result = MyExclude<'a' | 'b' | 'c', 'a'>; // 'b' | 'c'
 ```
 
 ## 分析
@@ -39,7 +39,7 @@ type Case1 = Example<1 | '3' | {} | []>;
 type Example<T> = T extends string ? 1 : 2;
 
 // 简单类型，不会分发，结果为 2
-type Case2 = ('1' | 1) extends string ? 1 : 2;
+type Case2 = '1' | 1 extends string ? 1 : 2;
 
 // 泛型，触发分发
 // '1' extends string ? 1 : 2 | 1 extends string ? 1 : 2
@@ -61,9 +61,10 @@ type MyExclude<T, U> = T extends U ? never : T;
 // 'a' extends 'a' ? never : 'a' | 'b' extends 'a' ? never : 'b' | 'c' extends 'a' ? never : 'c'
 // never | 'b' | 'c'
 // Case = 'b' | 'c';
-type Case = MyExclude<'a' | 'b' | 'c', 'a'>
+type Case = MyExclude<'a' | 'b' | 'c', 'a'>;
 ```
 
 ## 知识点
+
 1. 泛型下联合的分发特性
 2. `任意类型 | never = 任意类型`

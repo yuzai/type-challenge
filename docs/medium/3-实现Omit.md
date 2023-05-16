@@ -15,16 +15,16 @@ lang: zh-CN
 
 ```ts
 interface Todo {
-  title: string
-  description: string
-  completed: boolean
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
-type TodoPreview = MyOmit<Todo, 'description' | 'title'>
+type TodoPreview = MyOmit<Todo, 'description' | 'title'>;
 
 const todo: TodoPreview = {
   completed: false,
-}
+};
 ```
 
 ## 分析
@@ -45,8 +45,8 @@ type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
 ```ts
 type MyOmit<T, K> = {
-    [P in keyof T]: T[P]
-}
+  [P in keyof T]: T[P];
+};
 ```
 
 但是问题来了，能够在哪里加上忽略某些键值的逻辑呢？
@@ -67,12 +67,12 @@ const a = 1 as unknown as string;
 
 ```ts
 type Copy<T> = {
-    // 强制声明键值为 never
-    [P in keyof T as never]: T[P]
-}
+  // 强制声明键值为 never
+  [P in keyof T as never]: T[P];
+};
 
 // Case1 = {};
-type Case1 = Copy<{ a: 1, b: 2 }>
+type Case1 = Copy<{ a: 1; b: 2 }>;
 ```
 
 通过强制声明键值为 never，其结果就是该键值就会被忽略掉。到这一步了，题解也呼之欲出，只需要判断当前键值是否是目标键值的一员，如果是，就忽略掉。
@@ -81,15 +81,14 @@ type Case1 = Copy<{ a: 1, b: 2 }>
 
 ```ts
 type MyOmit<T, K extends keyof T> = {
-    [P in keyof T as P extends K ? never : P] : T[P]
-}
+  [P in keyof T as P extends K ? never : P]: T[P];
+};
 ```
 
 其核心就是利用 `as` 强制转换键值类型，又借助条件表达式将符合条件的键值改为 never，从而达到目标。
 
 ## 知识点
+
 1. 对象遍历的方式： `{ [P in keyof T]: T[P] }`
 2. `as` 表达式在对象遍历时的用途
 3. 条件表达式写法
-
-

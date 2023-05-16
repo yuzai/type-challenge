@@ -11,7 +11,7 @@ Implement the type version of Array.indexOf, indexOf<T, U> takes an Array T, any
 
 ```ts
 type Res = IndexOf<[1, 2, 3], 2>; // expected to be 1
-type Res1 = IndexOf<[2,6, 3,8,4,1,7, 3,9], 3>; // expected to be 2
+type Res1 = IndexOf<[2, 6, 3, 8, 4, 1, 7, 3, 9], 3>; // expected to be 2
 type Res2 = IndexOf<[0, 0, 0], 2>; // expected to be -1
 ```
 
@@ -25,18 +25,21 @@ type Res2 = IndexOf<[0, 0, 0], 2>; // expected to be -1
 
 ```ts
 // 标准 Equal 判断逻辑，具体原因看 Equal判断 章节
-type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+type MyEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B
+  ? 1
+  : 2
+  ? true
+  : false;
 
-type IndexOf<T, U, Arr extends any[] = []> =
-  T extends [infer F, ...infer R]
-  // 如果相等
-  ? MyEqual<F, U> extends true
-    // 返回计数元组的长度
-    ? Arr['length']
-    // 否则继续查找
-    : IndexOf<R, U, [...Arr, 1]>
-  // 找到最后都没找着，返回 -1
-  : -1;
+type IndexOf<T, U, Arr extends any[] = []> = T extends [infer F, ...infer R]
+  ? // 如果相等
+    MyEqual<F, U> extends true
+    ? // 返回计数元组的长度
+      Arr['length']
+    : // 否则继续查找
+      IndexOf<R, U, [...Arr, 1]>
+  : // 找到最后都没找着，返回 -1
+    -1;
 ```
 
 ## 知识点

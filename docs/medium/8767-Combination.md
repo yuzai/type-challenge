@@ -7,12 +7,11 @@ lang: zh-CN
 
 ## 题目描述
 
-Given an array of strings, do Permutation & Combination.
-It's also useful for the prop types like video [controlsList](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/controlsList)
+Given an array of strings, do Permutation & Combination. It's also useful for the prop types like video [controlsList](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/controlsList)
 
 ```ts
 // expected to be `"foo" | "bar" | "baz" | "foo bar" | "foo bar baz" | "foo baz" | "foo baz bar" | "bar foo" | "bar foo baz" | "bar baz" | "bar baz foo" | "baz foo" | "baz foo bar" | "baz bar" | "baz bar foo"`
-type Keys = Combination<['foo', 'bar', 'baz']>
+type Keys = Combination<['foo', 'bar', 'baz']>;
 ```
 
 ## 分析
@@ -35,15 +34,15 @@ type Combination<
   // 将输入的元组转成联合类型
   C = T[number],
   // 保留原始的联合类型，因为分发后，就只表示自身了，想要 Exclude ，就必须保留原始的联合类型
-  K = C
+  K = C,
 > =
   // 触发分发特性，
   K extends string
-  // 此时 K 表示 元组中的某一个元素，将 K 加入结果中，同时递归剩余元素：Exclude<C, K> 即可
-  // 左侧的 K ，借助分发，产出了单个元素的所有结果，递归中的第一次分发，产出了所有的两个元素的结果，再次递归，产出了所有的3个元素的结果
-  ? K | `${K} ${Combination<[], Exclude<C, K>>}`
-  // 永远走不到这个逻辑
-  : '';
+    ? // 此时 K 表示 元组中的某一个元素，将 K 加入结果中，同时递归剩余元素：Exclude<C, K> 即可
+      // 左侧的 K ，借助分发，产出了单个元素的所有结果，递归中的第一次分发，产出了所有的两个元素的结果，再次递归，产出了所有的3个元素的结果
+      K | `${K} ${Combination<[], Exclude<C, K>>}`
+    : // 永远走不到这个逻辑
+      '';
 ```
 
 ## 知识点

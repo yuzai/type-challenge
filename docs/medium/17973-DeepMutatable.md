@@ -13,40 +13,40 @@ lang: zh-CN
 
 ```ts
 type X = {
-  readonly a: () => 1
-  readonly b: string
+  readonly a: () => 1;
+  readonly b: string;
   readonly c: {
-    readonly d: boolean
+    readonly d: boolean;
     readonly e: {
       readonly g: {
         readonly h: {
-          readonly i: true
-          readonly j: "s"
-        }
-        readonly k: "hello"
-      }
-    }
-  }
-}
+          readonly i: true;
+          readonly j: 's';
+        };
+        readonly k: 'hello';
+      };
+    };
+  };
+};
 
 type Expected = {
-  a: () => 1
-  b: string
+  a: () => 1;
+  b: string;
   c: {
-    d: boolean
+    d: boolean;
     e: {
       g: {
         h: {
-          i: true
-          j: "s"
-        }
-        k: "hello"
-      }
-    }
-  }
-}
+          i: true;
+          j: 's';
+        };
+        k: 'hello';
+      };
+    };
+  };
+};
 
-type Todo = DeepMutable<X> // should be same as `Expected`
+type Todo = DeepMutable<X>; // should be same as `Expected`
 ```
 
 你可以假设我们在这个挑战中只处理对象。 数组、函数、类等不需要考虑。 但是，您仍然可以通过涵盖尽可能多的不同案例来挑战自己。
@@ -59,14 +59,12 @@ type Todo = DeepMutable<X> // should be same as `Expected`
 
 ```ts
 type DeepMutable<T extends Record<string, any>> = {
-  -readonly [P in keyof T]:
-    // 函数特殊处理
-    T[P] extends Function
+  -readonly [P in keyof T]: T[P] extends Function // 函数特殊处理
     ? T[P]
-    // 类对象类型，递归处理
-    : T[P] extends {}
-      ? DeepMutable<T[P]>
-      : T[P]
+    : // 类对象类型，递归处理
+    T[P] extends {}
+    ? DeepMutable<T[P]>
+    : T[P];
 };
 ```
 

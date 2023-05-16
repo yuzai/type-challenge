@@ -19,14 +19,14 @@ Here is the mapping:
 
 ```typescript
 type ControlsMap = {
-  c: 'char',
-  s: 'string',
-  d: 'dec',
-  o: 'oct',
-  h: 'hex',
-  f: 'float',
-  p: 'pointer',
-}
+  c: 'char';
+  s: 'string';
+  d: 'dec';
+  o: 'oct';
+  h: 'hex';
+  f: 'float';
+  p: 'pointer';
+};
 ```
 
 ## 分析
@@ -45,7 +45,7 @@ type cases = [
   Expect<Equal<ParsePrintFormat<'The result is %q.'>, []>>,
   Expect<Equal<ParsePrintFormat<'Hello %s: score is %d.'>, ['string', 'dec']>>,
   Expect<Equal<ParsePrintFormat<'The result is %'>, []>>,
-]
+];
 ```
 
 其本质是匹配 %x，其中 x ，必须是 `ControlsMap` 中的属性。对于 %%x，可以判定为无效。
@@ -57,22 +57,19 @@ type cases = [
 ## 题解
 
 ```ts
-type ParsePrintFormat<
-  T extends string,
-> =
+type ParsePrintFormat<T extends string> =
   // 匹配 % 后的 X
   T extends `${infer F}%${infer X}${infer R}`
-  // X 合法
-  ? X extends keyof ControlsMap
-    // 向结果中增加 X 对应的类型，并递归剩余字符
-    ? [ControlsMap[X], ...ParsePrintFormat<R>]
-    // 不合法，直接递归剩余字符
-    : ParsePrintFormat<R>
-  // 没有匹配到则返回 []
-  : [];
+    ? // X 合法
+      X extends keyof ControlsMap
+      ? // 向结果中增加 X 对应的类型，并递归剩余字符
+        [ControlsMap[X], ...ParsePrintFormat<R>]
+      : // 不合法，直接递归剩余字符
+        ParsePrintFormat<R>
+    : // 没有匹配到则返回 []
+      [];
 ```
 
 ## 知识点
 
 1. 字符匹配套路
-

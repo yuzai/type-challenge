@@ -12,7 +12,7 @@ lang: zh-CN
 例如
 
 ```ts
-type Trimed = TrimRight<'  Hello World  '> // 应推导出 '  Hello World'
+type Trimed = TrimRight<'  Hello World  '>; // 应推导出 '  Hello World'
 ```
 
 ## 分析
@@ -22,7 +22,9 @@ type Trimed = TrimRight<'  Hello World  '> // 应推导出 '  Hello World'
 ## 题解
 
 ```ts
-type TrimRight<T extends string> = T extends `${infer S}${' ' | '\n' | '\t'}` ? TrimRight<S> : T;
+type TrimRight<T extends string> = T extends `${infer S}${' ' | '\n' | '\t'}`
+  ? TrimRight<S>
+  : T;
 ```
 
 ## 知识点

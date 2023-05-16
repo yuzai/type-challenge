@@ -35,16 +35,15 @@ type Res5 = Intersection<[[1, 2, 3], 2, 3]>; // expected to be never
 ## 题解
 
 ```ts
-type Intersection<T> =
-  T extends [infer F, ...infer R]
-  // 如果元素是元组
-  ? F extends any[]
-    // 转成 联合，并同剩余元素进行交叉
-    ? F[number] & Intersection<R>
-    // 否则，直接交叉
-    : F & Intersection<R>
-  // unknown & any = any
-  : unknown;
+type Intersection<T> = T extends [infer F, ...infer R]
+  ? // 如果元素是元组
+    F extends any[]
+    ? // 转成 联合，并同剩余元素进行交叉
+      F[number] & Intersection<R>
+    : // 否则，直接交叉
+      F & Intersection<R>
+  : // unknown & any = any
+    unknown;
 ```
 
 ## 知识点

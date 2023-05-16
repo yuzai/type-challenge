@@ -12,9 +12,9 @@ Create a `SnakeCase<T>` generic that turns a string formatted in **camelCase** i
 A few examples:
 
 ```ts
-type res1 = SnakeCase<"hello">; // => "hello"
-type res2 = SnakeCase<"userName">; // => "user_name"
-type res3 = SnakeCase<"getElementById">; // => "get_element_by_id"
+type res1 = SnakeCase<'hello'>; // => "hello"
+type res2 = SnakeCase<'userName'>; // => "user_name"
+type res3 = SnakeCase<'getElementById'>; // => "get_element_by_id"
 ```
 
 ## 分析
@@ -30,18 +30,22 @@ type cases = [
   Expect<Equal<SnakeCase<'hello'>, 'hello'>>,
   Expect<Equal<SnakeCase<'userName'>, 'user_name'>>,
   Expect<Equal<SnakeCase<'getElementById'>, 'get_element_by_id'>>,
-  Expect<Equal<SnakeCase<'getElementById' | 'getElementByClassNames'>, 'get_element_by_id' | 'get_element_by_class_names'>>,
-]
+  Expect<
+    Equal<
+      SnakeCase<'getElementById' | 'getElementByClassNames'>,
+      'get_element_by_id' | 'get_element_by_class_names'
+    >
+  >,
+];
 
-type SnakeCase<T> =
-  T extends `${infer F}${infer R}`
+type SnakeCase<T> = T extends `${infer F}${infer R}`
   ? F extends Uppercase<F>
     ? `_${Lowercase<F>}${SnakeCase<R>}`
     : `${F}${SnakeCase<R>}`
-  : ''
+  : '';
 ```
 
-即便是应对题目中的联合类型，由于 ``` T extends `${infer F}${infer R}` ``` 本身就会分发一次，故也不需要做任何调整就能支持
+即便是应对题目中的联合类型，由于 `` T extends `${infer F}${infer R}` `` 本身就会分发一次，故也不需要做任何调整就能支持
 
 ## 知识点
 

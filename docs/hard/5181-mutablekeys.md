@@ -26,17 +26,17 @@ type Keys = MutableKeys<{ readonly foo: string; bar: number }>;
 
 ```ts
 type Mutable<T> = {
-  -readonly [P in keyof T]: T[P]
-}
+  -readonly [P in keyof T]: T[P];
+};
 
 type MutableKeys<T> = keyof {
-  [P in keyof T as
-      Equal<
-        { [K in P]: T[P] },
-        Mutable<{ [K in P]: T[P]}>
-      > extends true
-      ? P : never]: T[P]
-}
+  [P in keyof T as Equal<
+    { [K in P]: T[P] },
+    Mutable<{ [K in P]: T[P] }>
+  > extends true
+    ? P
+    : never]: T[P];
+};
 ```
 
 ## 知识点

@@ -12,7 +12,7 @@ lang: zh-CN
 例如
 
 ```ts
-type capitalized = Capitalize<'hello world'> // expected to be 'Hello world'
+type capitalized = Capitalize<'hello world'>; // expected to be 'Hello world'
 ```
 
 ## 分析
@@ -26,10 +26,11 @@ type capitalized = Capitalize<'hello world'> // expected to be 'Hello world'
 ## 题解
 
 ```ts
-type MyCapitalize<S extends string> = S extends `${infer F}${infer R}` ? `${Uppercase<F>}${R}`: '';
+type MyCapitalize<S extends string> = S extends `${infer F}${infer R}`
+  ? `${Uppercase<F>}${R}`
+  : '';
 ```
 
 ## 知识点
 
-1. 字符串推断匹配： ```A extends `${infer F}${infer R}` ```
-
+1. 字符串推断匹配： `` A extends `${infer F}${infer R}`  ``

@@ -12,7 +12,7 @@ lang: zh-CN
 例如
 
 ```ts
-type trimed = Trim<'  Hello World  '> // expected to be 'Hello World'
+type trimed = Trim<'  Hello World  '>; // expected to be 'Hello World'
 ```
 
 ## 分析
@@ -22,9 +22,13 @@ type trimed = Trim<'  Hello World  '> // expected to be 'Hello World'
 思路也很简单，先递归去除左侧的空白，再去除右侧的即可。
 
 ```ts
-type TrimLeft<T extends string> = T extends `${' ' | '\n' | '\t'}${infer R}` ? TrimLeft<R> : T;
+type TrimLeft<T extends string> = T extends `${' ' | '\n' | '\t'}${infer R}`
+  ? TrimLeft<R>
+  : T;
 
-type TrimRight<T extends string> = T extends `${infer R}${' ' | '\n' | '\t'}` ? TrimRight<R> : T;
+type TrimRight<T extends string> = T extends `${infer R}${' ' | '\n' | '\t'}`
+  ? TrimRight<R>
+  : T;
 
 type Trim<T extends string> = TrimRight<TrimLeft<T>>;
 ```
@@ -34,8 +38,9 @@ type Trim<T extends string> = TrimRight<TrimLeft<T>>;
 当然，除了上述方案，还有更简单的方法：
 
 ```ts
-type Trim<S extends string> =
-  S extends `${' ' | '\n' | '\t'}${infer M}` | `${infer M}${' ' | '\n' | '\t'}`
+type Trim<S extends string> = S extends
+  | `${' ' | '\n' | '\t'}${infer M}`
+  | `${infer M}${' ' | '\n' | '\t'}`
   ? Trim<M>
   : S;
 ```

@@ -13,15 +13,15 @@ For example:
 
 ```ts
 class A {
-  public str: string
-  protected num: number
-  private bool: boolean
+  public str: string;
+  protected num: number;
+  private bool: boolean;
   getNum() {
-    return Math.random()
+    return Math.random();
   }
 }
 
-type publicKyes = ClassPublicKeys<A> // 'str' | 'getNum'
+type publicKyes = ClassPublicKeys<A>; // 'str' | 'getNum'
 ```
 
 ## 分析
@@ -45,4 +45,4 @@ type ClassPublicKeys<T> = keyof T;
 
 ## 知识点
 
-1. keyof 
+1. keyof

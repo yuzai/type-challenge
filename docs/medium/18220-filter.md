@@ -16,17 +16,15 @@ Implement the type `Filter<T, Predicate>` takes an Array `T`, primitive type or 
 ## 题解
 
 ```ts
-type Filter<T extends any[], P> =
-  T extends [infer F, ...infer R]
-  // 简单判定 F 是否是 P 类型
-  ? F extends P
-    // 是，保留当前元素，并递归剩余元素
-    ? [F, ...Filter<R, P>]
-    // 否则去除当前元素，递归剩余元素即可
-    : Filter<R, P>
-  : []
+type Filter<T extends any[], P> = T extends [infer F, ...infer R]
+  ? // 简单判定 F 是否是 P 类型
+    F extends P
+    ? // 是，保留当前元素，并递归剩余元素
+      [F, ...Filter<R, P>]
+    : // 否则去除当前元素，递归剩余元素即可
+      Filter<R, P>
+  : [];
 ```
-
 
 ## 知识点
 

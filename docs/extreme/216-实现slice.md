@@ -12,8 +12,8 @@ Implement the JavaScript `Array.slice` function in the type system. `Slice<Arr, 
 For example
 
 ```ts
-type Arr = [1, 2, 3, 4, 5]
-type Result = Slice<Arr, 2, 4> // expected to be [3, 4]
+type Arr = [1, 2, 3, 4, 5];
+type Result = Slice<Arr, 2, 4>; // expected to be [3, 4]
 ```
 
 ## 分析
@@ -69,10 +69,14 @@ slice 的关键在于判断当前元素是否在区间内，如果在，则需�
 type Slice<
   T extends any[],
   Start extends number = 0,
-  End extends number = Arr['length']
+  End extends number = Arr['length'],
 > =
-    // 处理入参后交由只处理合法数据的 DealSlice 处理
-    DealSlice<T, ConvertIndex<Start, T['length']>, ConvertIndex<End, T['length']>>
+  // 处理入参后交由只处理合法数据的 DealSlice 处理
+  DealSlice<
+    T,
+    ConvertIndex<Start, T['length']>,
+    ConvertIndex<End, T['length']>
+  >;
 
 // 本题核心实现
 type DealSlice<
@@ -85,22 +89,22 @@ type DealSlice<
   flag = false,
 > = GreaterThan<Start, End> extends false // 开始位置是否大于结束位置
   ? T extends [infer F, ...infer R]
-    // 遍历元组，如果当前达到了起始位置
-    ? Cur['length'] extends Start
-      // 同时也达到了结束位置，此时对应 start === end 的场景，返回空元组
-      ? Cur['length'] extends End
+    ? // 遍历元组，如果当前达到了起始位置
+      Cur['length'] extends Start
+      ? // 同时也达到了结束位置，此时对应 start === end 的场景，返回空元组
+        Cur['length'] extends End
         ? []
-        // 否则，将 元素加入新元组中，并在递归中将 flag 改为 true，表示在区间内
-        : [F, ...DealSlice<R, Start, End, [...Cur, 1], true>]
-      // 达到了结束位置
-      : Cur['length'] extends End
-        // 此时后续元素也不关心，直接返回空元组
-        ? []
-        // 不是起始也不是结束的场景，此时根据 flag 的情况，决定是否要把当前元素放入元组中
-        // 并将 flag 保留当前值继续后续遍历
-        : flag extends true
-          ? [F, ...DealSlice<R, Start, End, [...Cur, 1], flag>]
-          : DealSlice<R, Start, End, [...Cur, 1], flag>
+        : // 否则，将 元素加入新元组中，并在递归中将 flag 改为 true，表示在区间内
+          [F, ...DealSlice<R, Start, End, [...Cur, 1], true>]
+      : // 达到了结束位置
+      Cur['length'] extends End
+      ? // 此时后续元素也不关心，直接返回空元组
+        []
+      : // 不是起始也不是结束的场景，此时根据 flag 的情况，决定是否要把当前元素放入元组中
+      // 并将 flag 保留当前值继续后续遍历
+      flag extends true
+      ? [F, ...DealSlice<R, Start, End, [...Cur, 1], flag>]
+      : DealSlice<R, Start, End, [...Cur, 1], flag>
     : []
   : []; // 开始位置大于结束位置，直接返回 []
 
@@ -108,38 +112,42 @@ type DealSlice<
 type GreaterThan<T extends number, U extends number, Arr extends any[] = []> =
   // 先达到 T，则 T 小
   T extends Arr['length']
-  ? false
-  // 先达到 U
-  : U extends Arr['length']
-    // 则 T 大
-    ? true
-    // 都没到，膨胀元组
-    : GreaterThan<T, U, [...Arr, 1]>
+    ? false
+    : // 先达到 U
+    U extends Arr['length']
+    ? // 则 T 大
+      true
+    : // 都没到，膨胀元组
+      GreaterThan<T, U, [...Arr, 1]>;
 
 // 构建长度为 Length 的元组
 type ArrWithLength<Length extends number, Arr extends any[] = []> =
   // 元组长度等于目标长度时
   Arr['length'] extends Length
-  // 返回元组
-  ? Arr
-  // 否则，向 Arr 中增加一个元素，并递归处理新数组
-  : ArrWithLength<Length, [...Arr, any]>
+    ? // 返回元组
+      Arr
+    : // 否则，向 Arr 中增加一个元素，并递归处理新数组
+      ArrWithLength<Length, [...Arr, any]>;
 
 // 减法实现: [进阶-计数-加减乘除](/summary/进阶-计数-加减乘除.md)
-type Substract<A extends number, B extends number> =
-  ArrWithLength<A> extends [...ArrWithLength<B>, ...infer R]
+type Substract<A extends number, B extends number> = ArrWithLength<A> extends [
+  ...ArrWithLength<B>,
+  ...infer R,
+]
   ? R['length']
   : never;
 
 // 处理负数入参
 // 如果是负数 -n，返回 length - n, length - n > 0, 那么返回 0
 // 如果是正数 n，返回 n
-type ConvertIndex<Index extends number, Length extends number> =
-  `${Index}` extends `-${infer F extends number}`
+type ConvertIndex<
+  Index extends number,
+  Length extends number,
+> = `${Index}` extends `-${infer F extends number}`
   ? GreaterThan<Length, F> extends true
     ? Substract<Length, F>
     : 0
-  : Index
+  : Index;
 ```
 
 ## 知识点

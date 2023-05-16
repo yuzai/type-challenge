@@ -7,12 +7,12 @@ lang: zh-CN
 
 ## 题目描述
 
-实现高级util类型 `UnionToIntersection<U>`
+实现高级 util 类型 `UnionToIntersection<U>`
 
 例如
 
 ```ts
-type I = Union2Intersection<'foo' | 42 | true> // expected to be 'foo' & 42 & true
+type I = Union2Intersection<'foo' | 42 | true>; // expected to be 'foo' & 42 & true
 ```
 
 ## 分析
@@ -25,16 +25,16 @@ type I = Union2Intersection<'foo' | 42 | true> // expected to be 'foo' & 42 & tr
 
 ```ts
 type TupleToIntersection<T extends any[]> =
-    // 遍历
-    T extends [infer F, ...infer R]
-    // 元素交叉即可
-    ? F & TupleToIntersection<R>
-    // any & unknown = any
-    // 所以当 T 为空时，返回 unknown不影响结果
-    : unknown;
+  // 遍历
+  T extends [infer F, ...infer R]
+    ? // 元素交叉即可
+      F & TupleToIntersection<R>
+    : // any & unknown = any
+      // 所以当 T 为空时，返回 unknown不影响结果
+      unknown;
 
 // Case1 = {a: 1} & {b: 2}
-type Case1 = TupleToIntersection<[{a: 1}, { b: 2}]>;
+type Case1 = TupleToIntersection<[{ a: 1 }, { b: 2 }]>;
 ```
 
 但是对联合类型就麻烦了，因为我们无法把联合类型一个一个拉出来进行遍历，联合类型只有分发特性。但是分发特性也是从一个联合类型返回一个新的联合类型，并不能转成交叉类型。
@@ -47,15 +47,11 @@ type Case1 = TupleToIntersection<[{a: 1}, { b: 2}]>;
 
 ```ts
 type UnionToIntersection<U> =
-  (
-    // 利用分发特性生成 (arg: a) => any | (arg: b) => any
-    U extends any
-    ? (arg: U) => any
-    : never
-  ) extends (arg: infer P) => any
-  // 利用逆变特性，P = a & b
-  ? P
-  : never;
+  // 利用分发特性生成 (arg: a) => any | (arg: b) => any
+  (U extends any ? (arg: U) => any : never) extends (arg: infer P) => any
+    ? // 利用逆变特性，P = a & b
+      P
+    : never;
 ```
 
 ## 知识点

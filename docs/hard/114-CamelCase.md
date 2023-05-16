@@ -12,8 +12,8 @@ lang: zh-CN
 例如
 
 ```ts
-type camelCase1 = CamelCase<"hello_world_with_types"> // 预期为 'helloWorldWithTypes'
-type camelCase2 = CamelCase<"HELLO_WORLD_WITH_TYPES"> // 期望与前一个相同
+type camelCase1 = CamelCase<'hello_world_with_types'>; // 预期为 'helloWorldWithTypes'
+type camelCase2 = CamelCase<'HELLO_WORLD_WITH_TYPES'>; // 期望与前一个相同
 ```
 
 ## 分析
@@ -28,17 +28,16 @@ type camelCase2 = CamelCase<"HELLO_WORLD_WITH_TYPES"> // 期望与前一个相�
 type CamelCaseF<
   S extends string,
   // 辅助字符，存储 _ 之前遇到的字符
-  W extends string = ''
-> =
-  S extends `${infer F}${infer R}`
-  // 如果是 _
-  ? F extends '_'
-    // 处理 _ 之前的的字符 W, 并递归剩余字符，重置 W
-    ? `${Capitalize<Lowercase<`${W}`>>}${CamelCaseF<R>}`
-    // 否则，递归剩余字符，将 F 存储 W 中
-    : `${CamelCaseF<R, `${W}${F}`>}`
-  // 遍历结束，取出最后一次的字符进行处理
-  : Capitalize<Lowercase<`${W}`>>;
+  W extends string = '',
+> = S extends `${infer F}${infer R}`
+  ? // 如果是 _
+    F extends '_'
+    ? // 处理 _ 之前的的字符 W, 并递归剩余字符，重置 W
+      `${Capitalize<Lowercase<`${W}`>>}${CamelCaseF<R>}`
+    : // 否则，递归剩余字符，将 F 存储 W 中
+      `${CamelCaseF<R, `${W}${F}`>}`
+  : // 遍历结束，取出最后一次的字符进行处理
+    Capitalize<Lowercase<`${W}`>>;
 
 // 单独处理掉第一个字符的小写
 type CamelCase<S extends string> = Uncapitalize<CamelCaseF<S>>;

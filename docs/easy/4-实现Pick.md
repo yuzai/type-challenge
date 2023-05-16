@@ -15,17 +15,17 @@ lang: zh-CN
 
 ```ts
 interface Todo {
-  title: string
-  description: string
-  completed: boolean
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
-type TodoPreview = MyPick<Todo, 'title' | 'completed'>
+type TodoPreview = MyPick<Todo, 'title' | 'completed'>;
 
 const todo: TodoPreview = {
-    title: 'Clean room',
-    completed: false,
-}
+  title: 'Clean room',
+  completed: false,
+};
 ```
 
 ## 分析
@@ -36,10 +36,10 @@ const todo: TodoPreview = {
 
 ```ts
 type Copy<T> = {
-    [P in keyof T]: T[P]
-}
+  [P in keyof T]: T[P];
+};
 
-type Case1 = Copy<{ a: string, b: string }>
+type Case1 = Copy<{ a: string; b: string }>;
 ```
 
 `keyof T` 本身是个联合类型，`[P in keyof T]` 便是将联合类型取出作为新类型的键值， 在上例中，流程如下：
@@ -49,7 +49,7 @@ type Case1 = Copy<{ a: string, b: string }>
 // ['a']: T['a'] (也就是 string)
 // ['b']: T['b'] (也就是 string)
 // type Case1 = { a: string, b: string }
-type Case1 = Copy<{ a: 1, b: 2 }>
+type Case1 = Copy<{ a: 1; b: 2 }>;
 ```
 
 ## 题解
@@ -58,14 +58,14 @@ type Case1 = Copy<{ a: 1, b: 2 }>
 
 ```ts
 type MyPick<T, K extends keyof T> = {
-  [P in K]: T[P]
-}
+  [P in K]: T[P];
+};
 
 // P in 'a' | 'b'
 // ['a']: T['a']
 // ['b']: T['b']
 // type Case2 = { a: string, b: string }
-type Case2 = MyPick<{a: string, b: string, c: string}, 'a' | 'b'>
+type Case2 = MyPick<{ a: string; b: string; c: string }, 'a' | 'b'>;
 ```
 
 注意：上述需要对 `K` 进行约束，也就是 `K extends keyof T`，因为 K 如果不是类型的键值的话，需要进行类型约束，否则 `T[P]` 将会因为访问不到类型而报错。

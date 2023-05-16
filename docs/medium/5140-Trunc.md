@@ -7,12 +7,12 @@ lang: zh-CN
 
 ## 题目描述
 
-Implement the type version of ```Math.trunc```, which takes string or number and returns the integer part of a number by removing any fractional digits.
+Implement the type version of `Math.trunc`, which takes string or number and returns the integer part of a number by removing any fractional digits.
 
 For example:
 
 ```typescript
-type A = Trunc<12.34> // 12
+type A = Trunc<12.34>; // 12
 ```
 
 ## 分析
@@ -22,12 +22,14 @@ type A = Trunc<12.34> // 12
 ## 题解
 
 ```ts
-type Trunc<T extends number | string> = `${T}` extends `${infer F}.${infer R}` ? F : `${T}`;
+type Trunc<T extends number | string> = `${T}` extends `${infer F}.${infer R}`
+  ? F
+  : `${T}`;
 ```
 
-要注意其中的 ``` `${T}` ```，将数字转成了字符，不然 T extends xxx 始终走的 false 逻辑。
+要注意其中的 `` `${T}` ``，将数字转成了字符，不然 T extends xxx 始终走的 false 逻辑。
 
 ## 知识点
 
 1. 字符推断匹配套路
-2. 数字转字符 ``` `${T}` ```
+2. 数字转字符 `` `${T}` ``

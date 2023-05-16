@@ -12,9 +12,9 @@ lang: zh-CN
 例如：`Promise<ExampleType>`，请你返回 ExampleType 类型。
 
 ```ts
-type ExampleType = Promise<string>
+type ExampleType = Promise<string>;
 
-type Result = MyAwaited<ExampleType> // string
+type Result = MyAwaited<ExampleType>; // string
 ```
 
 > 这个挑战来自于 [@maciejsikora](https://github.com/maciejsikora) 的文章：[original article](https://dev.to/macsikora/advanced-typescript-exercises-question-1-45k4)
@@ -57,7 +57,7 @@ type Case3 = MyAwaited<Promise<Promise<Promise<string>>>>; // string
 讲道理上述解法已经足够，但是在题目的 Case 中，存在如下场景：
 
 ```ts
-type T = { then: (onfulfilled: (arg: number) => any) => any }
+type T = { then: (onfulfilled: (arg: number) => any) => any };
 
 // 期望 MyAwaited<T> = number
 ```
@@ -65,11 +65,11 @@ type T = { then: (onfulfilled: (arg: number) => any) => any }
 也就是还需要处理 类似 promise 的场景，根据题目 case，可以写出如下代码：
 
 ```ts
-type MyAwaited<T> =
-    T extends Promise<infer R>
-        | { then: (onfullfilled: (arg: infer R) => any) => any }
-    ? MyAwaited<R>
-    : T;
+type MyAwaited<T> = T extends
+  | Promise<infer R>
+  | { then: (onfullfilled: (arg: infer R) => any) => any }
+  ? MyAwaited<R>
+  : T;
 ```
 
 利用 `|` 覆盖 普通的 `Promise` 和 `then` 两种场景。
@@ -81,10 +81,3 @@ type MyAwaited<T> =
 1. `A extends Promise<infer R>`，匹配推断类型
 2. 递归解决嵌套问题
 3. 联合类型位于 `extends` 右侧时不分发
-
-
-
-
-
-
-
