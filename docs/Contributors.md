@@ -3,7 +3,7 @@ title: 贡献者
 lang: zh-CN
 ---
 
-欢迎 PR。也可 [联系我](/Contactme.md)，拉你进群一起提 PR。
+欢迎 PR。也可 [联系我](/Contactme.md)，拉你进群一起提讨论 提 PR。
 
 ## [贡献者](https://github.com/yuzai/type-challenge/graphs/contributors)
 

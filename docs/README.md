@@ -38,7 +38,7 @@ type-challenges 是一个非常好的学习工具，它提供了一系列的 Typ
 
 希望这份《TypeScript 类型挑战题解》能对你学习 TypeScript 类型系统和解答 type-challenges 题目有所帮助。
 
-如果有任何问题或建议，请随时 [联系我](/Contactme.md)，我将非常乐意与你交流和学习，也可拉你进群一起提 PR。
+如果有任何问题或建议，请随时 [联系我](/Contactme.md)，我将非常乐意与你交流和学习，也可拉你进群讨论，一起提 PR。
 
 ## [贡献者](https://github.com/yuzai/type-challenge/graphs/contributors)
 
