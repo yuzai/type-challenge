@@ -26,7 +26,7 @@ type MyDog = LookUp<Cat | Dog, 'dog'> // expected to be `Dog`
 
 ## 分析
 
-这一题也有点贴合实际工作了，借助联合类型的分发特性可以很轻易的实现(不了解分发类型的可以看这一题 [实现Exclude](/docs/easy/43-%E5%AE%9E%E7%8E%B0Exclude.md))。
+这一题也有点贴合实际工作了，借助联合类型的分发特性可以很轻易的实现(不了解分发类型的可以看这一题 [实现Exclude](/easy/43-实现Exclude.md))。
 
 ## 题解
 
@@ -42,6 +42,6 @@ type MyDog = LookUp<Cat | Dog, 'dog'>
 
 ## 知识点
 
-1. 泛型下联合类型的分发特性，可以参考 [实现Exclude](/docs/easy/43-%E5%AE%9E%E7%8E%B0Exclude.md)
+1. 泛型下联合类型的分发特性，可以参考 [实现Exclude](/easy/43-实现Exclude.md)
 2. 条件表达式，可以参考官网 [Conditional Types
 ](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html)

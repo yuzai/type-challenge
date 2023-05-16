@@ -19,7 +19,7 @@ type c = EndsWith<'abc', 'd'> // expected to be false
 
 ## 分析
 
-参考上一题目 [startWith](/medium/2688-%E5%AE%9E%E7%8E%B0StartWith.md)。
+参考上一题目 [startWith](/medium/2688-实现StartWith.md)。
 
 ## 题解
 

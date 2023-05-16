@@ -35,7 +35,7 @@ type Todo = DeepReadonly<X> // should be same as `Expected`
 
 ## 分析
 
-这题是 [实现readonly](/easy/7-%E5%AE%9E%E7%8E%B0Readonly.md) 的深度遍历版，理论上只需要在原来的基础上增加递归处理嵌套即可。
+这题是 [实现readonly](/easy/7-实现Readonly.md) 的深度遍历版，理论上只需要在原来的基础上增加递归处理嵌套即可。
 
 ```ts
 type DeepReadonly<T> = {
@@ -94,7 +94,7 @@ type DeepReadonly<T> = {
 
 ## 知识点
 
-1. [readonly](/easy/7-%E5%AE%9E%E7%8E%B0Readonly.md)
+1. [readonly](/easy/7-实现Readonly.md)
 2. 递归处理嵌套问题
 3. 元组可以使用遍历对象的方法进行遍历
 4. `(() => {}) extends {}` 结果为 true

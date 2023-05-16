@@ -21,7 +21,7 @@ type Result = MyAwaited<ExampleType> // string
 
 ## 分析
 
-这个题目同 [第一个元素](/easy/14-%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0.md) 一样，都需要用到 `A extends infer xxx` 的特性，只不过原本的 `infer` 是匹配数组，而这里的 `infer`，是去匹配 `Promise` 的返回值。
+这个题目同 [第一个元素](/easy/14-第一个元素.md) 一样，都需要用到 `A extends infer xxx` 的特性，只不过原本的 `infer` 是匹配数组，而这里的 `infer`，是去匹配 `Promise` 的返回值。
 
 了解这一点后，可以非常快速的写出如下代码：
 

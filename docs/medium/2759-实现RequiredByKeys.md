@@ -45,4 +45,4 @@ type RequiredByKeys<T, K extends keyof T = keyof T> = Merge<{
 
 ## 知识点
 
-1. 同 [实现PartialByKeys](/medium/2757-%E5%AE%9E%E7%8E%B0PartialByKeys.md)
+1. 同 [实现PartialByKeys](/medium/2757-实现PartialByKeys.md)

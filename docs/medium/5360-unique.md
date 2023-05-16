@@ -21,7 +21,7 @@ type Res4 = Unique<[unknown, unknown, any, any, never, never]>; // expected to b
 
 要想去重，只需要遍历元组，并提供辅助元组，存储当前独一无二的元素，并在遍历元素时，先判断这个辅助元组中是否存在，如果存在，则忽略，否则，加入新元组并继续遍历。
 
-其中判断元组中是否存在某个元素，可以通过 [Includes](/docs/easy/898-%E5%AE%9E%E7%8E%B0Includes.md) 来进行。
+其中判断元组中是否存在某个元素，可以通过 [Includes](/easy/898-实现Includes.md) 来进行。
 
 ## 题解
 

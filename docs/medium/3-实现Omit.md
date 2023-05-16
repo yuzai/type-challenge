@@ -35,7 +35,7 @@ Omit 是 ts 自带的一个工具类，其原本的内部实现如下：
 type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 ```
 
-可以看到，想要在 T 中忽略某些属性，其实就是从 T 中，获取排除了这些属性后的类型即可，所以官方的实现借助了 [Exclude](/easy/43-%E5%AE%9E%E7%8E%B0Exclude.md) 和 [Pick](/easy/4-%E5%AE%9E%E7%8E%B0Pick.md)，当然之前我们也自己实现过。
+可以看到，想要在 T 中忽略某些属性，其实就是从 T 中，获取排除了这些属性后的类型即可，所以官方的实现借助了 [Exclude](/easy/43-实现Exclude.md) 和 [Pick](/easy/4-实现Pick.md)，当然之前我们也自己实现过。
 
 但是能不能不借助其他辅助工具实现呢？
 

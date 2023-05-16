@@ -20,7 +20,7 @@ type c = StartsWith<'abc', 'abcd'> // expected to be false
 
 ## 分析
 
-判断是否以某个字符开头，其实之前有类似的用法，[实现 Replace](/medium/116-%E5%AE%9E%E7%8E%B0Replace.md) 中，有 ```A extends `${From}${infer M}` ``` 的用法，在这一用法中，From 就是个常量字符，举几个例子：
+判断是否以某个字符开头，其实之前有类似的用法，[实现 Replace](/medium/116-实现Replace.md) 中，有 ```A extends `${From}${infer M}` ``` 的用法，在这一用法中，From 就是个常量字符，举几个例子：
 
 ```ts
 // Case1 = true

@@ -17,7 +17,7 @@ type c = TupleToNestedObject<[], boolean> // boolean. if the tuple is empty, jus
 
 ## 分析
 
-之前做过 [元组转对象](/docs/easy/11-%E5%85%83%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AF%B9%E8%B1%A1.md)，还是 easy 级别的，本质就是借助了元组的索引签名将元组转为联合类型作为属性形成新的类型。
+之前做过 [元组转对象](/easy/11-元组转换为对象.md)，还是 easy 级别的，本质就是借助了元组的索引签名将元组转为联合类型作为属性形成新的类型。
 
 这一题有点变种，是折叠进去的，所以并不能通过元组转成的联合类型来做属性。
 

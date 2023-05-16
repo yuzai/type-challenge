@@ -22,7 +22,7 @@ type OnlyBoolean = PickByType<{
 
 ## 分析
 
-这个题，可以说是非常简单了，理解了 [实现 Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md) 中 `as` 的写法，可以很轻松的写出本道题目，只需要遍历所有属性，并通过 as 判断类型不是目标类型的属性置为 never 即可过滤掉该属性。
+这个题，可以说是非常简单了，理解了 [实现 Omit](/medium/3-实现Omit.md) 中 `as` 的写法，可以很轻松的写出本道题目，只需要遍历所有属性，并通过 as 判断类型不是目标类型的属性置为 never 即可过滤掉该属性。
 
 ## 题解
 
@@ -36,5 +36,5 @@ as 过滤属性即可
 
 ## 知识点
 
-1. 同 [实现 Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)
+1. 同 [实现 Omit](/medium/3-实现Omit.md)
 

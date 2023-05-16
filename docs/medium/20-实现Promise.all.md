@@ -22,7 +22,7 @@ const p = PromiseAll([promise1, promise2, promise3] as const)
 
 ## 分析
 
-这一题可以遍历整个元组，并将元组中的每一个元素通过之前实现的 [Awaited](/docs/easy/189-%E5%AE%9E%E7%8E%B0Awaited.md) 转换一下即可。
+这一题可以遍历整个元组，并将元组中的每一个元素通过之前实现的 [Awaited](/easy/189-实现Awaited.md) 转换一下即可。
 
 元组的遍历基本上有三种方式：
 
@@ -103,4 +103,4 @@ declare function PromiseAll<T extends any[]>(
 ## 知识点
 
 1. ts 类型推断时，会尝试计算一个更通用的类型，比如 `[1, 2, 3]` 就会被推断成 `number[]`。这里要注意此处的类型推断是指的 ts 中的隐式类型推断，和 `A extends infer xxx` 还是不一样的。这种隐式类型推断一般发生在 `const a = [1, 2, 3] -> a = number[]` 以及函数的入参中。
-2. 同 [Awaited](/docs/easy/189-%E5%AE%9E%E7%8E%B0Awaited.md)。
+2. 同 [Awaited](/easy/189-实现Awaited.md)。

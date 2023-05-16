@@ -33,7 +33,7 @@ todo.completed = true // OK
 
 ## 分析
 
-这个题目是 [readonly](/easy/7-%E5%AE%9E%E7%8E%B0Readonly.md) 的升级版，仅仅对一部分的属性增加 `readonly` 的修饰符。
+这个题目是 [readonly](/easy/7-实现Readonly.md) 的升级版，仅仅对一部分的属性增加 `readonly` 的修饰符。
 
 对所有属性增加 `readonly` 修饰符只需要遍历一次即可：
 
@@ -62,7 +62,7 @@ type MyReadonly2<T, K extends keyof T = keyof T> = {
 
 这个题解可以分成两部分看，第一部分是对指定的类型增加 `readonly` 修饰符，第二部分是从 `T` 的属性中排除存在于 `K` 中的属性后组成的类型，两者交叉，就是本题的结果。
 
-相信大家也看出来了，后者其实就是上一题实现的 [Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)，直接换成 `Omit<T, K>` 也是成立的。
+相信大家也看出来了，后者其实就是上一题实现的 [Omit](/medium/3-实现Omit.md)，直接换成 `Omit<T, K>` 也是成立的。
 
 这里还有一点要提的就是，题目中在 `K` 不存在的时候需要将所有的属性都增加 `readonly` 修饰符，所以题解中写了 `K extends keyof T = keyof T`，功能就是缺省值，当 `K` 不存在时，就是 `keyof T`。
 
@@ -70,4 +70,4 @@ type MyReadonly2<T, K extends keyof T = keyof T> = {
 
 1. 对象遍历增加修饰符
 2. 缺省值设置
-3. [Omit](/medium/3-%E5%AE%9E%E7%8E%B0Omit.md)
+3. [Omit](/medium/3-实现Omit.md)

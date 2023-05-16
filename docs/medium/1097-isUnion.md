@@ -75,5 +75,5 @@ type IsUnion<T, K = T> =
 
 ## 知识点
 
-1. 联合类型的分发特性，同 [Exclude](/docs/easy/43-%E5%AE%9E%E7%8E%B0Exclude.md)。
+1. 联合类型的分发特性，同 [Exclude](/easy/43-实现Exclude.md)。
 2. never 的判断

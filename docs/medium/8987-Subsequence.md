@@ -65,14 +65,14 @@ type Subsequence<T extends any[]> =
 2. 编程思路
 
 建议 4道题目放一起看看：
-全排列
-[296](/medium/296-%E5%AE%9E%E7%8E%B0%E5%85%A8%E6%8E%92%E5%88%97.md)
-所有组合
-[4260](/medium/4260-%E5%AE%9E%E7%8E%B0%E6%89%80%E6%9C%89%E7%BB%84%E5%90%88.md)
-排除了空的所有组合
-[8767](/medium/8767-Combination.md)
-不考虑顺序的组合
-[8987](/docs//medium/8987-Subsequence.md)
+
+[全排列](/medium/296-实现全排列.md)
+
+[所有组合](/medium/4260-实现所有组合.md)
+
+[排除了空的所有组合](/medium/8767-Combination.md)
+
+[不考虑顺序的组合](/medium/8987-Subsequence.md)
 
 数学术语可能不太严谨，大家明白意思即可
 

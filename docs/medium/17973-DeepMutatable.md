@@ -53,7 +53,7 @@ type Todo = DeepMutable<X> // should be same as `Expected`
 
 ## 分析
 
-这一题其实和 [DeepReadonly](/medium/9-%E5%AE%9E%E7%8E%B0DeepReadonly.md) 一样，只不过这次是去除 readonly 修饰符，不再赘述
+这一题其实和 [DeepReadonly](/medium/9-实现DeepReadonly.md) 一样，只不过这次是去除 readonly 修饰符，不再赘述
 
 ## 题解
 
@@ -72,4 +72,4 @@ type DeepMutable<T extends Record<string, any>> = {
 
 ## 知识点
 
-1. 同 [DeepReadonly](/medium/9-%E5%AE%9E%E7%8E%B0DeepReadonly.md)
+1. 同 [DeepReadonly](/medium/9-实现DeepReadonly.md)

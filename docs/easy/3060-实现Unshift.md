@@ -17,7 +17,7 @@ type Result = Unshift<[1, 2], 0> // [0, 1, 2,]
 
 ## 分析
 
-同 [实现push](/docs//easy/3057-%E5%AE%9E%E7%8E%B0Push.md) 一样，扩展操作符，调整位置即可
+同 [实现push](/easy/3057-实现Push.md) 一样，扩展操作符，调整位置即可
 
 ## 题解
 

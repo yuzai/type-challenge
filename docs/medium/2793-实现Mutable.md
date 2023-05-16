@@ -37,4 +37,4 @@ type Mutable<T extends Record<string, any>> = {
 ## 知识点
 
 1. 修饰符操作。
-2. 同 [实现Readonly](/docs/easy/7-%E5%AE%9E%E7%8E%B0Readonly.md)
+2. 同 [实现Readonly](/easy/7-实现Readonly.md)
