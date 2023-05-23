@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vuepress dev docs",
-    "build": "vuepress build docs --dest dist",
+    "build": "npm run format:fix && vuepress build docs --dest dist",
     "format": "prettier . --check",
     "format:fix": "prettier . --write"
   }

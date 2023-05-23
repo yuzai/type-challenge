@@ -189,6 +189,7 @@ module.exports = {
           '/extreme/151-QueryStringParser',
           '/extreme/216-实现slice',
           '/extreme/274-整数比较器',
+          '/extreme/462-柯里化2',
           '/extreme/todo',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
