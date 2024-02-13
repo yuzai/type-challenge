@@ -81,3 +81,42 @@ type MyAwaited<T> = T extends
 1. `A extends Promise<infer R>`，匹配推断类型
 2. 递归解决嵌套问题
 3. 联合类型位于 `extends` 右侧时不分发
+
+## 2024-02-13 补充
+
+由于用例中增加了这一错误用例：
+
+```ts
+// @ts-expect-error
+type error = MyAwaited<number>;
+```
+
+这就需要对 入参的范型 进行类型限制，可以写出如下代码：
+
+```ts
+type MyAwaited<T extends Promise<any>> = T extends
+  | Promise<infer R>
+  | { then: (onfullfilled: (arg: infer R) => any) => any }
+  ? R extends Priomise<any>
+    ? MyAwaited<R>
+    : R
+  : T;
+```
+
+此时由于 `type T = { then: (onfulfilled: (arg: number) => any) => any };` 这一用例的存在，使得单纯的 `Promise<any>` 依旧失效，此时可以提取出一个新的类型，`MyPromiseLike` 来进行替换。
+
+最终的代码如下：
+
+```ts
+type MyPromiseLike<T> =
+  | Promise<T>
+  | { then: (onfullfilled: (arg: T) => any) => any };
+
+type MyAwaited<T extends MyPromiseLike<any>> = T extends MyPromiseLike<infer R>
+  ? R extends MyPromiseLike<any>
+    ? MyAwaited<R>
+    : R
+  : never;
+```
+
+此时便可覆盖所有的用例。
