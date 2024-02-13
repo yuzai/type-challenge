@@ -1,5 +1,5 @@
 ---
-title: 3188-元组转nested对象
+title: 3192-实现Reverse
 lang: zh-CN
 ---
 
