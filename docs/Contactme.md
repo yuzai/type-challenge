@@ -9,4 +9,4 @@ lang: zh-CN
 
 一起通关 TS 呀。
 
-![img](./assets/me.png)
+![img](./assets/me.png =411x576)

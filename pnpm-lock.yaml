@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  markdown-it-imsize:
+    specifier: ^2.0.1
+    version: 2.0.1
   prettier:
     specifier: ^2.8.8
     version: 2.8.8
@@ -6120,6 +6123,10 @@ packages:
 
   /markdown-it-emoji@1.4.0:
     resolution: {integrity: sha512-QCz3Hkd+r5gDYtS2xsFXmBYrgw6KuWcJZLCEkdfAuwzZbShCmCfta+hwAMq4NX/4xPzkSHduMKgMkkPUJxSXNg==}
+    dev: true
+
+  /markdown-it-imsize@2.0.1:
+    resolution: {integrity: sha512-5SH90ademqcR8ifQCBXRCfIR4HGfZZOh5pO0j2TglulfSQH+SBXM4Iw/QlTUbSoUwVZArCYgECoMvktDS2kP3w==}
     dev: true
 
   /markdown-it-table-of-contents@0.4.4:
