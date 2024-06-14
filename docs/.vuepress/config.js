@@ -4,9 +4,12 @@ const googleAnalyticsPlugin = require('@vuepress/plugin-google-analytics');
 module.exports = {
   plugins: [
     imageSizePlugin(),
-    googleAnalyticsPlugin({
-      ga: 'G-LE4N78KT0G',
-    }, {}),
+    googleAnalyticsPlugin(
+      {
+        ga: 'G-LE4N78KT0G',
+      },
+      {},
+    ),
   ],
   title: 'TS 类型挑战通关手册',
   description: '刷题吧少年',
