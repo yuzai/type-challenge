@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@vuepress/plugin-google-analytics": "^1.9.10",
+    "markdown-it-imsize": "^2.0.1",
     "prettier": "^2.8.8",
     "vuepress": "^1.9.9"
   },
