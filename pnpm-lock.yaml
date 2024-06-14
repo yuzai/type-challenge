@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  '@vuepress/plugin-google-analytics':
+    specifier: ^1.9.10
+    version: 1.9.10
   markdown-it-imsize:
     specifier: ^2.0.1
     version: 2.0.1
@@ -1921,6 +1924,14 @@ packages:
     dependencies:
       '@vuepress/types': 1.9.10
       lodash.debounce: 4.0.8
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /@vuepress/plugin-google-analytics@1.9.10:
+    resolution: {integrity: sha512-AyQ3IFbYIHhuTQCUBMez6qpgvqOYT05cVoxuezuCpmBQBp+xSDjTXB+C9YjP+5w3thY5x1K+13QPJfFWW8S0mA==}
+    dependencies:
+      '@vuepress/types': 1.9.10
     transitivePeerDependencies:
       - debug
     dev: true

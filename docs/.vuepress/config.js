@@ -1,7 +1,13 @@
 const imageSizePlugin = require('./imagesize');
+const googleAnalyticsPlugin = require('@vuepress/plugin-google-analytics');
 
 module.exports = {
-  plugins: [imageSizePlugin()],
+  plugins: [
+    imageSizePlugin(),
+    googleAnalyticsPlugin({
+      ga: 'G-LE4N78KT0G',
+    }, {}),
+  ],
   title: 'TS 类型挑战通关手册',
   description: '刷题吧少年',
   base: '/type-challenge/dist/',
