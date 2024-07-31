@@ -29,6 +29,26 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U];
 
 只需要借助 扩展操作符即可实现。
 
+**2024.7.31修正**
+
+由于题目中 T 和 U 可能会是 readonly any[] 的类型，所以上述约束在 readonly 时并不能生效。
+
+```ts
+type Q = readonly any[] extends any[] ? true : false; // false
+
+type Concat<T extends any[], U extends any[]> = [...T, ...U];
+const tuple = [1] as const
+type R = Concat<typeof tuple, typeof tuple>; // error: readonly [1] is can not assigned any[]
+```
+
+只需要将约束扩大即可:
+
+```ts
+type Q = any[] extends readonly any[] ? true : false; // trye
+
+type Concat<T extends readonly any[], U extends readonly any[]> = [...T, ...U];
+```
+
 ## 知识点
 
 1. 扩展操作符
