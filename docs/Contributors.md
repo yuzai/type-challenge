@@ -23,7 +23,7 @@ Deploy or build is not your concern. it will be deploy after PR accepted.
 
 修改 docs 目录下的文件，然后提新的 PR。
 
-构建和部署你不需要关心。PR 接收后便会发布。
+构建和部署你不需要关心。PR 接收后便会自动发布。
 
 ## 有什么可以提交的
 
