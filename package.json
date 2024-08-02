@@ -7,7 +7,8 @@
     "@vuepress/plugin-google-analytics": "^1.9.10",
     "markdown-it-imsize": "^2.0.1",
     "prettier": "^2.8.8",
-    "vuepress": "^1.9.9"
+    "vuepress": "^1.9.9",
+    "vuepress-plugin-readmore-popular": "^0.0.17"
   },
   "scripts": {
     "dev": "vuepress dev docs",
