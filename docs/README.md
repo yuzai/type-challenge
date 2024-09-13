@@ -38,10 +38,6 @@ type-challenges 是一个非常好的学习工具，它提供了一系列的 Typ
 
 如果你是 typescript 初学者，那么建议从[林不渡同学](https://juejin.cn/user/782508012077678)的[免费掘金小册入门](https://juejin.cn/book/7288482920602271802)，待有了一定基础后再来进行 ts 体操。
 
-当你做完体操之后，可以考虑和工程实践相结合，将体操的内容真正应用到实践中，此时比较推荐林不渡同学的掘金小册，进行结合应用，加深印象。
-
-![掘金小课](./assets/juejinkecheng1.jpg =300x536)
-
 ## 最后
 
 希望这份《TypeScript 类型挑战题解》能对你学习 TypeScript 类型系统和解答 type-challenges 题目有所帮助。
