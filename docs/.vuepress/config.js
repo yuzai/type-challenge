@@ -1,20 +1,13 @@
 const imageSizePlugin = require('./imagesize');
-const googleAnalyticsPlugin = require('@vuepress/plugin-google-analytics');
 
 module.exports = {
   plugins: [
     imageSizePlugin(),
-    googleAnalyticsPlugin(
-      {
-        ga: 'G-LE4N78KT0G',
-      },
-      {},
-    ),
     ['vuepress-plugin-readmore-popular', {
       // 已申请的博客 ID
       blogId: '96858-0428327450652-770',
       // 已申请的微信公众号名称
-      name: '芋仔的前端视界',
+      name: '程序员芋仔',
       // 已申请的微信公众号回复关键词
       keyword: '通关手册',                    
       // 已申请的微信公众号二维码图片
@@ -32,7 +25,7 @@ module.exports = {
       // 文章内容的预览高度(例如 300)，设置值为 auto 则表示预览高度自适应
       height: 'auto',
       // 是否添加微信公众号引流工具到移动端页面
-      allowMobile: true,
+      allowMobile: false,
       // 文章解锁后凭证的有效天数
       expires: 10,
       // 定时校验凭证有效性的时间间隔（秒）
@@ -46,6 +39,17 @@ module.exports = {
   title: 'TS 类型挑战通关手册',
   description: '刷题吧少年',
   base: '/type-challenge/dist/',
+  head: [
+    ['script', {}, `
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2e86f35b9511df6b3f101d5d6713c00a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+`]
+  ],
   configureWebpack: {
     resolve: {
       alias: {
@@ -59,10 +63,12 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: '关于本文档', link: '/' },
+      { text: 'ts学习路径', link: '/lujing.md' },
       { text: 'Github', link: 'https://github.com/yuzai/type-challenge' },
     ],
     sidebar: [
       '/',
+      '/lujing.md',
       {
         title: '简单', // 必要的
         // path: '/easy/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
@@ -260,7 +266,6 @@ module.exports = {
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
       },
       '/Contactme.md',
-      '/DaShang.md',
       '/Contributors.md',
     ],
     lastUpdated: 'Last Updated', // string | boolean
