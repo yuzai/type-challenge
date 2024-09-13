@@ -6,7 +6,7 @@
 
 ## 体操
 
-在做 [ts 体操]((https://github.com/type-challenges/type-challenges)) 的过程中，可以对照本文档进行答疑解惑。
+在做 [ts 体操](https://github.com/type-challenges/type-challenges) 的过程中，可以对照本文档进行答疑解惑。
 
 如果觉得刷完 ts 体操，还不够系统，也没有形成自己的方法论，可以看看 [神光](https://mp.weixin.qq.com/s/jogw1iMX5TdvX0x0M57jVA) 的 [TypeScript 类型体操通关秘籍](https://juejin.cn/book/7047524421182947366)。基本上是对 ts 类型体操套路的梳理。
 
