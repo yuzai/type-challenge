@@ -161,6 +161,12 @@ var _hmt = _hmt || [];
           '/medium/17973-DeepMutatable',
           '/medium/18142-all',
           '/medium/18220-filter',
+          '/medium/19749-IsEqual',
+          '/medium/21104-FindAll',
+          '/medium/21106-CombinationKeyType',
+          '/medium/21220-PermutationsOfTuple',
+          '/medium/25170-ReplaceFirst',
+          '/medium/25270-Transpose',
           '/medium/中等难度题目刷完总结',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
