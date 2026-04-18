@@ -171,6 +171,11 @@ var _hmt = _hmt || [];
           '/medium/27133-Square',
           '/medium/27152-TriangularNumber',
           '/medium/27862-CartesianProduct',
+          '/medium/27932-MergeAll',
+          '/medium/27958-CheckRepeatedTuple',
+          '/medium/28333-PublicType',
+          '/medium/29650-ExtractToObject',
+          '/medium/29785-DeepOmit',
           '/medium/中等难度题目刷完总结',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
