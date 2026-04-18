@@ -152,6 +152,7 @@ var _hmt = _hmt || [];
           '/medium/8987-Subsequence',
           '/medium/9142-CheckRepeatedChars',
           '/medium/9286-FirstUniqueCharIndex',
+          '/medium/9616-ParseUrlParams',
           '/medium/9896-获取数组的中间元素',
           '/medium/10969-整数',
           '/medium/16259-转换为基本类型',
