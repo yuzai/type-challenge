@@ -167,6 +167,10 @@ var _hmt = _hmt || [];
           '/medium/21220-PermutationsOfTuple',
           '/medium/25170-ReplaceFirst',
           '/medium/25270-Transpose',
+          '/medium/26401-JSONSchema2TS',
+          '/medium/27133-Square',
+          '/medium/27152-TriangularNumber',
+          '/medium/27862-CartesianProduct',
           '/medium/中等难度题目刷完总结',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
