@@ -176,6 +176,10 @@ var _hmt = _hmt || [];
           '/medium/28333-PublicType',
           '/medium/29650-ExtractToObject',
           '/medium/29785-DeepOmit',
+          '/medium/30301-IsOdd',
+          '/medium/30430-TowerOfHanoi',
+          '/medium/30958-PascalsTriangle',
+          '/medium/30970-IsFixedStringLiteralType',
           '/medium/中等难度题目刷完总结',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
