@@ -184,6 +184,8 @@ var _hmt = _hmt || [];
           '/medium/34857-DefinedPartialRecord',
           '/medium/35045-LongestCommonPrefix',
           '/medium/35191-Trace',
+          '/medium/35252-IsAlphabet',
+          '/medium/35991-MyUppercase',
           '/medium/中等难度题目刷完总结',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
