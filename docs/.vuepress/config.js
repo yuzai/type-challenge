@@ -154,6 +154,8 @@ var _hmt = _hmt || [];
           '/medium/9286-FirstUniqueCharIndex',
           '/medium/9616-ParseUrlParams',
           '/medium/9896-获取数组的中间元素',
+          '/medium/9898-AppearOnlyOnce',
+          '/medium/9989-CountElementNumberToObject',
           '/medium/10969-整数',
           '/medium/16259-转换为基本类型',
           '/medium/17973-DeepMutatable',
