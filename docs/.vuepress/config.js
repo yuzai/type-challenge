@@ -180,6 +180,10 @@ var _hmt = _hmt || [];
           '/medium/30430-TowerOfHanoi',
           '/medium/30958-PascalsTriangle',
           '/medium/30970-IsFixedStringLiteralType',
+          '/medium/34007-CompareArrayLength',
+          '/medium/34857-DefinedPartialRecord',
+          '/medium/35045-LongestCommonPrefix',
+          '/medium/35191-Trace',
           '/medium/中等难度题目刷完总结',
         ],
         // initialOpenGroupIndex: 1 // 可选的, 默认值是 0
