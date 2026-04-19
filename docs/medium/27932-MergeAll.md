@@ -33,20 +33,18 @@ type R = MergeAll<[Foo, Bar, Baz]>; // { a: 1 | 2; b: 2; c: 3 }
 
 ```ts
 type Merge<A, B> = {
-  [K in keyof A | keyof B]:
-    K extends keyof A
-      ? K extends keyof B
-        ? A[K] | B[K]
-        : A[K]
-      : K extends keyof B
-        ? B[K]
-        : never;
+  [K in keyof A | keyof B]: K extends keyof A
+    ? K extends keyof B
+      ? A[K] | B[K]
+      : A[K]
+    : K extends keyof B
+    ? B[K]
+    : never;
 };
 
-type MergeAll<T extends any[]> =
-  T extends [infer F, ...infer R]
-    ? Merge<F, MergeAll<R>>
-    : {};
+type MergeAll<T extends any[]> = T extends [infer F, ...infer R]
+  ? Merge<F, MergeAll<R>>
+  : {};
 ```
 
 解读：

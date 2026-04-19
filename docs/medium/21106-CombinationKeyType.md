@@ -34,7 +34,10 @@ type A = Combs<ModifierKeys>;
 ## 题解
 
 ```ts
-type Combs<T extends string[]> = T extends [infer F extends string, ...infer R extends string[]]
+type Combs<T extends string[]> = T extends [
+  infer F extends string,
+  ...infer R extends string[],
+]
   ? F | `${F} ${Combs<R>}` | Combs<R>
   : never;
 ```

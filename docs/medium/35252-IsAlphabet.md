@@ -47,7 +47,7 @@ type R2 = IsAlphabet<'Z'>; // true
 type R3 = IsAlphabet<'1'>; // false
 type R4 = IsAlphabet<'!'>; // false
 type R5 = IsAlphabet<' '>; // false
-type R6 = IsAlphabet<''>;  // false
+type R6 = IsAlphabet<''>; // false
 ```
 
 ## 知识点

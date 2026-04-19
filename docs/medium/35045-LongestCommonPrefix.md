@@ -11,7 +11,7 @@ lang: zh-CN
 
 ```ts
 type R1 = LongestCommonPrefix<['flower', 'flow', 'flight']>; // 'fl'
-type R2 = LongestCommonPrefix<['dog', 'racecar', 'race']>;    // ''
+type R2 = LongestCommonPrefix<['dog', 'racecar', 'race']>; // ''
 ```
 
 ## 分析
@@ -31,19 +31,23 @@ type R2 = LongestCommonPrefix<['dog', 'racecar', 'race']>;    // ''
 ## 题解
 
 ```ts
-type Head<S extends string, Acc extends string = ''> =
-  S extends `${infer F}${infer R}`
-    ? R extends ''
-      ? Acc
-      : Head<R, `${Acc}${F}`>
-    : Acc;
+type Head<
+  S extends string,
+  Acc extends string = '',
+> = S extends `${infer F}${infer R}`
+  ? R extends ''
+    ? Acc
+    : Head<R, `${Acc}${F}`>
+  : Acc;
 
-type AllStartsWith<Arr extends string[], P extends string> =
-  Arr extends [infer F extends string, ...infer Rest extends string[]]
-    ? F extends `${P}${string}`
-      ? AllStartsWith<Rest, P>
-      : false
-    : true;
+type AllStartsWith<Arr extends string[], P extends string> = Arr extends [
+  infer F extends string,
+  ...infer Rest extends string[],
+]
+  ? F extends `${P}${string}`
+    ? AllStartsWith<Rest, P>
+    : false
+  : true;
 
 type LongestCommonPrefix<
   Arr extends string[],
@@ -51,8 +55,8 @@ type LongestCommonPrefix<
 > = P extends ''
   ? ''
   : AllStartsWith<Arr, P> extends true
-    ? P
-    : LongestCommonPrefix<Arr, Head<P>>;
+  ? P
+  : LongestCommonPrefix<Arr, Head<P>>;
 ```
 
 解读：
@@ -65,9 +69,9 @@ type LongestCommonPrefix<
 
 ```ts
 type R1 = LongestCommonPrefix<['flower', 'flow', 'flight']>; // 'fl'
-type R2 = LongestCommonPrefix<['dog', 'racecar', 'race']>;   // ''
-type R3 = LongestCommonPrefix<['abc']>;                      // 'abc'
-type R4 = LongestCommonPrefix<[]>;                           // '' (初始 P = undefined)
+type R2 = LongestCommonPrefix<['dog', 'racecar', 'race']>; // ''
+type R3 = LongestCommonPrefix<['abc']>; // 'abc'
+type R4 = LongestCommonPrefix<[]>; // '' (初始 P = undefined)
 ```
 
 ## 知识点

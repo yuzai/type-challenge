@@ -10,9 +10,9 @@ lang: zh-CN
 给定一个数字 `N`，返回 `N * N`。要求支持负数，且能处理至少到 `Square<101> = 10201`。
 
 ```ts
-type R1 = Square<3>;   // 9
-type R2 = Square<20>;  // 400
-type R3 = Square<-5>;  // 25
+type R1 = Square<3>; // 9
+type R2 = Square<20>; // 400
+type R3 = Square<-5>; // 25
 type R4 = Square<101>; // 10201
 ```
 
@@ -34,34 +34,48 @@ type R4 = Square<101>; // 10201
 
 ```ts
 // 去掉负号
-type Abs<N extends number> = `${N}` extends `-${infer R extends number}` ? R : N;
+type Abs<N extends number> = `${N}` extends `-${infer R extends number}`
+  ? R
+  : N;
 
 // 每轮 push 10 个，把构造 N 长度元组的深度降到 ~N/10
-type BuildFast<N extends number, R extends any[] = []> =
-  R['length'] extends N
-    ? R
-    : [...R, any, any, any, any, any, any, any, any, any, any]['length'] extends infer L
-      ? L extends number
-        ? L extends N
-          ? [...R, any, any, any, any, any, any, any, any, any, any]
-          : L extends infer _  // always true, for nicer format
-            ? BuildFast<N, [...R, any, any, any, any, any, any, any, any, any, any]>
-            : never
-        : never
-      : never;
+type BuildFast<N extends number, R extends any[] = []> = R['length'] extends N
+  ? R
+  : [
+      ...R,
+      any,
+      any,
+      any,
+      any,
+      any,
+      any,
+      any,
+      any,
+      any,
+      any,
+    ]['length'] extends infer L
+  ? L extends number
+    ? L extends N
+      ? [...R, any, any, any, any, any, any, any, any, any, any]
+      : L extends infer _ // always true, for nicer format
+      ? BuildFast<N, [...R, any, any, any, any, any, any, any, any, any, any]>
+      : never
+    : never
+  : never;
 
 // 退化版：慢但对边界更稳
-type BuildSlow<N extends number, R extends any[] = []> =
-  R['length'] extends N ? R : BuildSlow<N, [...R, any]>;
+type BuildSlow<N extends number, R extends any[] = []> = R['length'] extends N
+  ? R
+  : BuildSlow<N, [...R, any]>;
 
 // A * B：把 B 个 BuildTuple<A> 拼起来
-type Mul<A extends number, B extends number, R extends any[] = []> =
-  B extends 0
-    ? R['length']
-    : Mul<A, Dec<B>, [...R, ...BuildSlow<A>]>;
+type Mul<A extends number, B extends number, R extends any[] = []> = B extends 0
+  ? R['length']
+  : Mul<A, Dec<B>, [...R, ...BuildSlow<A>]>;
 
-type Dec<N extends number> =
-  BuildSlow<N> extends [any, ...infer R] ? R['length'] : 0;
+type Dec<N extends number> = BuildSlow<N> extends [any, ...infer R]
+  ? R['length']
+  : 0;
 
 type Square<N extends number> = Mul<Abs<N>, Abs<N>>;
 ```
@@ -77,10 +91,10 @@ type Square<N extends number> = Mul<Abs<N>, Abs<N>>;
 ## 验证
 
 ```ts
-type R1 = Square<0>;   // 0
-type R2 = Square<3>;   // 9
-type R3 = Square<20>;  // 400
-type R4 = Square<-5>;  // 25
+type R1 = Square<0>; // 0
+type R2 = Square<3>; // 9
+type R3 = Square<20>; // 400
+type R4 = Square<-5>; // 25
 type R5 = Square<-31>; // 961
 ```
 

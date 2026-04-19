@@ -14,9 +14,9 @@ lang: zh-CN
 - 两者相等 → 返回 `0`。
 
 ```ts
-type R1 = CompareArrayLength<[1, 2, 3], [1, 2]>;        // 1
-type R2 = CompareArrayLength<[1], [1, 2, 3]>;           // -1
-type R3 = CompareArrayLength<[1, 2], [1, 2]>;           // 0
+type R1 = CompareArrayLength<[1, 2, 3], [1, 2]>; // 1
+type R2 = CompareArrayLength<[1], [1, 2, 3]>; // -1
+type R3 = CompareArrayLength<[1, 2], [1, 2]>; // 0
 ```
 
 ## 分析
@@ -31,14 +31,16 @@ type R3 = CompareArrayLength<[1, 2], [1, 2]>;           // 0
 ## 题解
 
 ```ts
-type CompareArrayLength<T extends any[], U extends any[]> =
-  T extends [any, ...infer TR]
-    ? U extends [any, ...infer UR]
-      ? CompareArrayLength<TR, UR>
-      : 1 // U 先空，T 长
-    : U extends [any, ...any]
-      ? -1 // T 先空，T 短
-      : 0; // 同时空
+type CompareArrayLength<T extends any[], U extends any[]> = T extends [
+  any,
+  ...infer TR,
+]
+  ? U extends [any, ...infer UR]
+    ? CompareArrayLength<TR, UR>
+    : 1 // U 先空，T 长
+  : U extends [any, ...any]
+  ? -1 // T 先空，T 短
+  : 0; // 同时空
 ```
 
 每轮从两边各 pop 一个元素，直到至少一方耗尽。
@@ -46,11 +48,11 @@ type CompareArrayLength<T extends any[], U extends any[]> =
 ## 验证
 
 ```ts
-type R1 = CompareArrayLength<[], []>;                       // 0
-type R2 = CompareArrayLength<[1, 2, 3], [1, 2]>;            // 1
-type R3 = CompareArrayLength<[1], [1, 2, 3]>;               // -1
-type R4 = CompareArrayLength<[1, 2, 3], [4, 5, 6]>;         // 0
-type R5 = CompareArrayLength<[any, any], [any, any, any]>;  // -1
+type R1 = CompareArrayLength<[], []>; // 0
+type R2 = CompareArrayLength<[1, 2, 3], [1, 2]>; // 1
+type R3 = CompareArrayLength<[1], [1, 2, 3]>; // -1
+type R4 = CompareArrayLength<[1, 2, 3], [4, 5, 6]>; // 0
+type R5 = CompareArrayLength<[any, any], [any, any, any]>; // -1
 ```
 
 ## 知识点

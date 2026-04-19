@@ -32,7 +32,7 @@ type PublicType<T> = {
 };
 ```
 
-一行搞定：`K extends `_${string}`` 检查 key 是否以下划线开头；是则 `never`（丢弃），否则保留 `K`。
+一行搞定：`K extends `\_${string}``检查 key 是否以下划线开头；是则`never`（丢弃），否则保留 `K`。
 
 ## 验证
 
@@ -41,7 +41,7 @@ type R1 = PublicType<{ name: string; _private: string; age: number }>;
 // { name: string; age: number }
 
 type R2 = PublicType<{ _a: 1; _b: 2 }>; // {}
-type R3 = PublicType<{ a: 1; b: 2 }>;   // { a: 1; b: 2 }
+type R3 = PublicType<{ a: 1; b: 2 }>; // { a: 1; b: 2 }
 ```
 
 ## 知识点

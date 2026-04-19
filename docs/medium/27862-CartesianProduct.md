@@ -23,12 +23,11 @@ type R = CartesianProduct<1 | 2, 'a' | 'b'>;
 ## 题解
 
 ```ts
-type CartesianProduct<A, B> =
-  A extends any
-    ? B extends any
-      ? [A, B]
-      : never
-    : never;
+type CartesianProduct<A, B> = A extends any
+  ? B extends any
+    ? [A, B]
+    : never
+  : never;
 ```
 
 解读：
@@ -44,7 +43,7 @@ type CartesianProduct<A, B> =
 type R1 = CartesianProduct<1 | 2, 'a' | 'b'>;
 // [1, 'a'] | [1, 'b'] | [2, 'a'] | [2, 'b']
 
-type R2 = CartesianProduct<1, 'a'>;     // [1, 'a']
+type R2 = CartesianProduct<1, 'a'>; // [1, 'a']
 type R3 = CartesianProduct<never, 'a'>; // never (never 分发为空)
 type R4 = CartesianProduct<'x', never>; // never
 ```

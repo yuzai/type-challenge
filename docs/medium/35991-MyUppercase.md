@@ -10,10 +10,10 @@ lang: zh-CN
 不使用内置的 `Uppercase`，手动实现"将字符串所有字母转为大写"。
 
 ```ts
-type R1 = MyUppercase<'hello'>;        // 'HELLO'
-type R2 = MyUppercase<'abc123'>;       // 'ABC123'
-type R3 = MyUppercase<'Hello World'>;  // 'HELLO WORLD'
-type R4 = MyUppercase<''>;             // ''
+type R1 = MyUppercase<'hello'>; // 'HELLO'
+type R2 = MyUppercase<'abc123'>; // 'ABC123'
+type R3 = MyUppercase<'Hello World'>; // 'HELLO WORLD'
+type R4 = MyUppercase<''>; // ''
 ```
 
 ## 分析
@@ -38,16 +38,37 @@ type Map = {
 
 ```ts
 type UpperMap = {
-  a: 'A'; b: 'B'; c: 'C'; d: 'D'; e: 'E'; f: 'F'; g: 'G';
-  h: 'H'; i: 'I'; j: 'J'; k: 'K'; l: 'L'; m: 'M'; n: 'N';
-  o: 'O'; p: 'P'; q: 'Q'; r: 'R'; s: 'S'; t: 'T'; u: 'U';
-  v: 'V'; w: 'W'; x: 'X'; y: 'Y'; z: 'Z';
+  a: 'A';
+  b: 'B';
+  c: 'C';
+  d: 'D';
+  e: 'E';
+  f: 'F';
+  g: 'G';
+  h: 'H';
+  i: 'I';
+  j: 'J';
+  k: 'K';
+  l: 'L';
+  m: 'M';
+  n: 'N';
+  o: 'O';
+  p: 'P';
+  q: 'Q';
+  r: 'R';
+  s: 'S';
+  t: 'T';
+  u: 'U';
+  v: 'V';
+  w: 'W';
+  x: 'X';
+  y: 'Y';
+  z: 'Z';
 };
 
-type MyUppercase<S extends string> =
-  S extends `${infer F}${infer R}`
-    ? `${F extends keyof UpperMap ? UpperMap[F] : F}${MyUppercase<R>}`
-    : '';
+type MyUppercase<S extends string> = S extends `${infer F}${infer R}`
+  ? `${F extends keyof UpperMap ? UpperMap[F] : F}${MyUppercase<R>}`
+  : '';
 ```
 
 解读：
@@ -59,11 +80,11 @@ type MyUppercase<S extends string> =
 ## 验证
 
 ```ts
-type R1 = MyUppercase<'hello'>;        // 'HELLO'
-type R2 = MyUppercase<'abc123'>;       // 'ABC123'
-type R3 = MyUppercase<'Hello World'>;  // 'HELLO WORLD'
-type R4 = MyUppercase<''>;             // ''
-type R5 = MyUppercase<'TypeScript'>;   // 'TYPESCRIPT'
+type R1 = MyUppercase<'hello'>; // 'HELLO'
+type R2 = MyUppercase<'abc123'>; // 'ABC123'
+type R3 = MyUppercase<'Hello World'>; // 'HELLO WORLD'
+type R4 = MyUppercase<''>; // ''
+type R5 = MyUppercase<'TypeScript'>; // 'TYPESCRIPT'
 ```
 
 ## 知识点

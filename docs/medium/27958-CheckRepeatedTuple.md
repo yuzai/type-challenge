@@ -27,8 +27,11 @@ type R2 = CheckRepeatedTuple<[1, 2, 1]>; // true
 ## 题解
 
 ```ts
-type Equal<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? true : false;
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+  ? 1
+  : 2
+  ? true
+  : false;
 
 type Includes<T extends any[], U> = T extends [infer F, ...infer R]
   ? Equal<F, U> extends true
@@ -36,12 +39,11 @@ type Includes<T extends any[], U> = T extends [infer F, ...infer R]
     : Includes<R, U>
   : false;
 
-type CheckRepeatedTuple<T extends any[]> =
-  T extends [infer F, ...infer R]
-    ? Includes<R, F> extends true
-      ? true
-      : CheckRepeatedTuple<R>
-    : false;
+type CheckRepeatedTuple<T extends any[]> = T extends [infer F, ...infer R]
+  ? Includes<R, F> extends true
+    ? true
+    : CheckRepeatedTuple<R>
+  : false;
 ```
 
 ## 验证

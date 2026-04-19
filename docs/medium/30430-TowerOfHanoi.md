@@ -32,8 +32,9 @@ type R2 = Hanoi<2>; // [['A', 'C'], ['A', 'B'], ['C', 'B']]
 ## 题解
 
 ```ts
-type BuildTuple<N, R extends any[] = []> =
-  R['length'] extends N ? R : BuildTuple<N, [...R, any]>;
+type BuildTuple<N, R extends any[] = []> = R['length'] extends N
+  ? R
+  : BuildTuple<N, [...R, any]>;
 
 type Dec<N> = BuildTuple<N> extends [any, ...infer R] ? R['length'] : 0;
 

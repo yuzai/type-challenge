@@ -17,9 +17,9 @@ type Obj = {
   };
 };
 
-type R1 = DeepOmit<Obj, 'person'>;          // {}
-type R2 = DeepOmit<Obj, 'person.name'>;      // { person: { age: { value: number } } }
-type R3 = DeepOmit<Obj, 'name'>;             // 原样返回（路径不匹配）
+type R1 = DeepOmit<Obj, 'person'>; // {}
+type R2 = DeepOmit<Obj, 'person.name'>; // { person: { age: { value: number } } }
+type R3 = DeepOmit<Obj, 'name'>; // 原样返回（路径不匹配）
 type R4 = DeepOmit<Obj, 'person.age.value'>; // { person: { name: string; age: {} } }
 ```
 
@@ -36,16 +36,18 @@ type R4 = DeepOmit<Obj, 'person.age.value'>; // { person: { name: string; age: {
 ## 题解
 
 ```ts
-type DeepOmit<T, Path extends string> =
-  Path extends `${infer Head}.${infer Rest}`
-    ? Head extends keyof T
-      ? {
-          [K in keyof T]: K extends Head ? DeepOmit<T[K], Rest> : T[K];
-        }
-      : T
-    : Path extends keyof T
-      ? Omit<T, Path>
-      : T;
+type DeepOmit<
+  T,
+  Path extends string,
+> = Path extends `${infer Head}.${infer Rest}`
+  ? Head extends keyof T
+    ? {
+        [K in keyof T]: K extends Head ? DeepOmit<T[K], Rest> : T[K];
+      }
+    : T
+  : Path extends keyof T
+  ? Omit<T, Path>
+  : T;
 ```
 
 三个分支：
@@ -59,10 +61,10 @@ type DeepOmit<T, Path extends string> =
 ```ts
 type Obj = { person: { name: string; age: { value: number } } };
 
-type R1 = DeepOmit<Obj, 'person'>;            // {}
+type R1 = DeepOmit<Obj, 'person'>; // {}
 type R2 = DeepOmit<Obj, 'person.name'>;
 // { person: { age: { value: number } } }
-type R3 = DeepOmit<Obj, 'name'>;              // 原样
+type R3 = DeepOmit<Obj, 'name'>; // 原样
 type R4 = DeepOmit<Obj, 'person.age.value'>;
 // { person: { name: string; age: {} } }
 ```

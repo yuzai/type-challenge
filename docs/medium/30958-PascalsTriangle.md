@@ -34,17 +34,23 @@ type R = PascalsTriangle<4>;
 ## 题解
 
 ```ts
-type BuildTuple<N, R extends any[] = []> =
-  R['length'] extends N ? R : BuildTuple<N, [...R, any]>;
+type BuildTuple<N, R extends any[] = []> = R['length'] extends N
+  ? R
+  : BuildTuple<N, [...R, any]>;
 
-type Add<A extends number, B extends number> =
-  [...BuildTuple<A>, ...BuildTuple<B>]['length'];
+type Add<A extends number, B extends number> = [
+  ...BuildTuple<A>,
+  ...BuildTuple<B>,
+]['length'];
 
 // 基于上一行构造下一行
-type NextRow<Row extends number[], Acc extends number[] = [1]> =
-  Row extends [infer A extends number, infer B extends number, ...infer R extends number[]]
-    ? NextRow<[B, ...R], [...Acc, Add<A, B>]>
-    : [...Acc, 1];
+type NextRow<Row extends number[], Acc extends number[] = [1]> = Row extends [
+  infer A extends number,
+  infer B extends number,
+  ...infer R extends number[],
+]
+  ? NextRow<[B, ...R], [...Acc, Add<A, B>]>
+  : [...Acc, 1];
 
 // 初始就是 [1]，不需要生成下一行的规则
 type PascalsTriangle<
@@ -53,8 +59,8 @@ type PascalsTriangle<
 > = Acc['length'] extends N
   ? Acc
   : Acc extends [...any, infer Last extends number[]]
-    ? PascalsTriangle<N, [...Acc, NextRow<Last>]>
-    : PascalsTriangle<N, [[1]]>;
+  ? PascalsTriangle<N, [...Acc, NextRow<Last>]>
+  : PascalsTriangle<N, [[1]]>;
 ```
 
 解读：

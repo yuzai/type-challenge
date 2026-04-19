@@ -16,13 +16,12 @@ lang: zh-CN
 ```ts
 const a: DefinedPartial<Record<'a' | 'b' | 'c', number>> = { a: 42 };
 const sum = 0 + a.a; // 42，a 的类型是 number（非 undefined）
-const err = a.b;     // Error: Property 'b' does not exist
+const err = a.b; // Error: Property 'b' does not exist
 ```
 
 ## 分析
 
-`Record<K, V>` 的类型是 `{ [P in K]: V }`，要求所有 key 都存在。
-`Partial<Record<K, V>>` 则所有 key 都可选，返回 `V | undefined`。
+`Record<K, V>` 的类型是 `{ [P in K]: V }`，要求所有 key 都存在。 `Partial<Record<K, V>>` 则所有 key 都可选，返回 `V | undefined`。
 
 我们想要的是："**赋值时允许只写部分 key**，但**访问时只允许访问实际写了的 key**"。做法：
 

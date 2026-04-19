@@ -34,24 +34,28 @@ type R = PermutationsOfTuple<[1, number, unknown]>;
 ## 题解
 
 ```ts
-type Remove<T extends any[], U, R extends any[] = []> =
-  T extends [infer F, ...infer Rest]
-    ? Equal<F, U> extends true
-      ? [...R, ...Rest]
-      : Remove<Rest, U, [...R, F]>
-    : R;
+type Remove<T extends any[], U, R extends any[] = []> = T extends [
+  infer F,
+  ...infer Rest,
+]
+  ? Equal<F, U> extends true
+    ? [...R, ...Rest]
+    : Remove<Rest, U, [...R, F]>
+  : R;
 
-type Equal<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? true : false;
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+  ? 1
+  : 2
+  ? true
+  : false;
 
-type PermutationsOfTuple<T extends unknown[]> =
-  T extends []
-    ? []
-    : T[number] extends infer U
-      ? U extends any
-        ? [U, ...PermutationsOfTuple<Remove<T, U>>]
-        : never
-      : never;
+type PermutationsOfTuple<T extends unknown[]> = T extends []
+  ? []
+  : T[number] extends infer U
+  ? U extends any
+    ? [U, ...PermutationsOfTuple<Remove<T, U>>]
+    : never
+  : never;
 ```
 
 分三步：

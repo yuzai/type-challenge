@@ -30,8 +30,9 @@ type R4 = TriangularNumber<5>; // 15
 ## 题解
 
 ```ts
-type BuildTuple<N, R extends any[] = []> =
-  R['length'] extends N ? R : BuildTuple<N, [...R, any]>;
+type BuildTuple<N, R extends any[] = []> = R['length'] extends N
+  ? R
+  : BuildTuple<N, [...R, any]>;
 
 type TriangularNumber<
   N extends number,

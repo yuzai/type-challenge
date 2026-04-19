@@ -32,10 +32,10 @@ lang: zh-CN
 type Primitive<T> = T extends 'string'
   ? string
   : T extends 'number'
-    ? number
-    : T extends 'boolean'
-      ? boolean
-      : never;
+  ? number
+  : T extends 'boolean'
+  ? boolean
+  : never;
 
 type PickRequired<P, R extends readonly string[]> = {
   [K in keyof P as K extends R[number] ? K : never]: JSONSchema2TS<P[K]>;
@@ -48,14 +48,14 @@ type PickOptional<P, R extends readonly string[]> = {
 type JSONSchema2TS<T> = T extends { enum: infer E extends readonly any[] }
   ? E[number]
   : T extends { type: 'array'; items: infer I }
-    ? JSONSchema2TS<I>[]
-    : T extends { type: 'object'; properties: infer P; required?: infer R }
-      ? (R extends readonly string[]
-          ? PickRequired<P, R> & PickOptional<P, R>
-          : { [K in keyof P]?: JSONSchema2TS<P[K]> })
-      : T extends { type: infer Ty }
-        ? Primitive<Ty>
-        : unknown;
+  ? JSONSchema2TS<I>[]
+  : T extends { type: 'object'; properties: infer P; required?: infer R }
+  ? R extends readonly string[]
+    ? PickRequired<P, R> & PickOptional<P, R>
+    : { [K in keyof P]?: JSONSchema2TS<P[K]> }
+  : T extends { type: infer Ty }
+  ? Primitive<Ty>
+  : unknown;
 ```
 
 解读：

@@ -10,11 +10,11 @@ lang: zh-CN
 给定一个文本字符串 `T` 和模式串 `P`，实现 `FindAll<T, P>`，返回 `P` 在 `T` 中所有匹配的起始索引（从 0 开始）组成的元组。
 
 ```ts
-type R1 = FindAll<'', ''>;              // []
-type R2 = FindAll<'a', ''>;             // []
-type R3 = FindAll<'aaa', 'aa'>;         // [0, 1]
-type R4 = FindAll<'aaaa', 'aa'>;        // [0, 1, 2]
-type R5 = FindAll<'abcabcabc', 'abc'>;  // [0, 3, 6]
+type R1 = FindAll<'', ''>; // []
+type R2 = FindAll<'a', ''>; // []
+type R3 = FindAll<'aaa', 'aa'>; // [0, 1]
+type R4 = FindAll<'aaaa', 'aa'>; // [0, 1, 2]
+type R5 = FindAll<'abcabcabc', 'abc'>; // [0, 3, 6]
 ```
 
 ## 分析
@@ -42,10 +42,10 @@ type FindAll<
 > = P extends ''
   ? []
   : T extends `${infer _F}${infer R}`
-    ? T extends `${P}${infer _}`
-      ? FindAll<R, P, [...Idx, 1], [...Result, Idx['length']]>
-      : FindAll<R, P, [...Idx, 1], Result>
-    : Result;
+  ? T extends `${P}${infer _}`
+    ? FindAll<R, P, [...Idx, 1], [...Result, Idx['length']]>
+    : FindAll<R, P, [...Idx, 1], Result>
+  : Result;
 ```
 
 - `Idx` 元组长度记录"当前首字符在原串里的索引"。
@@ -55,10 +55,10 @@ type FindAll<
 ## 验证
 
 ```ts
-type R1 = FindAll<'', ''>;              // []
-type R2 = FindAll<'a', ''>;             // []
-type R3 = FindAll<'aaa', 'aa'>;         // [0, 1]
-type R4 = FindAll<'aaaa', 'aa'>;        // [0, 1, 2]
-type R5 = FindAll<'abcabcabc', 'abc'>;  // [0, 3, 6]
-type R6 = FindAll<'xyz', 'abc'>;        // []
+type R1 = FindAll<'', ''>; // []
+type R2 = FindAll<'a', ''>; // []
+type R3 = FindAll<'aaa', 'aa'>; // [0, 1]
+type R4 = FindAll<'aaaa', 'aa'>; // [0, 1, 2]
+type R5 = FindAll<'abcabcabc', 'abc'>; // [0, 3, 6]
+type R6 = FindAll<'xyz', 'abc'>; // []
 ```

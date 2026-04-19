@@ -10,8 +10,8 @@ lang: zh-CN
 实现 `CountElementNumberToObject`，统计数组里每个元素的出现次数，返回一个对象；嵌套数组要先拉平。
 
 ```ts
-type A = CountElementNumberToObject<[]>;                         // {}
-type B = CountElementNumberToObject<[1, 2, 3, 4, 5]>;            // { 1: 1; 2: 1; 3: 1; 4: 1; 5: 1 }
+type A = CountElementNumberToObject<[]>; // {}
+type B = CountElementNumberToObject<[1, 2, 3, 4, 5]>; // { 1: 1; 2: 1; 3: 1; 4: 1; 5: 1 }
 type C = CountElementNumberToObject<[1, 2, 3, 4, 5, [1, 2, 3]]>; // { 1: 2; 2: 2; 3: 2; 4: 1; 5: 1 }
 ```
 
@@ -35,19 +35,23 @@ type Flatten<T extends any[]> = T extends [infer F, ...infer R]
   : [];
 
 // 2. 把结果对象里某个 key 的值 +1
-type Inc<N> = N extends number
-  ? [...BuildTuple<N>, any]['length']
-  : never;
+type Inc<N> = N extends number ? [...BuildTuple<N>, any]['length'] : never;
 
-type BuildTuple<N, R extends any[] = []> =
-  R['length'] extends N ? R : BuildTuple<N, [...R, any]>;
+type BuildTuple<N, R extends any[] = []> = R['length'] extends N
+  ? R
+  : BuildTuple<N, [...R, any]>;
 
 type CountElementNumberToObject<
   T extends any[],
   Acc extends Record<any, any> = {},
 > = Flatten<T> extends [infer F, ...infer R extends any[]]
   ? F extends keyof Acc
-    ? CountElementNumberToObject<R, Omit<Acc, F & keyof Acc> & { [K in F & PropertyKey]: Inc<Acc[F & keyof Acc]> }>
+    ? CountElementNumberToObject<
+        R,
+        Omit<Acc, F & keyof Acc> & {
+          [K in F & PropertyKey]: Inc<Acc[F & keyof Acc]>;
+        }
+      >
     : CountElementNumberToObject<R, Acc & { [K in F & PropertyKey]: 1 }>
   : Acc;
 ```

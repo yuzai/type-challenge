@@ -27,10 +27,7 @@ type C = Transpose<[[1, 2, 3], [4, 5, 6]]>; // [[1, 4], [2, 5], [3, 6]]
 ## 题解
 
 ```ts
-type Transpose<
-  M extends any[][],
-  H = M[0],
-> = H extends []
+type Transpose<M extends any[][], H = M[0]> = H extends []
   ? []
   : {
       [I in keyof H]: {
@@ -54,10 +51,9 @@ type Tail<M extends any[][]> = {
   [K in keyof M]: M[K] extends [any, ...infer R] ? R : [];
 };
 
-type Transpose<M extends any[][]> =
-  M[0] extends []
-    ? []
-    : [Head<M>, ...Transpose<Tail<M>>];
+type Transpose<M extends any[][]> = M[0] extends []
+  ? []
+  : [Head<M>, ...Transpose<Tail<M>>];
 ```
 
 解读：
@@ -69,8 +65,8 @@ type Transpose<M extends any[][]> =
 ## 验证
 
 ```ts
-type R1 = Transpose<[[1]]>;               // [[1]]
-type R2 = Transpose<[[1, 2], [3, 4]]>;    // [[1, 3], [2, 4]]
+type R1 = Transpose<[[1]]>; // [[1]]
+type R2 = Transpose<[[1, 2], [3, 4]]>; // [[1, 3], [2, 4]]
 type R3 = Transpose<[[1, 2, 3], [4, 5, 6]]>;
 // [[1, 4], [2, 5], [3, 6]]
 ```

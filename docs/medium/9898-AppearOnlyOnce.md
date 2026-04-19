@@ -35,24 +35,29 @@ type Includes<T extends any[], U> = T extends [infer F, ...infer R]
     : Includes<R, U>
   : false;
 
-type Equal<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2)
-    ? true
-    : false;
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+  ? 1
+  : 2
+  ? true
+  : false;
 
-type FindEles<T extends any[], All extends any[] = T> =
-  T extends [infer F, ...infer R]
-    ? CountEquals<F, All> extends 1
-      ? [F, ...FindEles<R, All>]
-      : FindEles<R, All>
-    : [];
+type FindEles<T extends any[], All extends any[] = T> = T extends [
+  infer F,
+  ...infer R,
+]
+  ? CountEquals<F, All> extends 1
+    ? [F, ...FindEles<R, All>]
+    : FindEles<R, All>
+  : [];
 
-type CountEquals<U, T extends any[], C extends any[] = []> =
-  T extends [infer F, ...infer R]
-    ? Equal<F, U> extends true
-      ? CountEquals<U, R, [...C, 1]>
-      : CountEquals<U, R, C>
-    : C['length'];
+type CountEquals<U, T extends any[], C extends any[] = []> = T extends [
+  infer F,
+  ...infer R,
+]
+  ? Equal<F, U> extends true
+    ? CountEquals<U, R, [...C, 1]>
+    : CountEquals<U, R, C>
+  : C['length'];
 ```
 
 思路：

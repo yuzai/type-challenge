@@ -12,7 +12,7 @@ lang: zh-CN
 ```ts
 type R1 = ReplaceFirst<[1, 2, 3], 2, 9>; // [1, 9, 3]
 type R2 = ReplaceFirst<[1, 2, 3], 4, 9>; // [1, 2, 3]
-type R3 = ReplaceFirst<[], 4, 9>;        // []
+type R3 = ReplaceFirst<[], 4, 9>; // []
 ```
 
 ## 分析
@@ -29,15 +29,20 @@ type R3 = ReplaceFirst<[], 4, 9>;        // []
 ## 题解
 
 ```ts
-type Equal<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? true : false;
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+  ? 1
+  : 2
+  ? true
+  : false;
 
-type ReplaceFirst<T extends readonly unknown[], S, R> =
-  T extends [infer F, ...infer Rest]
-    ? Equal<F, S> extends true
-      ? [R, ...Rest]
-      : [F, ...ReplaceFirst<Rest, S, R>]
-    : [];
+type ReplaceFirst<T extends readonly unknown[], S, R> = T extends [
+  infer F,
+  ...infer Rest,
+]
+  ? Equal<F, S> extends true
+    ? [R, ...Rest]
+    : [F, ...ReplaceFirst<Rest, S, R>]
+  : [];
 ```
 
 ## 验证
@@ -45,6 +50,6 @@ type ReplaceFirst<T extends readonly unknown[], S, R> =
 ```ts
 type A = ReplaceFirst<[1, 2, 3], 2, 9>; // [1, 9, 3]
 type B = ReplaceFirst<[1, 2, 3], 4, 9>; // [1, 2, 3]
-type C = ReplaceFirst<[], 4, 9>;        // []
+type C = ReplaceFirst<[], 4, 9>; // []
 type D = ReplaceFirst<[1, 1, 1], 1, 0>; // [0, 1, 1]
 ```
