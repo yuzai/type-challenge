@@ -7,7 +7,7 @@ lang: zh-CN
 
 ## 题目描述
 
-**This challenge continues from [6 - Simple Vue](//tsch.js.org/6), you should finish that one first, and modify your code based on it to start this challenge**.
+**This challenge continues from [6 - Simple Vue](https://tsch.js.org/6), you should finish that one first, and modify your code based on it to start this challenge**.
 
 In addition to the Simple Vue, we are now having a new `props` field in the options. This is a simplified version of Vue's `props` option. Here are some of the rules.
 

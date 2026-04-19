@@ -69,7 +69,7 @@ type Case2 = Equal<A, Merge<B>> extends true ? true : false;
 
 这里关于 merge，本文不再探讨，记住即可
 
-Equal 可以参考 [判断两个类型相等](/summary/%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9B%B8%E7%AD%89.md)
+Equal 可以参考 [判断两个类型相等](/summary/基操-判断两个类型相等.md)
 
 ## 知识点
 

@@ -1,5 +1,5 @@
 ---
-title: 3242-实现FlattenDepth
+title: 3243-实现FlattenDepth
 lang: zh-CN
 ---
 
