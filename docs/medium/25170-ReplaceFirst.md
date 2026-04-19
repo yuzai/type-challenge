@@ -21,29 +21,25 @@ type R3 = ReplaceFirst<[], 4, 9>; // []
 
 - 空元组：直接返回 `[]`。
 - 非空元组拆出首项 `F` 和余下 `Rest`：
-  - 若 `F` 等于 `S`，替换成 `R` 并直接拼回 `Rest`（不再递归），因为只替换"第一个"；
+  - 若 `F` 可被视作 `S`（即 `F extends S`），替换成 `R` 并直接拼回 `Rest`（不再递归），因为只替换"第一个"；
   - 否则保留 `F`，对 `Rest` 继续递归。
 
-判等要精确，使用 `Equal` 终极版，见 [判断两个类型相等](/summary/基操-判断两个类型相等.md)。
+注意：题目用的是 `F extends S`（赋值兼容）而不是 `Equal<F, S>`（严格相等）。例如 `ReplaceFirst<[1, 'two', 3], string, 2>` 要求把"第一个可以当作 `string` 的元素"换掉，得到 `[1, 2, 3]`，用严格 Equal 判等就拿不到这个结果。
 
 ## 题解
 
 ```ts
-type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
-  ? 1
-  : 2
-  ? true
-  : false;
-
-type ReplaceFirst<T extends readonly unknown[], S, R> = T extends [
+type ReplaceFirst<T extends readonly unknown[], S, R> = T extends readonly [
   infer F,
   ...infer Rest,
 ]
-  ? Equal<F, S> extends true
+  ? [F] extends [S]
     ? [R, ...Rest]
     : [F, ...ReplaceFirst<Rest, S, R>]
   : [];
 ```
+
+外面多套的一层 `[F] extends [S]` 是为了关掉 `F` 走进条件类型时的联合分发——题目要求的是整体判"第一个元素能不能当 S"，而不是把 F 按联合拆开逐项判断。
 
 ## 验证
 
