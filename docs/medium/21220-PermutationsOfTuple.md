@@ -29,42 +29,34 @@ type R = PermutationsOfTuple<[1, number, unknown]>;
 2. 剩下的元素递归排列；
 3. 把当前位与递归结果拼起来。
 
-关键点是"抽任意一个"。TS 里对元组做这个操作，可以把元组先转成联合（`T[number]`），利用联合分发"每支选一次"，然后再从元组里把这个选中的值删掉（用 `Remove` 辅助）。
+关键点是"抽任意一个"。天然的想法是 `T[number]` 把元组拍成联合再分发。但这里有坑：测试包含 `any`、`unknown`、`never` 这些"特殊"类型——`[any, unknown]` 的 `T[number]` 会被吸收成 `unknown`，直接丢失第一个元素；`never` 则会让某一支整个短路成 `never`。
+
+正确做法是**按下标抽**：对元组的每一个位置都做一次"抽出这个位、剩下的递归"，用联合把所有结果并起来。
 
 ## 题解
 
 ```ts
-type Remove<T extends any[], U, R extends any[] = []> = T extends [
+// 按下标抽出一个元素，返回 [抽出的元素, 剩下的元组] 的联合
+type PickEach<T extends unknown[], Acc extends unknown[] = []> = T extends [
   infer F,
   ...infer Rest,
 ]
-  ? Equal<F, U> extends true
-    ? [...R, ...Rest]
-    : Remove<Rest, U, [...R, F]>
-  : R;
-
-type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
-  ? 1
-  : 2
-  ? true
-  : false;
+  ? [F, [...Acc, ...Rest]] | PickEach<Rest, [...Acc, F]>
+  : never;
 
 type PermutationsOfTuple<T extends unknown[]> = T extends []
   ? []
-  : T[number] extends infer U
-  ? U extends any
-    ? [U, ...PermutationsOfTuple<Remove<T, U>>]
+  : PickEach<T> extends infer P
+  ? P extends [infer F, infer Rest extends unknown[]]
+    ? [F, ...PermutationsOfTuple<Rest>]
     : never
   : never;
 ```
 
-分三步：
+分两步：
 
-1. **空元组 → `[]`**：递归出口。
-2. **`T[number]` 拿到所有元素的联合 `U`**，配合 `U extends any` 触发分发，让每支单独继续。
-3. **`Remove<T, U>` 从原元组里去掉"这次选的"元素**，对剩余部分递归，再把 `U` 头插。
-
-`Remove` 使用 `Equal` 精确判等（避免 `unknown`、`number` 等一般类型互相吸收）。
+1. **`PickEach<T>` 产出"抽一个 + 剩下"的联合**：把 `T` 依次劈开，左边累积已经跨过的，右边拿到当前位；对每一位都产出一对 `[F, [...Acc, ...Rest]]`。按位置抽取不依赖类型相等，`any` / `unknown` / `never` 都能正确位置区分。
+2. **对每一对递归**：用 `P extends [F, Rest]` 把每一支解构出来，递归得到 `Rest` 的所有排列，再把 `F` 头插。
 
 ## 验证
 
@@ -78,6 +70,6 @@ type R4 = PermutationsOfTuple<[1, number, unknown]>;
 
 ## 知识点
 
-- `T[number]` 把元组转成元素的联合，见 [类型转换大集合](/summary/基操-类型转换大集合.md)。
+- 元组里混有 `any` / `unknown` / `never` 时，尽量**按下标**工作，不要走 `T[number]`——否则会被这些"吸收型"类型坑。
+- "累加器 + 剩余"分头劈开元组是 `PickEach` 这类"挑一个走一个"的通用套路，见 [元组遍历的黑科技](/summary/基操-元组遍历的黑科技.md)。
 - 分发 + 递归是排列题的套路，见 [排列组合大乱炖](/summary/算法-排列组合大乱炖.md)。
-- 判等使用 `Equal` 终极版，见 [判断两个类型相等](/summary/基操-判断两个类型相等.md)。

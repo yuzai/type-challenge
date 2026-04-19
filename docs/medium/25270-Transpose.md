@@ -27,7 +27,9 @@ type C = Transpose<[[1, 2, 3], [4, 5, 6]]>; // [[1, 4], [2, 5], [3, 6]]
 ## 题解
 
 ```ts
-type Transpose<M extends any[][], H = M[0]> = H extends []
+type Transpose<M extends any[][], H = M[0]> = M extends []
+  ? []
+  : H extends []
   ? []
   : {
       [I in keyof H]: {
@@ -40,6 +42,8 @@ type Transpose<M extends any[][], H = M[0]> = H extends []
     };
 ```
 
+注意入口的 `M extends []` 兜底：当 `M = []`，`M[0]` 是 `never`，后面的条件类型会整体短路成 `never`，必须先把空矩阵单独处理。
+
 写简单些，推荐用递归 + 首列提取：
 
 ```ts
@@ -51,7 +55,9 @@ type Tail<M extends any[][]> = {
   [K in keyof M]: M[K] extends [any, ...infer R] ? R : [];
 };
 
-type Transpose<M extends any[][]> = M[0] extends []
+type Transpose<M extends any[][]> = M extends []
+  ? []
+  : M[0] extends []
   ? []
   : [Head<M>, ...Transpose<Tail<M>>];
 ```

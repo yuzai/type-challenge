@@ -10,7 +10,7 @@ lang: zh-CN
 给定行数 `N`，构造 `N` 行的帕斯卡三角（杨辉三角）。
 
 ```ts
-type R = PascalsTriangle<4>;
+type R = Pascal<4>;
 // [
 //   [1],
 //   [1, 1],
@@ -41,7 +41,8 @@ type BuildTuple<N, R extends any[] = []> = R['length'] extends N
 type Add<A extends number, B extends number> = [
   ...BuildTuple<A>,
   ...BuildTuple<B>,
-]['length'];
+]['length'] &
+  number;
 
 // 基于上一行构造下一行
 type NextRow<Row extends number[], Acc extends number[] = [1]> = Row extends [
@@ -53,29 +54,29 @@ type NextRow<Row extends number[], Acc extends number[] = [1]> = Row extends [
   : [...Acc, 1];
 
 // 初始就是 [1]，不需要生成下一行的规则
-type PascalsTriangle<
+type Pascal<
   N extends number,
   Acc extends number[][] = [],
 > = Acc['length'] extends N
   ? Acc
   : Acc extends [...any, infer Last extends number[]]
-  ? PascalsTriangle<N, [...Acc, NextRow<Last>]>
-  : PascalsTriangle<N, [[1]]>;
+  ? Pascal<N, [...Acc, NextRow<Last>]>
+  : Pascal<N, [[1]]>;
 ```
 
 解读：
 
 - `NextRow<Row>` 每次取 Row 的前两项相加放入累加器，最后补一个 1；同时 `Row[0]` 已经是上一次贡献的 1，不再额外加。
-- 外层 `PascalsTriangle` 从 `[[1]]` 启动，直到累积到 `N` 行。
+- 外层 `Pascal` 从 `[[1]]` 启动，直到累积到 `N` 行。
 
 ## 验证
 
 ```ts
-type R1 = PascalsTriangle<0>; // []
-type R2 = PascalsTriangle<1>; // [[1]]
-type R3 = PascalsTriangle<3>;
+type R1 = Pascal<0>; // []
+type R2 = Pascal<1>; // [[1]]
+type R3 = Pascal<3>;
 // [[1], [1, 1], [1, 2, 1]]
-type R4 = PascalsTriangle<4>;
+type R4 = Pascal<4>;
 // [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1]]
 ```
 

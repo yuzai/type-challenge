@@ -7,29 +7,27 @@ lang: zh-CN
 
 ## 题目描述
 
-编写一个类型，把给定的修饰键数组 `ModifierKeys` 组合成所有可能的按键组合。要求：
+编写一个类型，把给定的修饰键数组 `ModifierKeys` 做两两组合。要求：
 
 1. 同一种修饰键组合不能重复出现；
 2. `ModifierKeys` 中前面的键优先级高于后面的键，例如 `'cmd ctrl'` 合法，但 `'ctrl cmd'` 不合法。
 
 ```ts
-type ModifierKeys = ['cmd', 'ctrl', 'shift', 'option'];
+type ModifierKeys = ['cmd', 'ctrl', 'opt', 'fn'];
 
 type A = Combs<ModifierKeys>;
-// 'cmd' | 'ctrl' | 'shift' | 'option'
-// | 'cmd ctrl' | 'cmd shift' | 'cmd option'
-// | 'ctrl shift' | 'ctrl option' | 'shift option'
-// | 'cmd ctrl shift' | ...
+// 'cmd ctrl' | 'cmd opt' | 'cmd fn'
+// | 'ctrl opt' | 'ctrl fn' | 'opt fn'
 ```
 
 ## 分析
 
-约束"前者优先级高"等价于**只允许"左边 index 小、右边 index 大"的组合**。换言之，题目就是对元组做"**按原顺序**的非空子集枚举"，并用空格连接。
+约束"前者优先级高"等价于**只允许"左边 index 小、右边 index 大"的组合**。换言之，对于元组里每一个元素 `F`，它可以和它**右边**的任意一个元素配对。
 
-拆成两层：
+拆两步：
 
-1. 枚举所有"从位置 i 出发的"子序列；对每一项，决定"选 / 不选"。
-2. 把选中的序列拼成字符串。
+1. 拆出首项 `F`，把 `F` 和剩余元组 `R` 中的每一项都配对一次：`` `${F} ${R[number]}` ``。
+2. 对剩余元组 `R` 递归同样的过程。
 
 ## 题解
 
@@ -38,30 +36,24 @@ type Combs<T extends string[]> = T extends [
   infer F extends string,
   ...infer R extends string[],
 ]
-  ? F | `${F} ${Combs<R>}` | Combs<R>
+  ? `${F} ${R[number]}` | Combs<R>
   : never;
 ```
 
 解读：
 
-- 拆出首项 `F`，剩余 `R`。对每一项有三种选择：
-  - 只选 `F`；
-  - 选 `F` 再拼上 `R` 里的某个组合（用模板串上空格）；
-  - 不选 `F`，直接从 `R` 里继续。
-- 返回的是这三条路径的联合，天然保证了"有序、不重复"。
-
-递归出口：`T = []`，返回 `never`（空联合），不会贡献任何字符串。
+- `F` 固定是前一位，`R[number]` 作为"后一位"的联合，模板字面量对联合自动分发，一次性铺开所有 `F-Rest` 配对。
+- 对 `R` 继续递归，直到 `R = []` → `R[number]` 为 `never`，整支返回 `never` 退出。
 
 ## 验证
 
 ```ts
-type M = ['cmd', 'ctrl', 'shift'];
+type M = ['cmd', 'ctrl', 'opt', 'fn'];
 type R = Combs<M>;
-// 'cmd' | 'cmd ctrl' | 'cmd ctrl shift' | 'cmd shift'
-// | 'ctrl' | 'ctrl shift' | 'shift'
+// 'cmd ctrl' | 'cmd opt' | 'cmd fn' | 'ctrl opt' | 'ctrl fn' | 'opt fn'
 ```
 
 ## 知识点
 
-- "**选 / 不选**"二叉分支是组合类题目的万能模板，见 [排列组合大乱炖](/summary/算法-排列组合大乱炖.md)。
-- 用 `F | ${F} ${Combs<R>} | Combs<R>` 一行搞定三种情况，是本题最精巧之处。
+- `R[number]` 把元组展成联合是最廉价的方式，见 [类型转换大集合](/summary/基操-类型转换大集合.md)。
+- 模板字面量对联合自动分发，配对 `` `${F} ${R[number]}` `` 一步到位。
