@@ -49,4 +49,4 @@ type Trim<S extends string> = S extends
 
 ## 知识点
 
-1. 同 [TirmLeft](/medium/108-Trim.md)。
+1. 同 [TrimLeft](/medium/106-实现TrimLeft.md)。

@@ -13,7 +13,7 @@ So, let's write a utility type `IsAny<T>`, which takes input type `T`. If `T` is
 
 ## 分析
 
-这个题判断是不是 any，有一个非常简单的方法，就是借助 [Equal](/summary/%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9B%B8%E7%AD%89.md)。即可判断：
+这个题判断是不是 any，有一个非常简单的方法，就是借助 [Equal](/summary/基操-判断两个类型相等.md)。即可判断：
 
 ```ts
 type isAny<T> = Equals<any, T>;
