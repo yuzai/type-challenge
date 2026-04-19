@@ -200,7 +200,7 @@ var _hmt = _hmt || [];
           '/hard/17-柯里化1',
           'hard/55-UnionToIntersection',
           'hard/57-获取必填属性',
-          'hard/58-获取可选属性',
+          'hard/59-获取可选属性',
           'hard/89-获取必填属性键值',
           'hard/90-获取可选属性键值',
           'hard/112-大写首字母',
