@@ -27,9 +27,11 @@ type C = CountElementNumberToObject<[1, 2, 3, 4, 5, [1, 2, 3]]>; // { 1: 2; 2: 2
 ## 题解
 
 ```ts
-// 1. 先把多层嵌套数组拉平
+// 1. 先把多层嵌套数组拉平；同时跳过 never 项
 type Flatten<T extends any[]> = T extends [infer F, ...infer R]
-  ? F extends any[]
+  ? [F] extends [never]
+    ? Flatten<R>
+    : F extends any[]
     ? [...Flatten<F>, ...Flatten<R>]
     : [F, ...Flatten<R>]
   : [];
@@ -40,6 +42,9 @@ type Inc<N> = N extends number ? [...BuildTuple<N>, any]['length'] : never;
 type BuildTuple<N, R extends any[] = []> = R['length'] extends N
   ? R
   : BuildTuple<N, [...R, any]>;
+
+// 3. 最后把累加器的链式交叉类型拍平成单一对象
+type Merge<T> = { [K in keyof T]: T[K] };
 
 type CountElementNumberToObject<
   T extends any[],
@@ -53,16 +58,17 @@ type CountElementNumberToObject<
         }
       >
     : CountElementNumberToObject<R, Acc & { [K in F & PropertyKey]: 1 }>
-  : Acc;
+  : Merge<Acc>;
 ```
 
 思路：
 
-1. `Flatten` 把嵌套数组拉平。每一项若是数组，先展开它再连上剩余；否则直接头插。
+1. `Flatten` 把嵌套数组拉平。每一项若是数组，先展开它再连上剩余；否则直接头插。注意 `never` 项要先跳过——否则 `never extends any[]` 会让整个条件短路成 `never`，拖垮后续。
 2. 每次把当前首项 `F` 往累加器 `Acc` 里塞：
    - 如果 `Acc` 已经有这个 key，把它的值 +1；
    - 否则新增字段，值为 1。
 3. 用 `BuildTuple` 实现"数字 +1"：把当前值转成等长元组，push 一个占位再取 `length`。
+4. 递归累积产生的是 `{1:1} & {2:1} & ...` 形式的交叉类型，跟一个扁平对象字面量 `Equal` 并不相等；最后用 `Merge` 走一遍 mapped type 把结构拍平。
 
 ## 验证
 
