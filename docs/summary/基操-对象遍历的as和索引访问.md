@@ -51,7 +51,7 @@ type Entries<T> = {
 type R = Entries<{ a: 1; b: 2 }>; // ['a', 1] | ['b', 2]
 ```
 
-这招的精髓是 **"先用 mapped type 把每个字段改成想要的单元结构，再用 `[keyof T]` 一次性拉平成联合"**，在 medium 的 `ObjectEntries`, `Flip` 以及 hard 的 `ObjectFromEntries`, `OptionalKeys` 里都会看到。
+这招的精髓是 **"先用 mapped type 把每个字段改成想要的单元结构，再用 `[keyof T]` 一次性拉平成联合"**，在 medium 的 [ObjectEntries](/medium/2946-实现ObjectEntries.md), [Flip](/medium/4179-实现Flip.md) 以及 hard 的 [ObjectFromEntries](/hard/2949-ObjectFromEntries.md), [OptionalKeys](/hard/90-获取可选属性键值.md) 里都会看到。
 
 ### 在元组上的索引访问
 
@@ -96,7 +96,7 @@ type R = PickString<{ a: string; b: number; c: 'x' }>;
 // { a: string; c: 'x' }
 ```
 
-**"as 输出 never 即丢弃"** 是 as 最高频的用法，直接对标 `PickByType`, `OmitByType`, `RequiredKeys`, `OptionalKeys`, `ReadonlyKeys` 等一大票题目。
+**"as 输出 never 即丢弃"** 是 as 最高频的用法，直接对标 [PickByType](/medium/2595-实现PickByType.md), [OmitByType](/medium/2852-实现OmitByType.md), [RequiredKeys](/hard/89-获取必填属性键值.md), [OptionalKeys](/hard/90-获取可选属性键值.md), [ReadonlyKeys](/extreme/5-GetReadOnlyKeys.md) 等一大票题目。
 
 ### 场景 3：把 key 映射到另一个联合
 
@@ -109,7 +109,7 @@ type Flip<T extends Record<string, string>> = {
 type R = Flip<{ a: '1'; b: '2' }>; // { '1': 'a'; '2': 'b' }
 ```
 
-这就是 medium/4179 Flip 的解法核心。
+这就是 [medium/4179 Flip](/medium/4179-实现Flip.md) 的解法核心。
 
 ## 修饰符
 
