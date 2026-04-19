@@ -10,10 +10,10 @@ lang: zh-CN
 给定一个数字 `N`，返回第 `N` 个三角形数 `1 + 2 + 3 + ... + N`。
 
 ```ts
-type R1 = TriangularNumber<1>; // 1
-type R2 = TriangularNumber<2>; // 3
-type R3 = TriangularNumber<3>; // 6
-type R4 = TriangularNumber<5>; // 15
+type R1 = Triangular<1>; // 1
+type R2 = Triangular<2>; // 3
+type R3 = Triangular<3>; // 6
+type R4 = Triangular<5>; // 15
 ```
 
 ## 分析
@@ -34,13 +34,13 @@ type BuildTuple<N, R extends any[] = []> = R['length'] extends N
   ? R
   : BuildTuple<N, [...R, any]>;
 
-type TriangularNumber<
+type Triangular<
   N extends number,
   Cur extends any[] = [],
   Acc extends any[] = [],
 > = Cur['length'] extends N
   ? [...Acc, ...BuildTuple<N>]['length']
-  : TriangularNumber<N, [...Cur, any], [...Acc, ...BuildTuple<Cur['length']>]>;
+  : Triangular<N, [...Cur, any], [...Acc, ...BuildTuple<Cur['length']>]>;
 ```
 
 思路：
@@ -54,12 +54,12 @@ type TriangularNumber<
 ## 验证
 
 ```ts
-type R0 = TriangularNumber<0>; // 0
-type R1 = TriangularNumber<1>; // 1
-type R2 = TriangularNumber<2>; // 3
-type R3 = TriangularNumber<3>; // 6
-type R4 = TriangularNumber<5>; // 15
-type R5 = TriangularNumber<10>; // 55
+type R0 = Triangular<0>; // 0
+type R1 = Triangular<1>; // 1
+type R2 = Triangular<2>; // 3
+type R3 = Triangular<3>; // 6
+type R4 = Triangular<5>; // 15
+type R5 = Triangular<10>; // 55
 ```
 
 ## 知识点
