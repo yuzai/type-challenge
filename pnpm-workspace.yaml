@@ -1,0 +1,5 @@
+allowBuilds:
+  core-js: false
+  esbuild: false
+  highlight.js: false
+  vuepress: false
