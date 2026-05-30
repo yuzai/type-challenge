@@ -7,6 +7,7 @@
     "@vuepress/plugin-google-analytics": "^1.9.10",
     "markdown-it-imsize": "^2.0.1",
     "prettier": "^2.8.8",
+    "vue-template-compiler": "2.7.16",
     "vuepress": "^1.9.9"
   },
   "scripts": {
@@ -18,5 +19,13 @@
   "dependencies": {
     "@vssue/api-github-v3": "^1.4.7",
     "@vssue/vuepress-plugin-vssue": "^1.4.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild",
+      "highlight.js",
+      "vuepress"
+    ]
   }
 }
