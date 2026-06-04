@@ -18,5 +18,13 @@
   "dependencies": {
     "@vssue/api-github-v3": "^1.4.7",
     "@vssue/vuepress-plugin-vssue": "^1.4.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild",
+      "highlight.js",
+      "vuepress"
+    ]
   }
 }
